@@ -27,30 +27,34 @@ const NavBar = () => {
 
 const Navbar = styled.div`
   width: 100vw;
-  height: 7vh;
+  height: 10vh;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 1vh 2vw;
+  justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   margin: 0 auto;
-  margin-top: 2vh;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  position: absolute;
 `;
 
 const Logo = styled.div`
+  flex: 1;
   font-size: 4vh;
   font-weight: bold;
-  // margin-right: 2vw;
+
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
 `;
 
 const NavLinks = styled.div`
+  flex: 1;
   display: flex;
-  gap: 3vw;
   justify-content: center;
+  gap: 3vw;
 `;
 
 const NavLink = styled.a`
@@ -70,10 +74,11 @@ const StyledLogoutIcon = styled(LogoutOutlined)`
 `;
 
 const Profile = styled.div`
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5vw;
-  margin-left: 2vw;
 `;
 
 const ProfileImage = styled.div`
@@ -86,4 +91,5 @@ const ProfileImage = styled.div`
   justify-content: center;
   margin-left: 1vw;
 `;
+
 export default NavBar;
