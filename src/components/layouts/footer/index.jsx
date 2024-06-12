@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
-const Footer = () => {
+const CustomFooter = () => {
   return (
     <StyledLayout>
       <Container>
@@ -62,7 +62,7 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default CustomFooter;
 
 const StyledLayout = styled(Layout)`
   position: absolute;
