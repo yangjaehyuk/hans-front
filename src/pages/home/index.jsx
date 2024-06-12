@@ -1,6 +1,11 @@
 import React from 'react';
+import Footer from '../../components/layouts/footer';
 const Home = () => {
-  return <div>여긴홈</div>;
+  return (
+    <div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Home;
