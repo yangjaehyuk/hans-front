@@ -2,9 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
 
+const NavBar = () => {
+  return (
+    <Navbar>
+      <Logo>HANS</Logo>
+      <NavLinks>
+        <NavLink href="">Home</NavLink>
+        <NavLink href="style">Style</NavLink>
+        <NavLink href="mypage">My Page</NavLink>
+      </NavLinks>
+      <Profile>
+        <StyledSearchIcon />
+        <StyledLogoutIcon />
+        <ProfileImage>
+          <span role="img" aria-label="user">
+            👤
+          </span>
+        </ProfileImage>
+        <span>yangjaehyuk_</span>
+      </Profile>
+    </Navbar>
+  );
+};
+
 const Navbar = styled.div`
-  width: 100%;
-  height: 10vh;
+  width: 100vw;
+  height: 7vh;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -21,13 +44,13 @@ const Navbar = styled.div`
 const Logo = styled.div`
   font-size: 4vh;
   font-weight: bold;
-  margin-right: 2vw; /* Add margin to adjust spacing */
+  // margin-right: 2vw;
 `;
 
 const NavLinks = styled.div`
   display: flex;
   gap: 3vw;
-  justify-content: center; /* Center NavLinks */
+  justify-content: center;
 `;
 
 const NavLink = styled.a`
@@ -37,20 +60,20 @@ const NavLink = styled.a`
 `;
 
 const StyledSearchIcon = styled(SearchOutlined)`
-  font-size: 3vh; /* Adjust the size as needed */
-  margin-right: 0.5vw; /* Add margin to create space between icons */
+  font-size: 3vh;
+  margin-right: 0.5vw;
 `;
 
 const StyledLogoutIcon = styled(LogoutOutlined)`
-  font-size: 3vh; /* Adjust the size to match StyledSearchIcon */
-  margin-right: 1vw; /* Add margin to create space between icons */
+  font-size: 3vh;
+  margin-right: 1vw;
 `;
 
 const Profile = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5vw; /* Reduce gap to bring elements closer */
-  margin-left: 2vw; /* Add margin to adjust spacing */
+  gap: 0.5vw;
+  margin-left: 2vw;
 `;
 
 const ProfileImage = styled.div`
@@ -61,28 +84,6 @@ const ProfileImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 1vw; /* Add margin to push to the right */
+  margin-left: 1vw;
 `;
-
-const NavBar = () => {
-  return (
-    <Navbar>
-      <Logo>HANS</Logo>
-      <NavLinks>
-        <NavLink href="#home">Home</NavLink>
-        <NavLink href="#style">Style</NavLink>
-        <NavLink href="#mypage">My Page</NavLink>
-      </NavLinks>
-      <Profile>
-        <StyledSearchIcon />
-        <StyledLogoutIcon />
-        <ProfileImage>
-          <span role="img" aria-label="user">👤</span>
-        </ProfileImage>
-        <span>yangjaehyuk_</span>
-      </Profile>
-    </Navbar>
-  );
-}
-
 export default NavBar;
