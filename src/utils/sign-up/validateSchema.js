@@ -6,6 +6,10 @@ const ValidateSchema = () => {
       .string()
       .matches(/^[^@\s]+@[^\s]+\.[^@\s]+$/, '이메일 형식이 올바르지 않습니다.')
       .required('이메일을 입력하세요.'),
+    nickname: yup
+      .string()
+      .required('닉네임을 입력하세요.')
+      .min(1, '닉네임은 최소 한 글자 이상이어야 합니다.'),
     password: yup
       .string()
       .matches(
