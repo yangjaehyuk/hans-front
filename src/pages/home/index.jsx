@@ -1,12 +1,19 @@
 import React from 'react';
-import NavBar from '../../components/layouts/main-header';
-import CustomFooter from '../../components/layouts/footer';
+import HomeCarousel from '../../components/home';
+import styled from 'styled-components';
 
+import { Layout } from 'antd';
 const Home = () => {
-  return <div>
-    <NavBar></NavBar>
-    <CustomFooter></CustomFooter>
-  </div>;
+  return (
+    <StyledLayout>
+      <HomeCarousel />
+    </StyledLayout>
+  );
 };
 
 export default Home;
+
+const StyledLayout = styled(Layout)`
+  max-width: 100vw;
+  background-color: white;
+`;
