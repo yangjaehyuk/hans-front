@@ -7,11 +7,19 @@ import SignUp from './pages/sign-up';
 import AuthLayout from './authLayout';
 import { ROUTES } from './constants/routes';
 import SignUpSuccess from './pages/sign-up-success';
+import MainLayout from './mainLayout';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route
+          path={ROUTES.HOME}
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
         <Route
           path={ROUTES.SIGNIN}
           element={
