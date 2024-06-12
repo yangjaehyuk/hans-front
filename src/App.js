@@ -6,6 +6,7 @@ import SignUpAgreement from './pages/sign-up-agreement';
 import SignUp from './pages/sign-up';
 import AuthLayout from './authLayout';
 import { ROUTES } from './constants/routes';
+import SignUpSuccess from './pages/sign-up-success';
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +33,14 @@ function App() {
           element={
             <AuthLayout title="회원 정보 입력">
               <SignUp />
+            </AuthLayout>
+          }
+        ></Route>
+        <Route
+          path={ROUTES.SIGNUP_SUCCESS}
+          element={
+            <AuthLayout title="">
+              <SignUpSuccess />
             </AuthLayout>
           }
         ></Route>
