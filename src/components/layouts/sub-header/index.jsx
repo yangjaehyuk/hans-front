@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 20vh;
+  top: 5vh;
 `;
 
 const TitleContainer = styled.div`
