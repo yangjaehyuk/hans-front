@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
 
-const NavBar = () => {
+const MainHeader = () => {
   return (
     <Navbar>
       <Logo>HANS</Logo>
@@ -92,4 +92,4 @@ const ProfileImage = styled.div`
   margin-left: 1vw;
 `;
 
-export default NavBar;
+export default MainHeader;
