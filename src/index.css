@@ -107,3 +107,22 @@ video {
 .ant-layout {
   background-color: white;
 }
+
+/*button custom style*/
+.ant-btn-primary:hover {
+  background-color: #000000;
+}
+.ant-btn-primary:active {
+  background-color: #414447;
+}
+.ant-btn-lg {
+  width: 100%;
+}
+.ant-btn-primary[disabled] {
+  background-color: #9199a4;
+  color: white;
+}
+.ant-btn-primary[disabled]:hover {
+  background-color: #9199a4;
+  color: white;
+}
