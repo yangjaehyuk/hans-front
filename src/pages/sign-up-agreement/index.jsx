@@ -1,7 +1,7 @@
 import React from 'react';
-
-const SignInAgreement = () => {
-  return <div>index</div>;
+import SignUpAgreementContainer from '../../components/sign-up-agreement';
+const SignUpAgreement = () => {
+  return <SignUpAgreementContainer />;
 };
 
-export default SignInAgreement;
+export default SignUpAgreement;
