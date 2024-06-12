@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
-import { ValidateSchema } from '../../utils/sign-in/validateSchema';
+import ValidateSchema from '../../utils/sign-in/validateSchema';
 import { message, Layout, Input, Button } from 'antd';
 import { TextBox } from '../../stores/atom/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
