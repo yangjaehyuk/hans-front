@@ -172,3 +172,30 @@ video {
   display: flex;
   align-items: center;
 }
+
+.ant-checkbox-inner {
+  border-color: black !important;
+}
+
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: black !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.ant-checkbox-checked:hover .ant-checkbox-inner {
+  background-color: black;
+  border-color: black;
+}
+
+/* Optional: Change the checkmark color to white for better visibility */
+.ant-checkbox-checked .ant-checkbox-inner::after {
+  border-color: white;
+}
+
+.ant-checkbox-checked:hover .ant-checkbox-inner::after {
+  border-color: white; /* Ensure checkmark color remains white on hover when checked */
+}
