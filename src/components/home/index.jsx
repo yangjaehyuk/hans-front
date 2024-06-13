@@ -36,14 +36,15 @@ CarouselItem.propTypes = {
 
 const StyledCarousel = styled(Carousel)`
   max-width: 100vw;
+  margin: 0 auto;
   max-height: 80vh;
   overflow: hidden;
 `;
 
 const StyledImage = styled.img`
   width: 100vw;
-  height: 80vh;
-  object-fit: fill;
+  max-height: 80vh;
+  object-fit: cover;
 `;
 
 export default HomeCarousel;
