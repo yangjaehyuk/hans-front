@@ -6,4 +6,6 @@ export const ROUTES = {
   HOME: '/',
   DETAIL: '/detail/:postId',
   SEARCH: '/search',
+  STYLE: '/style',
+  POST: '/post',
 };
