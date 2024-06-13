@@ -10,10 +10,20 @@ import Detail from './pages/detail';
 import AuthLayout from './authLayout';
 import MainLayout from './mainLayout';
 import Search from './pages/search';
+import Style from './pages/style';
+import Post from './pages/post';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path={ROUTES.POST}
+          element={
+            <MainLayout>
+              <Post />
+            </MainLayout>
+          }
+        ></Route>
         <Route
           path={ROUTES.HOME}
           element={
@@ -70,6 +80,14 @@ function App() {
             </MainLayout>
           }
         />
+        <Route
+          path={ROUTES.STYLE}
+          element={
+            <MainLayout>
+              <Style />
+            </MainLayout>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
