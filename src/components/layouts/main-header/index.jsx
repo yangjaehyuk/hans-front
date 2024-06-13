@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
-import SearchContainer from '../../search';
+import { SearchContainer } from '../../search';
 import React, { useState } from 'react';
 import { Input, Spin, message } from 'antd';
 import { useCustomNavigate } from '../../../hooks';
