@@ -4,6 +4,6 @@ export const ROUTES = {
   SIGNUP: '/signup',
   SIGNUP_SUCCESS: '/signup/success',
   HOME: '/',
-  DETAIL: '/detail/:postId', // 이 부분을 추가합니다.
+  DETAIL: '/detail/:postId',
   SEARCH: '/search',
 };
