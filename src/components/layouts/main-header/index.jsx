@@ -54,7 +54,13 @@ const MainHeader = () => {
 
   return (
     <Navbar>
-      <Logo>HANS</Logo>
+      <Logo
+        onClick={() => {
+          handleChangeUrl('/');
+        }}
+      >
+        HANS
+      </Logo>
       <NavLinks>
         <NavLink href="/">Home</NavLink>
         <NavLink href="style">Style</NavLink>
@@ -123,6 +129,7 @@ const Logo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const NavLinks = styled.div`
