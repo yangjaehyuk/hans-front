@@ -1,11 +1,12 @@
 import React from 'react';
+import { ROUTES } from './constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import SignIn from './pages/sign-in';
 import SignUpAgreement from './pages/sign-up-agreement';
 import SignUp from './pages/sign-up';
 import SignUpSuccess from './pages/sign-up-success';
-import Detail from './pages/detail'; // Detail 페이지 임포트
+import Detail from './pages/detail';
 import AuthLayout from './authLayout';
 import MainLayout from './mainLayout';
 import Search from './pages/search';
