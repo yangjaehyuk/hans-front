@@ -40,7 +40,6 @@ const SearchPagination = ({ arr = [], pageSize = 8 }) => {
 
   const fetchDataForPage = (page) => {
     console.log(`Fetching data for page ${page}`);
-    // Here you could fetch data from an API based on the page number
   };
 
   useEffect(() => {
