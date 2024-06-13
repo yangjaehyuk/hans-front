@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
-
 const MainHeader = () => {
   return (
     <Navbar>
@@ -16,7 +15,6 @@ const MainHeader = () => {
         <StyledLogoutIcon />
         <ProfileImage>
           <span role="img" aria-label="user">
-            👤
           </span>
         </ProfileImage>
         <span>yangjaehyuk_</span>
@@ -24,10 +22,8 @@ const MainHeader = () => {
     </Navbar>
   );
 };
-
 const Navbar = styled.div`
   width: 100vw;
-  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,41 +34,33 @@ const Navbar = styled.div`
   left: 50%;
   transform: translateX(-50%);
 `;
-
 const Logo = styled.div`
   flex: 1;
   font-size: 4vh;
   font-weight: bold;
-
   display: flex;
   justify-content: center;
-
   align-items: center;
 `;
-
 const NavLinks = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   gap: 3vw;
 `;
-
 const NavLink = styled.a`
   text-decoration: none;
   color: black;
   font-size: 2.2vh;
 `;
-
 const StyledSearchIcon = styled(SearchOutlined)`
   font-size: 3vh;
   margin-right: 0.5vw;
 `;
-
 const StyledLogoutIcon = styled(LogoutOutlined)`
   font-size: 3vh;
   margin-right: 1vw;
 `;
-
 const Profile = styled.div`
   flex: 1;
   display: flex;
@@ -80,16 +68,14 @@ const Profile = styled.div`
   justify-content: center;
   gap: 0.5vw;
 `;
-
 const ProfileImage = styled.div`
   width: 4vh;
   height: 4vh;
   border-radius: 50%;
-  background-color: #d8d8d8;
+  background-color: #D8D8D8;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 1vw;
 `;
-
 export default MainHeader;
