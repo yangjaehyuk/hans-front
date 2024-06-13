@@ -2,46 +2,49 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { HeartOutlined } from '@ant-design/icons';
 
 const DetailContainer = styled.div`
-  padding: 20px;
-`;
-
-const PostHeader = styled.div`
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const PostTitle = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-`;
-
-const PostContent = styled.div`
-  margin-bottom: 20px;
-  text-align: center;
-  border: 1px solid #ddd; /* 테두리 추가 */
-  padding: 20px; /* 내용과 테두리 사이에 여백 추가 */
-`;
-
-const PostImage = styled.img`
-  max-width: 100%;  // 이미지의 최대 너비를 100%로 설정
-  height: 50vh;   // 이미지의 높이를 50vh로 설정
-  margin-bottom: 20px;
-`;
-
-const PostFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  border: 1px solid #ddd; /* 테두리 추가 */
-  padding: 20px; /* 내용과 테두리 사이에 여백 추가 */
+  padding: 20px;
+  margin-top: 20px; /* 위와의 간격을 띄우기 위해 추가 */
 `;
 
-const AuthorInfo = styled.div`
-  margin-bottom: 10px;
-  font-size: 16px;
+const PostWrapper = styled.div`
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  width: 600px;
+  margin-bottom: 20px;
+  background-color: white;
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid #dbdbdb;
+`;
+
+const ProfileImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 14px;
+`;
+
+const AuthorName = styled.span`
+  font-weight: bold;
+`;
+
+const PostImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+const PostContent = styled.div`
+  padding: 14px;
 `;
 
 const LikeSection = styled.div`
@@ -50,35 +53,43 @@ const LikeSection = styled.div`
   margin-bottom: 10px;
 `;
 
-const LikeButton = styled.button`
-  margin-right: 10px;
-  padding: 10px 20px;
-  background-color: #ff6f61;
-  color: white;
-  border: none;
-  border-radius: 5px;
+const LikeIcon = styled(HeartOutlined)`
+  margin-right: 8px; /* 아이콘과 텍스트 사이의 간격 추가 */
+  font-size: 24px;
   cursor: pointer;
 
   &:hover {
-    background-color: #ff4f41;
+    color: #ff6f61;
   }
 `;
 
 const LikeCount = styled.span`
-  font-size: 16px;
+  font-weight: bold;
+`;
+
+const PostDescription = styled.div`
+  margin-bottom: 10px;
 `;
 
 const Hashtags = styled.div`
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 16px;
+  color: #00376b;
 `;
 
-const TermsPrivacy = styled.div`
-  font-size: 12px;
-  color: gray;
-  text-align: center;
-  margin-top: 20px;
+const CommentSection = styled.div`
+  border-top: 1px solid #dbdbdb;
+  padding: 14px;
+`;
+
+const Comment = styled.div`
+  margin-bottom: 10px;
+`;
+
+const CommentInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  margin-top: 10px;
 `;
 
 const Detail = () => {
@@ -86,28 +97,35 @@ const Detail = () => {
 
   return (
     <DetailContainer>
-      <PostHeader>
-        <PostTitle>참고 하기 좋은 직장인 여름 코디(^0^)</PostTitle>
-      </PostHeader>
-      <PostContent>
+      <PostWrapper>
+        <PostHeader>
+          <ProfileImage src="https://via.placeholder.com/32" alt="Profile" />
+          <AuthorName>yangjaehyuk_</AuthorName>
+        </PostHeader>
         <PostImage 
           src="https://cdn-img.thehandsome.com/studio/goods/MU/2E/SS/MU2E1WSC017W6O_LB_W01.jpg?rs=684X1032" 
           alt="Summer Office Fashion" 
         />
-        <p>@@ 이렇게 입으면 오땡?</p>
-        <p>참고 하기 좋은 직장인 여름 코디(^0^)</p>
-        <p>@@ 이렇게 입으면 오땡?</p>
-      </PostContent>
-      <PostFooter>
-        <AuthorInfo>작성자: yangjaehyuk_</AuthorInfo>
-        <LikeSection>
-          <LikeButton>좋아요</LikeButton>
-          <LikeCount>좋아요 100개</LikeCount>
-        </LikeSection>
-        <Hashtags>
-          <p>#여름코디 #여자코디 #출근룩 #직장인코디 #직장인룩 #직딩룩</p>
-        </Hashtags>
-      </PostFooter>
+        <PostContent>
+          <LikeSection>
+            <LikeIcon />
+            <LikeCount>좋아요 100개</LikeCount>
+          </LikeSection>
+          <PostDescription>
+            <strong>yangjaehyuk_ </strong>참고 하기 좋은 직장인 여름 코디(^0^)
+          </PostDescription>
+          <Hashtags>#여름코디 #여자코디 #출근룩 #직장인코디 #직장인룩 #직딩룩</Hashtags>
+        </PostContent>
+        <CommentSection>
+          <Comment>
+            <strong>user1 </strong>좋은 정보 감사합니다!
+          </Comment>
+          <Comment>
+            <strong>user2 </strong>정말 유용해요!
+          </Comment>
+          <CommentInput type="text" placeholder="댓글을 입력하세요..." />
+        </CommentSection>
+      </PostWrapper>
     </DetailContainer>
   );
 };
