@@ -8,6 +8,7 @@ import AuthLayout from './authLayout';
 import { ROUTES } from './constants/routes';
 import SignUpSuccess from './pages/sign-up-success';
 import MainLayout from './mainLayout';
+import Search from './pages/search';
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,14 @@ function App() {
             </MainLayout>
           }
         />
+        <Route
+          path={`${ROUTES.SEARCH}/:query`}
+          element={
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          }
+        ></Route>
         <Route
           path={ROUTES.SIGNIN}
           element={
