@@ -24,13 +24,13 @@ const MainLayout = ({ children }) => {
 };
 
 const StyledLayout = styled(Layout)`
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 `;
 
 const StyledHeader = styled(Header)`
   padding: 0;
+  width: 100% !important;
 `;
 
 const ContentWrapper = styled.div`
