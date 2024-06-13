@@ -23,6 +23,7 @@ const DetailContainer = styled.div`
   align-items: center;
   padding: 20px;
   margin-top: 20px; /* 위와의 간격을 띄우기 위해 추가 */
+  line-height: 1.6; /* 기본 줄 간격 설정 */
 `;
 
 const PostWrapper = styled.div`
@@ -35,7 +36,6 @@ const PostWrapper = styled.div`
   overflow: hidden; /* 자식 요소의 테두리 반경을 부모에 맞추기 위해 추가 */
 `;
 
-
 const PostImageWrapper = styled.div`
   width: 60%; /* 이미지 영역을 60%로 설정 */
   border-right: 2px solid #dbdbdb; /* 내부 구분을 위한 테두리 */
@@ -46,6 +46,8 @@ const PostContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 0 10px 10px 0; /* 내용 영역에 둥근 테두리 적용 */
+  overflow: hidden;
+  word-wrap: break-word;
 `;
 
 const PostHeader = styled.div`
@@ -64,11 +66,15 @@ const ProfileImage = styled.img`
 
 const AuthorName = styled.span`
   font-weight: bold;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* 공백을 유지하면서 줄바꿈 */
 `;
 
 const ReplyName = styled.span`
-    font-weight: bold;
-`
+  font-weight: bold;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* 공백을 유지하면서 줄바꿈 */
+`;
 
 const PostImage = styled.img`
   width: 100%;
@@ -81,11 +87,16 @@ const PostContent = styled.div`
   border-bottom: 1px solid #dbdbdb; /* 내부 구분을 위한 테두리 */
 `;
 
+const LikeSectionDivider = styled.div`
+  border-top: 1px solid #dbdbdb; /* 줄 추가 */
+  margin: 10px 0; /* 줄 위아래 간격 추가 */
+`;
+
 const LikeSection = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  margin-top: 10px; /* LikeSection 위의 간격 추가 */
+  margin-top: 20px; /* LikeSection 위의 간격 추가 */
 `;
 
 const LikeIcon = styled(HeartOutlined)`
@@ -104,20 +115,36 @@ const LikeCount = styled.span`
 
 const PostDescription = styled.div`
   margin-bottom: 10px;
+  line-height: 1.6; /* 줄 간격 설정 */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* 공백을 유지하면서 줄바꿈 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Hashtags = styled.div`
   color: #00376b;
+  line-height: 1.6; /* 줄 간격 설정 */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* 공백을 유지하면서 줄바꿈 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const CommentSection = styled.div`
   border-top: 1px solid #dbdbdb;
   padding: 14px;
   flex-grow: 1; /* CommentSection이 나머지 공간을 채우도록 설정 */
+  line-height: 1.6; /* 줄 간격 설정 */
 `;
 
 const Comment = styled.div`
   margin-bottom: 10px;
+  line-height: 1.6; /* 줄 간격 설정 */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* 공백을 유지하면서 줄바꿈 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const CommentInput = styled.input`
@@ -129,7 +156,7 @@ const CommentInput = styled.input`
 `;
 
 const AdditionalImagesContainer = styled.div`
-  margin-bottom: 30px; /* AdditionalImagesContainer 아래의 간격 추가 */
+  margin-bottom: 70px; /* AdditionalImagesContainer 아래의 간격 추가 */
 `;
 
 const AdditionalImagesTitle = styled.h3`
@@ -179,7 +206,7 @@ const Detail = () => {
           </PostHeader>
           <PostContent>
             <AdditionalImagesContainer>
-              <AdditionalImagesTitle>참고한 코디</AdditionalImagesTitle>
+              <AdditionalImagesTitle>@상품 정보</AdditionalImagesTitle>
               <Slider {...sliderSettings}>
                 {additionalImages.map((src, index) => (
                   <div key={index}>
@@ -188,8 +215,7 @@ const Detail = () => {
                 ))}
               </Slider>
             </AdditionalImagesContainer>
-          </PostContent>
-          <PostContent>
+            <LikeSectionDivider /> {/* 줄 추가 */}
             <LikeSection>
               <LikeIcon />
               <LikeCount>좋아요 100개</LikeCount>
@@ -201,7 +227,7 @@ const Detail = () => {
           </PostContent>
           <CommentSection>
             <Comment>
-              <ReplyName>user1 </ReplyName>좋은 정보 감사합니다! 좋은 정보 감사합니다!좋은 정보 감사합니다!좋은 정보 감사합니다!좋은 정보 감사합니다!
+              <ReplyName>user1 </ReplyName>좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다!
             </Comment>
             <Comment>
               <ReplyName>user2 </ReplyName>정말 유용해요!
