@@ -422,12 +422,10 @@ const StyledContent = styled(Layout.Content)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  gap: 16px;
-  position: absolute;
-  top: 50vh;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  gap: 52px;
+  height: 660px;
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
 const FormContainer = styled.form`

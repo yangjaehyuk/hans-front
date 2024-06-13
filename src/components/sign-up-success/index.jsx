@@ -7,31 +7,24 @@ import { colors } from '../../constants/colors';
 const SignUpSuccessContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   return (
-    <StyledLayout>
-      <StyledContent>
-        <TextBox
-          typography="h3"
-          color={'black900'}
-          textAlign="center"
-          fontWeight={'500'}
-          cursor="default"
-        >
-          회원가입이 완료되었습니다!
+    <StyledContent>
+      <TextBox
+        typography="h3"
+        color={'black900'}
+        textAlign="center"
+        fontWeight={'500'}
+        cursor="default"
+      >
+        회원가입이 완료되었습니다!
+      </TextBox>
+      <StyledButton onClick={() => handleChangeUrl('/')} type="primary">
+        <TextBox typography="h5" fontWeight={'700'} textAlign="center">
+          홈 화면 가기
         </TextBox>
-        <StyledButton onClick={() => handleChangeUrl('/')} type="primary">
-          <TextBox typography="h5" fontWeight={'700'} textAlign="center">
-            홈 화면 가기
-          </TextBox>
-        </StyledButton>
-      </StyledContent>
-    </StyledLayout>
+      </StyledButton>
+    </StyledContent>
   );
 };
-
-const StyledLayout = styled(Layout)`
-  max-width: 100vw;
-  background-color: white;
-`;
 
 const StyledContent = styled(Layout.Content)`
   display: flex;

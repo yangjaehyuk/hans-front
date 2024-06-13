@@ -1,4 +1,4 @@
-import { Button, Checkbox } from 'antd';
+import { Button, Checkbox, Layout } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
@@ -61,113 +61,126 @@ const SignUpAgreementContainer = () => {
   };
 
   return (
-    <Wrapper>
-      <Container>
-        <MainContainer>
-          <CheckBoxContainer>
-            <CheckBoxInner>
-              <Checkbox
-                onChange={handleAllCheck}
-                id="all"
-                checked={allChecked}
-              />
-              <TextInner>
-                <label htmlFor="all">
-                  <TextBox
-                    typography="h5"
-                    color="black900"
-                    textAlign="center"
-                    fontWeight={'700'}
-                  >
-                    모두 동의
-                  </TextBox>
-                </label>
+    <StyledContent>
+      <Wrapper>
+        <Container>
+          <MainContainer>
+            <CheckBoxContainer>
+              <CheckBoxInner>
+                <Checkbox
+                  onChange={handleAllCheck}
+                  id="all"
+                  checked={allChecked}
+                />
+                <TextInner>
+                  <label htmlFor="all">
+                    <TextBox
+                      typography="h5"
+                      color="black900"
+                      textAlign="center"
+                      fontWeight={'700'}
+                    >
+                      모두 동의
+                    </TextBox>
+                  </label>
 
-                <MenuContainer>
-                  <SubTextContainer>
-                    <TextBox
-                      typography="body5"
-                      color="black900"
-                      cursor="default"
-                      fontWeight={'400'}
-                    >
-                      • 전체 동의는 필수 및 선택 항목에 대한 동의를 포함합니다.
-                    </TextBox>
-                  </SubTextContainer>
-                  <SubTextContainer>
-                    <TextBox
-                      typography="body5"
-                      color="black900"
-                      cursor="default"
-                      fontWeight={'400'}
-                    >
-                      • 선택 항목에 동의하지 않아도 서비스 이용이 가능합니다.
-                    </TextBox>
-                  </SubTextContainer>
-                </MenuContainer>
-              </TextInner>
-            </CheckBoxInner>
-            {data.map((data) => (
-              <React.Fragment key={data.id}>
-                <CheckBoxSelectiveInner>
-                  <Checkbox
-                    onChange={(e) =>
-                      handleSingleCheck(e.target.checked, data.id)
-                    }
-                    checked={isChecked.includes(data.id)}
-                    id={`${data.id}`}
-                  />
-                  <TextInner>
-                    <label htmlFor={`${data.id}`}>
+                  <MenuContainer>
+                    <SubTextContainer>
                       <TextBox
-                        typography="body3"
-                        color="primary"
-                        textAlign="center"
-                        fontWeight={'700'}
-                      >
-                        {data.condition}
-                      </TextBox>
-                      <TextBox
-                        typography="body3"
+                        typography="body5"
                         color="black900"
-                        textAlign="center"
-                        fontWeight={'500'}
+                        cursor="default"
+                        fontWeight={'400'}
                       >
-                        {' '}
-                        {data.title}
+                        • 전체 동의는 필수 및 선택 항목에 대한 동의를
+                        포함합니다.
                       </TextBox>
-                    </label>
-                  </TextInner>
-                </CheckBoxSelectiveInner>
-              </React.Fragment>
-            ))}
-          </CheckBoxContainer>
-          <ButtonContainer>
-            <StyledPrevButton onClick={() => handleChangeUrl('/signin')}>
-              <TextBox
-                typography="h5"
-                fontWeight={'700'}
-                textAlign="center"
-                color="primary"
+                    </SubTextContainer>
+                    <SubTextContainer>
+                      <TextBox
+                        typography="body5"
+                        color="black900"
+                        cursor="default"
+                        fontWeight={'400'}
+                      >
+                        • 선택 항목에 동의하지 않아도 서비스 이용이 가능합니다.
+                      </TextBox>
+                    </SubTextContainer>
+                  </MenuContainer>
+                </TextInner>
+              </CheckBoxInner>
+              {data.map((data) => (
+                <React.Fragment key={data.id}>
+                  <CheckBoxSelectiveInner>
+                    <Checkbox
+                      onChange={(e) =>
+                        handleSingleCheck(e.target.checked, data.id)
+                      }
+                      checked={isChecked.includes(data.id)}
+                      id={`${data.id}`}
+                    />
+                    <TextInner>
+                      <label htmlFor={`${data.id}`}>
+                        <TextBox
+                          typography="body3"
+                          color="primary"
+                          textAlign="center"
+                          fontWeight={'700'}
+                        >
+                          {data.condition}
+                        </TextBox>
+                        <TextBox
+                          typography="body3"
+                          color="black900"
+                          textAlign="center"
+                          fontWeight={'500'}
+                        >
+                          {' '}
+                          {data.title}
+                        </TextBox>
+                      </label>
+                    </TextInner>
+                  </CheckBoxSelectiveInner>
+                </React.Fragment>
+              ))}
+            </CheckBoxContainer>
+            <ButtonContainer>
+              <StyledPrevButton onClick={() => handleChangeUrl('/signin')}>
+                <TextBox
+                  typography="h5"
+                  fontWeight={'700'}
+                  textAlign="center"
+                  color="primary"
+                >
+                  이전
+                </TextBox>
+              </StyledPrevButton>
+              <StyledNextButton
+                onClick={() => handleChangeUrl('/signup')}
+                type="primary"
+                disabled={isDisabled}
               >
-                이전
-              </TextBox>
-            </StyledPrevButton>
-            <StyledNextButton
-              onClick={() => handleChangeUrl('/signup')}
-              type="primary"
-              disabled={isDisabled}
-            >
-              <TextBox typography="h5" fontWeight={'700'} textAlign="center">
-                다음
-              </TextBox>
-            </StyledNextButton>
-          </ButtonContainer>
-        </MainContainer>
-      </Container>
-    </Wrapper>
+                <TextBox typography="h5" fontWeight={'700'} textAlign="center">
+                  다음
+                </TextBox>
+              </StyledNextButton>
+            </ButtonContainer>
+          </MainContainer>
+        </Container>
+      </Wrapper>
+    </StyledContent>
   );
 };
+const StyledContent = styled(Layout.Content)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 52px;
+  height: 660px;
+  padding: 20px;
+  box-sizing: border-box;
+`;
 
 const Wrapper = styled.div`
   position: absolute;

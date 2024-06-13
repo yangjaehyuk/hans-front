@@ -7,6 +7,7 @@ import { TextBox } from '../../stores/atom/text-box';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { colors } from '../../constants/colors';
 import { useCustomNavigate } from '../../hooks';
+
 const SignInContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const formik = useFormik({
@@ -46,84 +47,94 @@ const SignInContainer = () => {
   };
 
   return (
-    <StyledContent>
-      <Inner>
-        <LoginContainer>
-          <FormContainer onSubmit={handleSubmit}>
-            <StyledInput
-              size="large"
-              placeholder="이메일 입력"
-              type="text"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {touched.email && errors.email && (
-              <TextBox typography="body4" color="error">
-                {errors.email}
-              </TextBox>
-            )}
-            <StyledPassword
-              size="large"
-              placeholder="비밀번호 입력"
-              iconRender={(visible) =>
-                visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
-              }
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="off"
-            />
-            {touched.password && errors.password && (
-              <TextBox typography="body4" color="error">
-                {errors.password}
-              </TextBox>
-            )}
-            <ButtonContainer>
-              <LoginButton
-                htmlType="submit"
-                type="primary"
-                onClick={handleOnclick}
-              >
-                <TextBox
-                  typography="h5"
-                  color={colors.black900}
-                  fontWeight={'700'}
-                  textAlign="center"
-                >
-                  로그인
+    <FullHeightLayout>
+      <StyledContent>
+        <Inner>
+          <LoginContainer>
+            <FormContainer onSubmit={handleSubmit}>
+              <StyledInput
+                size="large"
+                placeholder="이메일 입력"
+                type="text"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.email && errors.email && (
+                <TextBox typography="body4" color="error">
+                  {errors.email}
                 </TextBox>
-              </LoginButton>
-            </ButtonContainer>
-          </FormContainer>
-        </LoginContainer>
-      </Inner>
-      <SignUpContainer>
-        <SignUpButton onClick={() => handleChangeUrl('/signup/agreement')}>
-          <TextBox
-            typography="h5"
-            color="white"
-            fontWeight={'700'}
-            textAlign="center"
-          >
-            회원가입
-          </TextBox>
-        </SignUpButton>
-      </SignUpContainer>
-    </StyledContent>
+              )}
+              <StyledPassword
+                size="large"
+                placeholder="비밀번호 입력"
+                iconRender={(visible) =>
+                  visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
+                }
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="off"
+              />
+              {touched.password && errors.password && (
+                <TextBox typography="body4" color="error">
+                  {errors.password}
+                </TextBox>
+              )}
+              <ButtonContainer>
+                <LoginButton
+                  htmlType="submit"
+                  type="primary"
+                  onClick={handleOnclick}
+                >
+                  <TextBox
+                    typography="h5"
+                    color={colors.black900}
+                    fontWeight={'700'}
+                    textAlign="center"
+                  >
+                    로그인
+                  </TextBox>
+                </LoginButton>
+              </ButtonContainer>
+            </FormContainer>
+          </LoginContainer>
+        </Inner>
+        <SignUpContainer>
+          <SignUpButton onClick={() => handleChangeUrl('/signup/agreement')}>
+            <TextBox
+              typography="h5"
+              color="white"
+              fontWeight={'700'}
+              textAlign="center"
+            >
+              회원가입
+            </TextBox>
+          </SignUpButton>
+        </SignUpContainer>
+      </StyledContent>
+    </FullHeightLayout>
   );
 };
+
+const FullHeightLayout = styled(Layout)`
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledContent = styled(Layout.Content)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  height: 666px;
   gap: 52px;
+  height: 660px;
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
 const Inner = styled.div`
@@ -154,7 +165,7 @@ const StyledInput = styled(Input)`
   border: 1px solid #d9d9d9;
 `;
 
-const StyledPassword = styled(StyledInput.Password)`
+const StyledPassword = styled(Input.Password)`
   height: 54px;
   border-radius: 2px;
   border: 1px solid #d9d9d9;

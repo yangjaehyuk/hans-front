@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 
 const AuthLayout = ({ title, children }) => {
   return (
-    <Layout>
+    <StyledLayout>
       <SubHeader title={title} />
       <StyledContent>{children}</StyledContent>
       <CustomFooter />
-    </Layout>
+    </StyledLayout>
   );
 };
 
@@ -21,6 +21,10 @@ AuthLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+const StyledLayout = styled(Layout)`
+  max-height: 100vh;
+  overflow-y: hidden;
+`;
 const StyledContent = styled(Layout.Content)`
   max-width: 1280px;
   margin: 0 auto;
