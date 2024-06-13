@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Input, Spin, message } from 'antd';
 import { useCustomNavigate } from '../../../hooks';
 import { TextBox } from '../../../stores/atom/text-box';
+import SignOutContainer from '../../sign-out';
 const { Search } = Input;
 
 const MainHeader = () => {
@@ -12,7 +13,7 @@ const MainHeader = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { handleChangeUrl } = useCustomNavigate();
   const [inputDisabled, setInputDisabled] = useState(false);
-
+  const showMessage = SignOutContainer();
   const onSearch = (value) => {
     console.log(value);
 
@@ -86,7 +87,11 @@ const MainHeader = () => {
             }
           />
         </>
-        <StyledLogoutIcon />
+        <StyledLogoutIcon
+          onClick={() => {
+            showMessage();
+          }}
+        />
         <ProfileImage>
           <span role="img" aria-label="user">
             👤
