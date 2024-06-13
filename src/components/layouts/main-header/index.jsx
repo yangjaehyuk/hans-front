@@ -1,18 +1,91 @@
-import React from 'react';
 import styled from 'styled-components';
 import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
+import SearchContainer from '../../search';
+import React, { useState } from 'react';
+import { Input, Spin, message } from 'antd';
+import { useCustomNavigate } from '../../../hooks';
+import { TextBox } from '../../../stores/atom/text-box';
+const { Search } = Input;
 
 const MainHeader = () => {
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const { handleChangeUrl } = useCustomNavigate();
+  const [inputDisabled, setInputDisabled] = useState(false);
+
+  const onSearch = (value) => {
+    console.log(value);
+
+    // test
+    if (value.length > 0) {
+      setConfirmLoading(true);
+      setTimeout(() => {
+        setOpen(false);
+        setConfirmLoading(false);
+        handleChangeUrl(`/search/${value}`);
+      }, 2000);
+    } else if (value.length === 0) {
+      setInputDisabled(true);
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            검색어를 입력해주세요.
+          </TextBox>
+        ),
+        duration: 2,
+        style: {
+          width: '346px',
+          height: '41px',
+        },
+      });
+      setTimeout(() => {
+        setInputDisabled(false);
+        setOpen(false);
+      }, 1000);
+    }
+  };
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   return (
     <Navbar>
       <Logo>HANS</Logo>
       <NavLinks>
-        <NavLink href="">Home</NavLink>
+        <NavLink href="/">Home</NavLink>
         <NavLink href="style">Style</NavLink>
         <NavLink href="mypage">My Page</NavLink>
       </NavLinks>
       <Profile>
-        <StyledSearchIcon />
+        <>
+          <StyledSearchIcon onClick={showModal} />
+          <SearchContainer
+            open={open}
+            onSearch={onSearch}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+            modalText={
+              <>
+                {!confirmLoading && (
+                  <StyledSearch
+                    placeholder="ex) 여름"
+                    allowClear
+                    onSearch={onSearch}
+                    disabled={inputDisabled}
+                  />
+                )}
+                {confirmLoading && (
+                  <LoadingContainer>
+                    <BlackSpin size="large" />
+                  </LoadingContainer>
+                )}
+              </>
+            }
+          />
+        </>
         <StyledLogoutIcon />
         <ProfileImage>
           <span role="img" aria-label="user">
@@ -42,10 +115,8 @@ const Logo = styled.div`
   flex: 1;
   font-size: 4vh;
   font-weight: bold;
-
   display: flex;
   justify-content: center;
-
   align-items: center;
 `;
 
@@ -89,6 +160,32 @@ const ProfileImage = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 1vw;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+
+const BlackSpin = styled(Spin)`
+  .ant-spin-dot {
+    i {
+      background: black; // Change background color to black
+    }
+  }
+`;
+
+const StyledSearch = styled(Input.Search)`
+  width: 100%;
+  .ant-input-outlined: hover, .ant-input-outlined: focus-within {
+    border-color: black !important;
+  }
+
+  .anticon-search: hover {
+    border-color: black !important;
+  }
 `;
 
 export default MainHeader;
