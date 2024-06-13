@@ -25,7 +25,6 @@ const MainLayout = ({ children }) => {
 
 const StyledLayout = styled(Layout)`
   min-height: 100vh;
-  position: relative;
 `;
 
 const StyledContent = styled.div`

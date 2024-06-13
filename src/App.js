@@ -4,10 +4,12 @@ import Home from './pages/home';
 import SignIn from './pages/sign-in';
 import SignUpAgreement from './pages/sign-up-agreement';
 import SignUp from './pages/sign-up';
-import AuthLayout from './authLayout';
-import { ROUTES } from './constants/routes';
 import SignUpSuccess from './pages/sign-up-success';
+import Detail from './pages/detail'; // Detail 페이지 임포트
+import AuthLayout from './authLayout';
 import MainLayout from './mainLayout';
+import { ROUTES } from './constants/routes';
+
 function App() {
   return (
     <BrowserRouter>
@@ -35,7 +37,7 @@ function App() {
               <SignUpAgreement />
             </AuthLayout>
           }
-        ></Route>
+        />
         <Route
           path={ROUTES.SIGNUP}
           element={
@@ -43,7 +45,7 @@ function App() {
               <SignUp />
             </AuthLayout>
           }
-        ></Route>
+        />
         <Route
           path={ROUTES.SIGNUP_SUCCESS}
           element={
@@ -51,7 +53,15 @@ function App() {
               <SignUpSuccess />
             </AuthLayout>
           }
-        ></Route>
+        />
+        <Route
+          path={ROUTES.DETAIL.replace(':postId', ':postId')} // ':postId'를 사용하는 동적 경로 설정
+          element={
+            <MainLayout>
+              <Detail />
+            </MainLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
