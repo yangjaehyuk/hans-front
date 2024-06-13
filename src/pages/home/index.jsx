@@ -165,10 +165,10 @@ const SubContainer = styled.div`
 `;
 
 const InnerContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
   align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Inner = styled.div`
