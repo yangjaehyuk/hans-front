@@ -184,12 +184,18 @@ const BlackSpin = styled(Spin)`
 
 const StyledSearch = styled(Input.Search)`
   width: 100%;
-  .ant-input-outlined: hover, .ant-input-outlined: focus-within {
+  .ant-input-outlined:hover,
+  .ant-input-outlined:focus-within {
     border-color: black !important;
   }
 
-  .anticon-search: hover {
+  .ant-input-group-addon:last-child .ant-input-search-button:hover {
     border-color: black !important;
+  }
+
+  .css-dev-only-do-not-override-3rel02 .ant-btn.ant-btn-icon-only .anticon {
+    font-size: 16px;
+    color: black;
   }
 `;
 
