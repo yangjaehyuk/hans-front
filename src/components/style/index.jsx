@@ -2,16 +2,34 @@ import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Radio } from 'antd';
 import PropTypes from 'prop-types';
+
 const StyleContainer = ({ first, second, third, fourth }) => {
   const [selectedValue, setSelectedValue] = useState('a');
+  const [selectedText, setSelectedText] = useState(first); // Initialize with the default first button text
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
+    switch (e.target.value) {
+      case 'a':
+        setSelectedText(first);
+        break;
+      case 'b':
+        setSelectedText(second);
+        break;
+      case 'c':
+        setSelectedText(third);
+        break;
+      case 'd':
+        setSelectedText(fourth);
+        break;
+      default:
+        setSelectedText(''); // Handle unexpected cases
+    }
   };
 
   useEffect(() => {
-    console.log(selectedValue);
-  }, [selectedValue]); // selectedValue가 변경될 때마다 useEffect가 호출됨
+    console.log(selectedText); // Log the selected button's inner text
+  }, [selectedText]); // useEffect depends on selectedText changes
 
   return (
     <StyledRadioGroup
@@ -33,6 +51,7 @@ StyleContainer.propTypes = {
   third: PropTypes.string.isRequired,
   fourth: PropTypes.string.isRequired,
 };
+
 const StyledRadioGroup = styled(Radio.Group)`
   display: flex;
   align-items: center;
