@@ -65,10 +65,9 @@ const CustomFooter = () => {
 export default CustomFooter;
 
 const StyledLayout = styled(Layout)`
-  position: absolute;
   bottom: 0;
-  width: 100%;
   background-color: ${colors.midGray};
+  width: 100% !important;
 `;
 
 const Container = styled.div`

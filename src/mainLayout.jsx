@@ -5,40 +5,42 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import CustomFooter from './components/layouts/footer';
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const MainLayout = ({ children }) => {
   return (
     <StyledLayout>
-      <Header>
+      <StyledHeader>
         <MainHeader />
-      </Header>
-      <Content>
-        <StyledContent>{children}</StyledContent>
-      </Content>
-      <Footer>
+      </StyledHeader>
+      <ContentWrapper>
+        <Content>{children}</Content>
+      </ContentWrapper>
+      <StyledFooter>
         <CustomFooter />
-      </Footer>
+      </StyledFooter>
     </StyledLayout>
   );
 };
 
 const StyledLayout = styled(Layout)`
-  min-height: 100vh;
-  position: relative;
+  overflow-x: auto;
+  white-space: nowrap;
 `;
 
-const StyledContent = styled.div`
-  max-width: 100vw;
-  margin: 0 auto;
-  padding-bottom: 10vh;
+const StyledHeader = styled(Header)`
+  padding: 0;
+  width: 100% !important;
 `;
 
-const Footer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+const ContentWrapper = styled.div`
   width: 100%;
+  overflow-x: hidden;
+`;
+
+const StyledFooter = styled(Footer)`
+  width: 100%;
+  padding: 0;
 `;
 
 MainLayout.propTypes = {
