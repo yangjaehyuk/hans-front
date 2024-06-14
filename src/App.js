@@ -12,6 +12,8 @@ import MainLayout from './mainLayout';
 import Search from './pages/search';
 import Style from './pages/style';
 import Post from './pages/post';
+import MyPage from './pages/my-page';
+import Modify from './pages/modify';
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +23,22 @@ function App() {
           element={
             <MainLayout>
               <Post />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path={ROUTES.MODIFY}
+          element={
+            <MainLayout>
+              <Modify />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path={ROUTES.MYPAGE}
+          element={
+            <MainLayout>
+              <MyPage />
             </MainLayout>
           }
         ></Route>
