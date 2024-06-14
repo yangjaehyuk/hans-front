@@ -26,14 +26,7 @@ function App() {
             </MainLayout>
           }
         ></Route>
-        <Route
-          path={ROUTES.MODIFY}
-          element={
-            <MainLayout>
-              <Modify />
-            </MainLayout>
-          }
-        ></Route>
+        <Route path={ROUTES.MODIFY} element={<Modify />}></Route>
         <Route
           path={ROUTES.MYPAGE}
           element={
