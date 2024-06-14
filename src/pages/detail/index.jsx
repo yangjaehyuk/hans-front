@@ -6,7 +6,82 @@ import { HeartOutlined } from '@ant-design/icons';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { TextBox } from '../../stores/atom/text-box';
 
+const dummyData = [{}];
+const Detail = () => {
+  const { postId } = useParams();
+
+  const additionalImages = [
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+  ];
+
+  return (
+    <DetailContainer>
+      <GlobalStyle />
+      <PostWrapper>
+        <PostImageWrapper>
+          <PostImage
+            src="https://cdn-img.thehandsome.com/studio/goods/MU/2E/SS/MU2E1WSC017W6O_LB_W01.jpg?rs=684X1032"
+            alt="Summer Office Fashion"
+          />
+        </PostImageWrapper>
+        <PostContentWrapper>
+          <PostHeader>
+            <ProfileImage src="https://via.placeholder.com/32" alt="Profile" />
+            <TextBox typography="body3" fontWeight={'700'}>
+              yangjaehyuk_
+            </TextBox>
+          </PostHeader>
+          <PostContent>
+            <AdditionalImagesContainer>
+              <TextBox typography="body2" fontWeight={'700'}>
+                Related Products
+              </TextBox>
+              <Slider {...sliderSettings}>
+                {additionalImages.map((src, index) => (
+                  <div key={index}>
+                    <AdditionalImage
+                      src={src}
+                      alt={`Additional ${index + 1}`}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </AdditionalImagesContainer>
+            <LikeSectionDivider /> {/* 줄 추가 */}
+            <LikeSection>
+              <LikeIcon />
+              <LikeCount>좋아요 100개</LikeCount>
+            </LikeSection>
+            <PostDescription>
+              <AuthorName>yangjaehyuk_ </AuthorName>사랑합니다~~~참고 하기 좋은
+              직장인 여름 코디(^0^)
+            </PostDescription>
+            <Hashtags>
+              #여름코디 #여자코디 #출근룩 #직장인코디 #직장인룩 #직딩룩
+            </Hashtags>
+          </PostContent>
+          <CommentSection>
+            <Comment>
+              <ReplyName>user1 </ReplyName>좋은 정보 감사합니다! 좋은 정보
+              감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보
+              감사합니다!
+            </Comment>
+            <Comment>
+              <ReplyName>user2 </ReplyName>정말 유용해요!
+            </Comment>
+            <CommentInput type="text" placeholder="댓글을 입력하세요..." />
+          </CommentSection>
+        </PostContentWrapper>
+      </PostWrapper>
+    </DetailContainer>
+  );
+};
 const GlobalStyle = createGlobalStyle`
   .slick-slide > div {
     margin: 0 10px; /* 사진들 간의 간격을 추가 */
@@ -156,7 +231,7 @@ const CommentInput = styled.input`
 `;
 
 const AdditionalImagesContainer = styled.div`
-  margin-bottom: 70px; /* AdditionalImagesContainer 아래의 간격 추가 */
+  margin-bottom: 10vh;
 `;
 
 const AdditionalImagesTitle = styled.h3`
@@ -177,67 +252,4 @@ const sliderSettings = {
   slidesToScroll: 3,
   centerMode: false,
 };
-
-const Detail = () => {
-  const { postId } = useParams();
-
-  const additionalImages = [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-  ];
-
-  return (
-    <DetailContainer>
-      <GlobalStyle />
-      <PostWrapper>
-        <PostImageWrapper>
-          <PostImage 
-            src="https://cdn-img.thehandsome.com/studio/goods/MU/2E/SS/MU2E1WSC017W6O_LB_W01.jpg?rs=684X1032" 
-            alt="Summer Office Fashion" 
-          />
-        </PostImageWrapper>
-        <PostContentWrapper>
-          <PostHeader>
-            <ProfileImage src="https://via.placeholder.com/32" alt="Profile" />
-            <AuthorName>yangjaehyuk_</AuthorName>
-          </PostHeader>
-          <PostContent>
-            <AdditionalImagesContainer>
-              <AdditionalImagesTitle>@상품 정보</AdditionalImagesTitle>
-              <Slider {...sliderSettings}>
-                {additionalImages.map((src, index) => (
-                  <div key={index}>
-                    <AdditionalImage src={src} alt={`Additional ${index + 1}`} />
-                  </div>
-                ))}
-              </Slider>
-            </AdditionalImagesContainer>
-            <LikeSectionDivider /> {/* 줄 추가 */}
-            <LikeSection>
-              <LikeIcon />
-              <LikeCount>좋아요 100개</LikeCount>
-            </LikeSection>
-            <PostDescription>
-              <AuthorName>yangjaehyuk_ </AuthorName>사랑합니다~~~참고 하기 좋은 직장인 여름 코디(^0^)
-            </PostDescription>
-            <Hashtags>#여름코디 #여자코디 #출근룩 #직장인코디 #직장인룩 #직딩룩</Hashtags>
-          </PostContent>
-          <CommentSection>
-            <Comment>
-              <ReplyName>user1 </ReplyName>좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다! 좋은 정보 감사합니다!
-            </Comment>
-            <Comment>
-              <ReplyName>user2 </ReplyName>정말 유용해요!
-            </Comment>
-            <CommentInput type="text" placeholder="댓글을 입력하세요..." />
-          </CommentSection>
-        </PostContentWrapper>
-      </PostWrapper>
-    </DetailContainer>
-  );
-};
-
 export default Detail;
