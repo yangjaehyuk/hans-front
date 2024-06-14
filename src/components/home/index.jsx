@@ -12,12 +12,10 @@ import image5 from '../../assets/image/carousel4.jpg';
 import image6 from '../../assets/image/carousel6.jpg';
 import image7 from '../../assets/image/carousel7.jpg';
 import image8 from '../../assets/image/carousel8.jpg';
-
 const { Meta } = Card;
 
 const HomeCarousel = () => {
   const [animate, setAnimate] = useState(true);
-
   const handleBeforeChange = () => {
     setAnimate(false);
   };
@@ -36,10 +34,11 @@ const HomeCarousel = () => {
     >
       <CarouselItem
         imgUrl={image1}
-        text1="OBZÉÉ"
-        text2="뉴 시즌"
-        text3="슬리브리스 탑 GIFT를 드려요"
+        text1="ICONIC"
+        text2="OBZÉÉ"
+        text3="오브제가 재해석한 달의 여신 셀레네"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/planshopDetail/20477"
       />
       <CarouselItem
         imgUrl={image3}
@@ -47,6 +46,7 @@ const HomeCarousel = () => {
         text2="With SERI PAK"
         text3="볼마커 GIFT & 2만원 혜택까지"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/planshopDetail/20561"
       />
       <CarouselItem
         imgUrl={image4}
@@ -54,6 +54,7 @@ const HomeCarousel = () => {
         text2="MINE"
         text3="하나만 걸쳐도 우아한 마인 신상품"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/shopList/BR02/10000001"
       />
       <CarouselItem
         imgUrl={image5}
@@ -61,6 +62,7 @@ const HomeCarousel = () => {
         text2="CLASSIC"
         text3="베로니카 비어드 썸머 드롭"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/planshopDetail/19817"
       />
       <CarouselItem
         imgUrl={image6}
@@ -68,6 +70,7 @@ const HomeCarousel = () => {
         text2="Mia Le Journal"
         text3="더한섬닷컴 단독 이벤트까지"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/theMagazineDetail/10019274"
       />
       <CarouselItem
         imgUrl={image7}
@@ -75,6 +78,7 @@ const HomeCarousel = () => {
         text2="Vacation"
         text3="바캉스를 위한 스윔웨어 아그넬"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/planshopDetail/20171"
       />
       <CarouselItem
         imgUrl={image8}
@@ -82,14 +86,15 @@ const HomeCarousel = () => {
         text2="새 계절"
         text3="멋스러운 뉴 시즌을 만나보세요"
         animate={animate}
+        linkedUrl="https://www.thehandsome.com/ko/DP/shopList/BR07/10000001"
       />
     </StyledCarousel>
   );
 };
 
-const CarouselItem = ({ imgUrl, text1, text2, text3, animate }) => {
+const CarouselItem = ({ imgUrl, text1, text2, text3, animate, linkedUrl }) => {
   return (
-    <ItemContainer>
+    <ItemContainer onClick={() => (window.location.href = linkedUrl)}>
       <StyledImage src={imgUrl} alt="Carousel Item" />
       <TextContainer>
         {text1 && (
@@ -136,6 +141,7 @@ CarouselItem.propTypes = {
   text2: PropTypes.string.isRequired,
   text3: PropTypes.string.isRequired,
   animate: PropTypes.bool.isRequired,
+  linkedUrl: PropTypes.string.isRequired,
 };
 
 const StyledCarousel = styled(Carousel)`
@@ -143,6 +149,7 @@ const StyledCarousel = styled(Carousel)`
   margin: 0 auto;
   max-height: 80vh;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const StyledImage = styled.img`
