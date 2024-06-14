@@ -184,10 +184,10 @@ const SignUpContainer = () => {
                     textAlign="center"
                     color={emailDisabled ? 'white' : 'black'}
                     // test
-                    onClick={() => {
-                      setEmailDisabled(true);
-                      setCheckOne(true);
-                    }}
+                    // onClick={() => {
+                    //   setEmailDisabled(true);
+                    //   setCheckOne(true);
+                    // }}
                   >
                     중복확인
                   </TextBox>
@@ -292,10 +292,10 @@ const SignUpContainer = () => {
                     textAlign="center"
                     color={nicknameDisabled ? 'white' : 'primary'}
                     // test
-                    onClick={() => {
-                      setNicknameDisabled(true);
-                      setCheckTwo(true);
-                    }}
+                    // onClick={() => {
+                    //   setNicknameDisabled(true);
+                    //   setCheckTwo(true);
+                    // }}
                   >
                     중복확인
                   </TextBox>
@@ -426,6 +426,7 @@ const StyledContent = styled(Layout.Content)`
   height: 660px;
   padding: 20px;
   box-sizing: border-box;
+  padding-bottom: 10vh;
 `;
 
 const FormContainer = styled.form`
