@@ -6,6 +6,7 @@ import { Input, Spin, message } from 'antd';
 import { useCustomNavigate } from '../../../hooks';
 import { TextBox } from '../../../stores/atom/text-box';
 import SignOutContainer from '../../sign-out';
+import { ROUTES } from '../../../constants/routes';
 const { Search } = Input;
 
 const MainHeader = () => {
@@ -62,9 +63,11 @@ const MainHeader = () => {
         HANS
       </Logo>
       <NavLinks>
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="style">Style</NavLink>
-        <NavLink href="mypage">My Page</NavLink>
+        <NavLink onClick={() => handleChangeUrl(ROUTES.HOME)}>Home</NavLink>
+        <NavLink onClick={() => handleChangeUrl(ROUTES.STYLE)}>Style</NavLink>
+        <NavLink onClick={() => handleChangeUrl(ROUTES.MYPAGE)}>
+          My Page
+        </NavLink>
       </NavLinks>
       <Profile>
         <>
