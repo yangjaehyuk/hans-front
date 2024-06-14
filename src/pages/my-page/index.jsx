@@ -125,7 +125,7 @@ const MyPage = () => {
       </SubContainer>
       <SubContainer>
         <Inner>
-          <div style={{ margin: '0 auto' }}>
+          <div style={{ margin: '0 auto', cursor: 'default' }}>
             <TextBox
               typography="h1"
               fontWeight={'700'}
@@ -138,7 +138,7 @@ const MyPage = () => {
       </SubContainer>
       <SubContainer>
         <Inner>
-          <div style={{ margin: '0 auto' }}>
+          <div style={{ margin: '0 auto', cursor: 'default' }}>
             <TextBox
               typography="h4"
               fontWeight={'400'}
