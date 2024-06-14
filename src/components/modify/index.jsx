@@ -19,7 +19,7 @@ const ModifyContainer = () => {
   const [checkFour, setCheckFour] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [nicknameError, setNicknameError] = useState(false);
-
+  const [uploadedUrl, setUploadedUrl] = useState(''); // State to hold uploaded URL
   const [thumbnail, setThumbnail] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -94,18 +94,31 @@ const ModifyContainer = () => {
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
     formik.setFieldValue('file', file);
-    // test 이걸로 보냄
-    const url = URL.createObjectURL(event.currentTarget.files[0]);
-    console.log(url);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setThumbnail(reader.result);
-        // test
-      };
-      reader.readAsDataURL(file);
+
+    if (file && !errors.file) {
+      // Check if the file type is supported (JPG, JPEG, GIF, PNG)
+      if (
+        ['image/jpeg', 'image/jpg', 'image/gif', 'image/png'].includes(
+          file.type,
+        )
+      ) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const url = URL.createObjectURL(file);
+          console.log(url); // Log the URL when thumbnail is about to be displayed
+          setThumbnail(reader.result); // Set thumbnail image to state
+          setUploadedUrl(url); // Optionally store the URL in state
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.log(
+          '지원하지 않는 파일 형식입니다. JPG, JPEG, GIF, PNG 파일을 업로드하세요.',
+        ); // Log error message for unsupported file types
+        // Optionally, provide user feedback or handle unsupported file types
+      }
     }
   };
+
   return (
     <>
       <StyledLayout>
@@ -133,7 +146,11 @@ const ModifyContainer = () => {
               style={{ display: 'none' }}
             />
             <label htmlFor="file" style={{ cursor: 'pointer' }}>
-              {!errors.file && thumbnail ? (
+              {values.file === undefined ? (
+                <TextBox typography="body4" fontWeight={'400'}>
+                  파일을 업로드 하세요.
+                </TextBox>
+              ) : !errors.file && thumbnail ? (
                 <img
                   src={thumbnail}
                   alt="Thumbnail"
@@ -141,7 +158,7 @@ const ModifyContainer = () => {
                 />
               ) : (
                 <TextBox typography="body4" fontWeight={'400'}>
-                  파일을 업로드 하세요.
+                  {errors.file}
                 </TextBox>
               )}
             </label>
