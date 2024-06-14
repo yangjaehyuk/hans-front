@@ -8,4 +8,6 @@ export const ROUTES = {
   SEARCH: '/search',
   STYLE: '/style',
   POST: '/post',
+  MYPAGE: '/mypage',
+  MODIFY: '/modify',
 };
