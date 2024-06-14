@@ -1,7 +1,7 @@
 import React from 'react';
-
+import ModifyContainer from '../../components/modify';
 const Modify = () => {
-  return <div>index</div>;
+  return <ModifyContainer />;
 };
 
 export default Modify;
