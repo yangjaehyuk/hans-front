@@ -183,7 +183,7 @@ const StyledTextOverlay = styled(motion.div)`
   color: white;
 `;
 
-const HomeCard = ({ imageUrl, title, nickname, url }) => {
+const HomeCard = ({ thumbnail_img_url, title, nickname, postId }) => {
   const { handleChangeUrl } = useCustomNavigate();
 
   return (
@@ -191,8 +191,8 @@ const HomeCard = ({ imageUrl, title, nickname, url }) => {
       <StyledCard
         hoverable
         style={{ width: 240 }}
-        cover={<StyledCardCover alt="example" src={imageUrl} />}
-        onClick={() => handleChangeUrl(url)}
+        cover={<StyledCardCover alt="example" src={thumbnail_img_url} />}
+        onClick={() => handleChangeUrl(postId)}
       >
         <Meta title={title} description={nickname} />
       </StyledCard>
@@ -201,10 +201,10 @@ const HomeCard = ({ imageUrl, title, nickname, url }) => {
 };
 
 HomeCard.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
+  thumbnail_img_url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   nickname: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  postId: PropTypes.number.isRequired,
 };
 
 const CardContainer = styled.div`

@@ -33,7 +33,7 @@ const SearchPagination = ({ arr = [], pageSize = 8 }) => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, arr.length);
   const displayItems = arr.slice(startIndex, endIndex);
-
+  console.log(displayItems);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -52,10 +52,10 @@ const SearchPagination = ({ arr = [], pageSize = 8 }) => {
         {displayItems.map((item, index) => (
           <HomeCard
             key={index}
-            imageUrl={item.imageUrl}
+            thumbnail_img_url={item.thumbnail_img_url}
             title={item.title}
             nickname={item.nickname}
-            url={item.url}
+            postId={item.postId}
           />
         ))}
       </InnerContainer>
