@@ -9,26 +9,6 @@ const ValidateSchema = yup.object().shape({
     .string()
     .matches(/^.{1,}$/, '내용은 최소 한 글자 이상이어야 합니다.')
     .required('내용을 입력하세요.'),
-  hashtags: yup
-    .array()
-    .of(
-      yup
-        .string()
-        .required('해시태그를 등록하세요.')
-        .matches(/^.{1,}$/, '해시태그는 최소 한 글자 이상이어야 합니다.'),
-    )
-    .min(1, '최소 한 개 이상의 해시태그를 등록하세요.')
-    .required('해시태그를 등록하세요.'),
-  products: yup
-    .array()
-    .of(
-      yup
-        .string()
-        .required('제품을 검색 하세요.')
-        .matches(/^.{1,}$/, '제품은 최소 한 글자 이상이어야 합니다.'),
-    )
-    .min(1, '최소 한 개 이상의 제품을 등록하세요.')
-    .required('제품을 검색 하세요.'),
   files: yup
     .array()
     .min(1, '최소 1개의 이미지를 업로드해주세요.')
