@@ -8,8 +8,8 @@ const ValidateSchema = () => {
       .required('이메일을 입력하세요.'),
     nickname: yup
       .string()
-      .required('닉네임을 입력하세요.')
-      .min(1, '닉네임은 최소 한 글자 이상이어야 합니다.'),
+      .matches(/^.{1,}$/, '닉네임은 최소 한 글자 이상이어야 합니다.')
+      .required('닉네임을 입력하세요.'),
     password: yup
       .string()
       .matches(

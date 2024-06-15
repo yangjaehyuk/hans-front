@@ -3,8 +3,9 @@ import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
 
+import PropTypes from 'prop-types';
 import { colors } from '../../constants/colors';
-const SignUpSuccessContainer = () => {
+const ErrorContainer = ({ title, content }) => {
   const { handleChangeUrl } = useCustomNavigate();
   return (
     <StyledContent>
@@ -15,15 +16,20 @@ const SignUpSuccessContainer = () => {
         fontWeight={'500'}
         cursor="default"
       >
-        회원가입이 완료되었습니다!
+        {title}
       </TextBox>
       <StyledButton onClick={() => handleChangeUrl('/')} type="primary">
         <TextBox typography="h5" fontWeight={'700'} textAlign="center">
-          홈 화면 가기
+          {content}
         </TextBox>
       </StyledButton>
     </StyledContent>
   );
+};
+
+ErrorContainer.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 const StyledContent = styled(Layout.Content)`
@@ -54,4 +60,4 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export default SignUpSuccessContainer;
+export default ErrorContainer;

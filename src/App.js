@@ -1,19 +1,58 @@
 import React from 'react';
+import { ROUTES } from './constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import SignIn from './pages/sign-in';
 import SignUpAgreement from './pages/sign-up-agreement';
 import SignUp from './pages/sign-up';
 import SignUpSuccess from './pages/sign-up-success';
-import Detail from './pages/detail'; // Detail 페이지 임포트
+import Detail from './pages/detail';
 import AuthLayout from './authLayout';
 import MainLayout from './mainLayout';
-import { ROUTES } from './constants/routes';
-
+import Search from './pages/search';
+import Style from './pages/style';
+import Post from './pages/post';
+import MyPage from './pages/my-page';
+import Modify from './pages/modify';
+import Edit from './pages/edit';
+import Error404 from './pages/errors/error404';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path={ROUTES.EDIT}
+          element={
+            <MainLayout>
+              <Edit />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path={ROUTES.ERROR_404}
+          element={
+            <MainLayout>
+              <Error404 />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path={ROUTES.POST}
+          element={
+            <MainLayout>
+              <Post />
+            </MainLayout>
+          }
+        ></Route>
+        <Route path={ROUTES.MODIFY} element={<Modify />}></Route>
+        <Route
+          path={ROUTES.MYPAGE}
+          element={
+            <MainLayout>
+              <MyPage />
+            </MainLayout>
+          }
+        ></Route>
         <Route
           path={ROUTES.HOME}
           element={
@@ -22,6 +61,14 @@ function App() {
             </MainLayout>
           }
         />
+        <Route
+          path={`${ROUTES.SEARCH}/:query`}
+          element={
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          }
+        ></Route>
         <Route
           path={ROUTES.SIGNIN}
           element={
@@ -62,6 +109,14 @@ function App() {
             </MainLayout>
           }
         />
+        <Route
+          path={ROUTES.STYLE}
+          element={
+            <MainLayout>
+              <Style />
+            </MainLayout>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

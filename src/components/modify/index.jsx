@@ -1,5 +1,5 @@
 import { colors } from '../../constants/colors';
-import ValidateSchema from '../../utils/sign-up/validateSchema';
+import ValidateSchema from '../../utils/modify/validateSchema';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
@@ -7,26 +7,23 @@ import { Button, Input, Layout } from 'antd';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-const SignUpContainer = () => {
+import CustomFooter from '../layouts/footer';
+const ModifyContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const [emailDisabled, setEmailDisabled] = useState(false);
   const [nicknameDisabled, setNicknameDisabled] = useState(false);
   const [checkOne, setCheckOne] = useState(false);
-  const [checkOne_2, setCheckOne_2] = useState(false);
-  const [checkOne_3, setCheckOne_3] = useState(false);
   const [checkTwo, setCheckTwo] = useState(false);
   const [checkTwo_1, setCheckTwo_1] = useState(false);
   const [checkTwo_2, setCheckTwo_2] = useState(false);
   const [checkThree, setCheckThree] = useState(false);
   const [checkFour, setCheckFour] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [emailError, setEmailError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
-
+  const [uploadedUrl, setUploadedUrl] = useState(''); // State to hold uploaded URL
+  const [thumbnail, setThumbnail] = useState(null);
   const formik = useFormik({
     initialValues: {
-      email: '',
+      file: undefined,
       nickname: '',
       password: '',
       checkPassword: '',
@@ -61,19 +58,17 @@ const SignUpContainer = () => {
     }
     setIsDisabled(!(checkOne && checkTwo && checkThree && checkFour));
     console.log(checkOne, checkTwo, checkThree, checkFour);
-  }, [values.checkPassword, values.password, values.email, values.nickname]);
+    // console.log(
+    //   values.file,
+    //   values.checkPassword,
+    //   values.password,
+    //   values.nickname,
+    // );
+  }, [values.file, values.checkPassword, values.password, values.nickname]);
 
   useEffect(() => {
     setIsDisabled(!(checkOne && checkTwo && checkThree && checkFour));
   }, [checkOne, checkTwo, checkThree, checkFour]);
-
-  useEffect(() => {
-    if (values.email.length >= 0) {
-      setEmailError(false);
-      setCheckOne_2(false);
-      setCheckOne_3(false);
-    }
-  }, [values.email]);
 
   useEffect(() => {
     if (values.nickname.length >= 0) {
@@ -83,123 +78,98 @@ const SignUpContainer = () => {
     }
   }, [values.nickname]);
 
-  return (
-    <StyledLayout>
-      <StyledContent>
-        <FormContainer onSubmit={handleSubmit}>
-          <EmailContainer>
-            <TextBox typography="body2" fontWeight={'400'} cursor="default">
-              이메일
-            </TextBox>
-            <EmailInner>
-              <EmailInput>
-                <StyledInput
-                  size="large"
-                  placeholder="이메일 입력"
-                  type="text"
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  readOnly={emailDisabled}
-                  style={{
-                    borderColor: checkOne_2
-                      ? `${colors.error}`
-                      : checkOne_3
-                        ? `${colors.error}`
-                        : emailError
-                          ? `${colors.error}`
-                          : values.email.length === 0
-                            ? errors.email && touched.email
-                              ? `${colors.error}`
-                              : `${colors.black600}`
-                            : emailError || (errors.email && touched.email)
-                              ? `${colors.error}`
-                              : `${colors.success}`,
-                  }}
-                />
-                {emailError && (
-                  <TextBox typography="body4" fontWeight={'400'} color="error">
-                    이메일 형식이 올바르지 않습니다.
-                  </TextBox>
-                )}
-                {emailError ||
-                  (touched.email && errors.email && (
-                    <TextBox
-                      typography="body4"
-                      fontWeight={'400'}
-                      color="error"
-                    >
-                      {errors.email}
-                    </TextBox>
-                  ))}
-                {checkOne && (
-                  <TextBox
-                    typography="body4"
-                    fontWeight={'400'}
-                    color="success"
-                    cursor="default"
-                  >
-                    사용 가능한 이메일입니다.
-                  </TextBox>
-                )}
-                {checkOne_2 && (
-                  <TextBox
-                    typography="body4"
-                    fontWeight={'400'}
-                    color="error"
-                    cursor="default"
-                  >
-                    이메일 형식이 올바르지 않습니다.
-                  </TextBox>
-                )}
-                {checkOne_3 && (
-                  <TextBox
-                    typography="body4"
-                    fontWeight={'400'}
-                    color="error"
-                    cursor="default"
-                  >
-                    이미 가입된 이메일입니다.
-                  </TextBox>
-                )}
-              </EmailInput>
-              <ButtonInput>
-                <StyledButton
-                  disabled={emailDisabled}
-                  onClick={() => {
-                    if (
-                      values.email.length > 0 &&
-                      (!touched.email || !errors.email)
-                    ) {
-                      // handle email duplication check
-                    } else if (values.email.length === 0) {
-                      setEmailError(true);
-                    }
-                  }}
-                >
-                  <TextBox
-                    typography="h5"
-                    fontWeight={'500'}
-                    textAlign="center"
-                    color={emailDisabled ? 'white' : 'black'}
-                    // test
-                    // onClick={() => {
-                    //   setEmailDisabled(true);
-                    //   setCheckOne(true);
-                    // }}
-                  >
-                    중복확인
-                  </TextBox>
-                </StyledButton>
-              </ButtonInput>
-            </EmailInner>
+  useEffect(() => {
+    if (values.file !== undefined && values.file.size > 2 * 1024 * 1024) {
+      setCheckOne(false);
+    } else if (
+      values.file !== undefined &&
+      values.file.size <= 2 * 1024 * 1024
+    ) {
+      setCheckOne(true);
+    } else if (values.file === undefined || values.file === null) {
+      setCheckOne(false);
+    }
+  }, [values.file]);
 
+  const handleFileChange = (event) => {
+    const file = event.currentTarget.files[0];
+    formik.setFieldValue('file', file);
+
+    if (file && !errors.file) {
+      // Check if the file type is supported (JPG, JPEG, GIF, PNG)
+      if (
+        ['image/jpeg', 'image/jpg', 'image/gif', 'image/png'].includes(
+          file.type,
+        )
+      ) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const url = URL.createObjectURL(file);
+          console.log(url); // Log the URL when thumbnail is about to be displayed
+          setThumbnail(reader.result); // Set thumbnail image to state
+          setUploadedUrl(url); // Optionally store the URL in state
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.log(
+          '지원하지 않는 파일 형식입니다. JPG, JPEG, GIF, PNG 파일을 업로드하세요.',
+        ); // Log error message for unsupported file types
+        // Optionally, provide user feedback or handle unsupported file types
+      }
+    }
+  };
+
+  return (
+    <>
+      <StyledLayout>
+        <StyledContent>
+          <TitleContainer>
+            <TextBox
+              typography="h2"
+              fontWeight={'700'}
+              textAlign="center"
+              cursor="default"
+            >
+              회원 정보 수정
+            </TextBox>
+          </TitleContainer>
+          <FormContainer onSubmit={handleSubmit}>
+            <TextBox variant="body2" fontWeight={'400'} cursor="default">
+              프로필 사진
+            </TextBox>
+
+            <input
+              type="file"
+              id="file"
+              name="file"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="file" style={{ cursor: 'pointer' }}>
+              {values.file === undefined ? (
+                <TextBox typography="body4" fontWeight={'400'}>
+                  파일을 업로드 하세요.
+                </TextBox>
+              ) : !errors.file && thumbnail ? (
+                <img
+                  src={thumbnail}
+                  alt="Thumbnail"
+                  style={{ width: '100px', height: '100px', objectFit: 'fill' }}
+                />
+              ) : (
+                <TextBox typography="body4" fontWeight={'400'}>
+                  {errors.file}
+                </TextBox>
+              )}
+            </label>
+
+            {/* Nickname */}
             <TextBox typography="body2" fontWeight={'400'} cursor="default">
               닉네임
             </TextBox>
             <EmailInner>
               <EmailInput>
+                {/* Input for nickname */}
                 <StyledInput
                   size="large"
                   placeholder="닉네임 입력"
@@ -272,6 +242,7 @@ const SignUpContainer = () => {
                   </TextBox>
                 )}
               </EmailInput>
+              {/* Button to check nickname availability */}
               <ButtonInput>
                 <StyledButton
                   disabled={nicknameDisabled}
@@ -291,7 +262,7 @@ const SignUpContainer = () => {
                     fontWeight={'500'}
                     textAlign="center"
                     color={nicknameDisabled ? 'white' : 'primary'}
-                    // test
+                    //test
                     // onClick={() => {
                     //   setNicknameDisabled(true);
                     //   setCheckTwo(true);
@@ -302,6 +273,8 @@ const SignUpContainer = () => {
                 </StyledButton>
               </ButtonInput>
             </EmailInner>
+
+            {/* Password */}
             <PasswordInput>
               <TextBox typography="body2" fontWeight={'400'} cursor="default">
                 비밀번호
@@ -326,18 +299,22 @@ const SignUpContainer = () => {
                         ? `${colors.error}`
                         : `${colors.success}`,
                 }}
-              ></StyledInputPassword>
+              />
+              {/* Error message for password */}
               {touched.password && errors.password && (
                 <TextBox typography="body4" color="error">
                   {errors.password}
                 </TextBox>
               )}
+              {/* Password criteria message */}
               {errors.password === undefined && values.password.length > 0 && (
                 <TextBox typography="body4" fontWeight={'400'} color="success">
                   8~20자 영문(대,소문자)/숫자 조합
                 </TextBox>
               )}
             </PasswordInput>
+
+            {/* Confirm Password */}
             <PasswordInput>
               <TextBox typography="body2" fontWeight={'400'} cursor="default">
                 비밀번호 확인
@@ -362,12 +339,14 @@ const SignUpContainer = () => {
                         ? colors.error
                         : colors.success,
                 }}
-              ></StyledInputPassword>
+              />
+              {/* Error message for password confirmation */}
               {touched.checkPassword && errors.checkPassword && (
                 <TextBox typography="body4" color="error">
                   {errors.checkPassword}
                 </TextBox>
               )}
+              {/* Success message for matching passwords */}
               {values.password === values.checkPassword &&
                 values.checkPassword.length > 0 && (
                   <TextBox typography="body4" color="success">
@@ -375,7 +354,10 @@ const SignUpContainer = () => {
                   </TextBox>
                 )}
             </PasswordInput>
+
+            {/* Buttons */}
             <ButtonContainer>
+              {/* Previous button */}
               <StyledPrevButton
                 onClick={() => {
                   handleChangeUrl('/signup/agreement');
@@ -390,6 +372,7 @@ const SignUpContainer = () => {
                   이전
                 </TextBox>
               </StyledPrevButton>
+              {/* Submit button */}
               <StyledDoneButton
                 htmlType="submit"
                 disabled={isDisabled}
@@ -401,14 +384,15 @@ const SignUpContainer = () => {
                   textAlign="center"
                   color="white"
                 >
-                  회원가입 완료
+                  수정 완료
                 </TextBox>
               </StyledDoneButton>
             </ButtonContainer>
-          </EmailContainer>
-        </FormContainer>
-      </StyledContent>
-    </StyledLayout>
+          </FormContainer>
+        </StyledContent>
+      </StyledLayout>
+      <CustomFooter />
+    </>
   );
 };
 
@@ -423,7 +407,7 @@ const StyledContent = styled(Layout.Content)`
   justify-content: center;
   align-items: center;
   gap: 52px;
-  height: 660px;
+  height: 100%;
   padding: 20px;
   box-sizing: border-box;
   padding-bottom: 10vh;
@@ -460,12 +444,6 @@ const StyledButton = styled(Button)`
     border-color: ${colors.black900} !important;
     color: ${colors.black900} !important;
   }
-`;
-
-const EmailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
 
 const EmailInner = styled.div`
@@ -529,4 +507,6 @@ const StyledDoneButton = styled(Button)`
     color: white !important;
   }
 `;
-export default SignUpContainer;
+
+const TitleContainer = styled.div``;
+export default ModifyContainer;

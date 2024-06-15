@@ -4,5 +4,12 @@ export const ROUTES = {
   SIGNUP: '/signup',
   SIGNUP_SUCCESS: '/signup/success',
   HOME: '/',
-  DETAIL: '/detail/:postId', // 이 부분을 추가합니다.
+  DETAIL: '/detail/:postId',
+  SEARCH: '/search',
+  STYLE: '/style',
+  POST: '/post',
+  MYPAGE: '/mypage',
+  MODIFY: '/modify',
+  EDIT: '/edit',
+  ERROR_404: '/*',
 };
