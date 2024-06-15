@@ -10,4 +10,5 @@ export const ROUTES = {
   POST: '/post',
   MYPAGE: '/mypage',
   MODIFY: '/modify',
+  ERROR_404: '/*',
 };

@@ -14,10 +14,19 @@ import Style from './pages/style';
 import Post from './pages/post';
 import MyPage from './pages/my-page';
 import Modify from './pages/modify';
+import Error404 from './pages/errors/error404';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path={ROUTES.ERROR_404}
+          element={
+            <MainLayout>
+              <Error404 />
+            </MainLayout>
+          }
+        ></Route>
         <Route
           path={ROUTES.POST}
           element={
