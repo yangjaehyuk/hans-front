@@ -8,6 +8,7 @@ import {
   Upload,
   Image,
   message,
+  Select,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
@@ -32,6 +33,8 @@ const Post = () => {
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
+
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (inputVisible) {
@@ -138,17 +141,22 @@ const Post = () => {
     });
 
   useEffect(() => {
-    console.log(
-      formik.touched.files +
-        ' ' +
-        formik.errors.hashtags +
-        ' ' +
-        formik.errors.files +
-        ' ' +
-        formik.errors.title,
-    );
-  }, [formik.values.files, formik.values.title]);
-
+    if (
+      formik.values.title.length > 0 &&
+      formik.values.detail.length > 0 &&
+      formik.values.hashtags.length > 0 &&
+      formik.values.files.length > 0 &&
+      formik.values.products.length > 0
+    ) {
+      setIsDisabled(false);
+    } else setIsDisabled(true);
+  }, [
+    formik.values.title,
+    formik.values.detail,
+    formik.values.hashtags,
+    formik.values.files,
+    formik.values.products,
+  ]);
   return (
     <StyledLayout>
       <StyledContent>
@@ -291,55 +299,50 @@ const Post = () => {
           <TextBox variant="body2" fontWeight={'400'} cursor="default">
             Products
           </TextBox>
-          <EmailInner>
-            <EmailInput>
-              <div style={{ marginBottom: 16 }}>
-                <TweenOneGroup
-                  name="hashtags"
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    maxWidth: '100%',
-                  }}
-                  key={formik.values.hashtags.join(',')}
-                  enter={{
-                    scale: 0.8,
-                    opacity: 1,
-                    type: 'from',
-                    duration: 100,
-                  }}
-                  leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
-                  onEnd={(e) => {
-                    if (e.type === 'appear' || e.type === 'enter') {
-                      e.target.style = 'display: inline-block';
-                    }
-                  }}
-                >
-                  {tagChild}
-                </TweenOneGroup>
-              </div>
-              {inputVisible ? (
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  size="small"
-                  style={{ width: 78 }}
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  onBlur={handleInputConfirm}
-                  onPressEnter={handleInputConfirm}
-                />
-              ) : (
-                <Tag onClick={showInput} style={{ width: 78 }}>
-                  <PlusOutlined /> New Tag
-                </Tag>
-              )}
-            </EmailInput>
-          </EmailInner>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Search to Select"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? '').includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '')
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            options={[
+              {
+                value: '1',
+                label: 'Not Identified',
+              },
+              {
+                value: '2',
+                label: 'Closed',
+              },
+              {
+                value: '3',
+                label: 'Communicated',
+              },
+              {
+                value: '4',
+                label: 'Identified',
+              },
+              {
+                value: '5',
+                label: 'Resolved',
+              },
+              {
+                value: '6',
+                label: 'Cancelled',
+              },
+            ]}
+          />
           <ButtonContainer>
             <StyledDoneButton
               htmlType="submit"
-              disabled={!formik.isValid || formik.isSubmitting}
+              disabled={isDisabled}
               type="primary"
             >
               <TextBox
