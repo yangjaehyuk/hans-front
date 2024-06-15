@@ -39,13 +39,8 @@ const Post = () => {
     },
   });
 
-  useEffect(() => {
-    console.log(formik.values.hashtags);
-  }, [formik.values.hashtags]);
-
   const handleClose = (removedTag) => {
     const newTags = formik.values.hashtags.filter((tag) => tag !== removedTag);
-    console.log(newTags);
     formik.setFieldValue('hashtags', newTags); // Update Formik state
   };
 
@@ -75,6 +70,7 @@ const Post = () => {
   );
 
   const tagChild = formik.values.hashtags.map(forMap);
+
   return (
     <StyledLayout>
       <StyledContent>
@@ -139,6 +135,11 @@ const Post = () => {
             <EmailInput>
               <div style={{ marginBottom: 16 }}>
                 <TweenOneGroup
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    maxWidth: '100%',
+                  }}
                   key={formik.values.hashtags.join(',')}
                   enter={{
                     scale: 0.8,
@@ -171,11 +172,6 @@ const Post = () => {
                 <Tag onClick={showInput} style={{ width: 78 }}>
                   <PlusOutlined /> New Tag
                 </Tag>
-              )}
-              {formik.touched.hashtags && formik.errors.hashtags && (
-                <TextBox typography="body4" fontWeight={'400'} color="error">
-                  {formik.errors.hashtags}
-                </TextBox>
               )}
             </EmailInput>
           </EmailInner>
