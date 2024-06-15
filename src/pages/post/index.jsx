@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import {
   Button,
   Layout,
@@ -9,6 +9,7 @@ import {
   Image,
   message,
   Select,
+  Spin,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
@@ -19,9 +20,53 @@ import ValidateSchema from '../../utils/post/validateSchema';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
 import * as yup from 'yup';
+import debounce from 'lodash/debounce';
+import PropTypes from 'prop-types';
 
 const { TextArea } = Input;
 const { Dragger } = Upload;
+
+const DebounceSelect = ({ fetchOptions, debounceTimeout = 800, ...props }) => {
+  const [fetching, setFetching] = useState(false);
+  const [options, setOptions] = useState([]);
+  const fetchRef = useRef(0);
+
+  const debounceFetcher = useMemo(() => {
+    const loadOptions = (value) => {
+      fetchRef.current += 1;
+      const fetchId = fetchRef.current;
+      setOptions([]);
+      setFetching(true);
+
+      fetchOptions(value).then((newOptions) => {
+        if (fetchId !== fetchRef.current) {
+          // Ensure the fetch result order
+          return;
+        }
+        setOptions(newOptions);
+        setFetching(false);
+      });
+    };
+
+    return debounce(loadOptions, debounceTimeout);
+  }, [fetchOptions, debounceTimeout]);
+
+  return (
+    <Select
+      labelInValue
+      filterOption={false}
+      onSearch={debounceFetcher}
+      notFoundContent={fetching ? <StyledSpin size="small" /> : null}
+      {...props}
+      options={options}
+    />
+  );
+};
+
+DebounceSelect.propTypes = {
+  fetchOptions: PropTypes.func.isRequired,
+  debounceTimeout: PropTypes.number.isRequired,
+};
 
 const Post = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -52,7 +97,8 @@ const Post = () => {
     },
     validationSchema: ValidateSchema,
     onSubmit: (values) => {
-      // handle form submission
+      const blobUrls = values.files.map((file) => file.blobUrl);
+      const productLabel = values.products[0].label;
     },
   });
 
@@ -114,7 +160,14 @@ const Post = () => {
             ),
         })
         .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
-        .then(() => validFiles.push(file))
+        .then(() => {
+          const blobUrl = URL.createObjectURL(file.originFileObj);
+          validFiles.push({
+            ...file,
+            originFileObj: file.originFileObj,
+            blobUrl,
+          });
+        })
         .catch((error) => {
           message.error(error.message);
         }),
@@ -141,6 +194,7 @@ const Post = () => {
     });
 
   useEffect(() => {
+    console.log(formik.values.products);
     if (
       formik.values.title.length > 0 &&
       formik.values.detail.length > 0 &&
@@ -157,6 +211,21 @@ const Post = () => {
     formik.values.files,
     formik.values.products,
   ]);
+
+  // Function to fetch products (similar to fetchUserList)
+  const fetchProducts = async (productName) => {
+    console.log('fetching products', productName);
+
+    return fetch('https://randomuser.me/api/?results=5')
+      .then((response) => response.json())
+      .then((data) =>
+        data.results.map((product) => ({
+          label: `${product.name.first} ${product.name.last}`, // Make sure label is a string
+          value: product.login.username,
+        })),
+      );
+  };
+
   return (
     <StyledLayout>
       <StyledContent>
@@ -299,45 +368,47 @@ const Post = () => {
           <TextBox variant="body2" fontWeight={'400'} cursor="default">
             Products
           </TextBox>
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Search to Select"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.label ?? '').includes(input)
-            }
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '')
-                .toLowerCase()
-                .localeCompare((optionB?.label ?? '').toLowerCase())
-            }
-            options={[
-              {
-                value: '1',
-                label: 'Not Identified',
-              },
-              {
-                value: '2',
-                label: 'Closed',
-              },
-              {
-                value: '3',
-                label: 'Communicated',
-              },
-              {
-                value: '4',
-                label: 'Identified',
-              },
-              {
-                value: '5',
-                label: 'Resolved',
-              },
-              {
-                value: '6',
-                label: 'Cancelled',
-              },
-            ]}
+          <DebounceSelect
+            mode="multiple"
+            placeholder="Select products"
+            fetchOptions={fetchProducts}
+            // onChange={(products) => formik.setFieldValue('products', products)}
+            onChange={(newValue) => {
+              if (newValue.length > 1) {
+                message.error({
+                  content: (
+                    <TextBox typography="body3" fontWeight={'400'}>
+                      하나의 제품만 등록 가능합니다.
+                      <br />
+                      이전에 등록한 제품은 삭제됩니다.
+                    </TextBox>
+                  ),
+                  duration: 2,
+                  style: {
+                    width: '346px',
+                    height: '41px', // Adjust height to auto to display multi-line content properly
+                  },
+                });
+
+                newValue = [newValue[newValue.length - 1]];
+
+                const select = document.querySelector('.ant-select');
+                setTimeout(() => {
+                  if (select) {
+                    const removeButtons = select.querySelectorAll(
+                      '.ant-select-selection-item-remove',
+                    );
+                    removeButtons.forEach((button, index) => {
+                      if (index === 0) {
+                        button.click();
+                      }
+                    });
+                  }
+                }, 1000);
+              }
+              formik.setFieldValue('products', newValue);
+            }}
+            style={{ width: '100%' }}
           />
           <ButtonContainer>
             <StyledDoneButton
@@ -428,6 +499,12 @@ const StyledInput = styled(Input)`
 const StyledTextArea = styled(TextArea)`
   border-radius: 2px;
   border: 1px solid #d9d9d9;
+`;
+
+const StyledSpin = styled(Spin)`
+  .ant-spin-dot i {
+    background-color: ${colors.black900};
+  }
 `;
 
 export default Post;
