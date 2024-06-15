@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Layout, Input, Tag, theme } from 'antd';
+import {
+  Button,
+  Layout,
+  Input,
+  Tag,
+  theme,
+  Upload,
+  Image,
+  message,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import { TweenOneGroup } from 'rc-tween-one';
@@ -8,17 +17,21 @@ import { colors } from '../../constants/colors';
 import ValidateSchema from '../../utils/post/validateSchema';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
+import * as yup from 'yup';
 
 const { TextArea } = Input;
+const { Dragger } = Upload;
 
 const Post = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const { token } = theme.useToken();
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef(null);
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
 
   useEffect(() => {
     if (inputVisible) {
@@ -31,6 +44,7 @@ const Post = () => {
       title: '',
       detail: '',
       hashtags: [],
+      files: [],
       products: [],
     },
     validationSchema: ValidateSchema,
@@ -70,6 +84,70 @@ const Post = () => {
   );
 
   const tagChild = formik.values.hashtags.map(forMap);
+
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+  };
+
+  const handleChange = ({ fileList }) => {
+    const validFiles = [];
+    const filePromises = fileList.map((file) =>
+      yup
+        .object()
+        .shape({
+          originFileObj: yup
+            .mixed()
+            .required('이미지를 업로드해주세요.')
+            .test(
+              'fileType',
+              '지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.',
+              (value) =>
+                value &&
+                ['image/jpeg', 'image/png', 'image/gif'].includes(value.type),
+            ),
+        })
+        .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
+        .then(() => validFiles.push(file))
+        .catch((error) => {
+          message.error(error.message);
+        }),
+    );
+
+    Promise.all(filePromises).then(() => {
+      formik.setFieldValue('files', validFiles);
+    });
+  };
+
+  const uploadButton = (
+    <button style={{ border: 0, background: 'none' }} type="button">
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
+
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  useEffect(() => {
+    console.log(
+      formik.touched.files +
+        ' ' +
+        formik.errors.hashtags +
+        ' ' +
+        formik.errors.files +
+        ' ' +
+        formik.errors.title,
+    );
+  }, [formik.values.files, formik.values.title]);
 
   return (
     <StyledLayout>
@@ -135,6 +213,89 @@ const Post = () => {
             <EmailInput>
               <div style={{ marginBottom: 16 }}>
                 <TweenOneGroup
+                  name="hashtags"
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    maxWidth: '100%',
+                  }}
+                  key={formik.values.hashtags.join(',')}
+                  enter={{
+                    scale: 0.8,
+                    opacity: 1,
+                    type: 'from',
+                    duration: 100,
+                  }}
+                  leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
+                  onEnd={(e) => {
+                    if (e.type === 'appear' || e.type === 'enter') {
+                      e.target.style = 'display: inline-block';
+                    }
+                  }}
+                >
+                  {tagChild}
+                </TweenOneGroup>
+              </div>
+              {inputVisible ? (
+                <Input
+                  ref={inputRef}
+                  type="text"
+                  size="small"
+                  style={{ width: 78 }}
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onBlur={handleInputConfirm}
+                  onPressEnter={handleInputConfirm}
+                />
+              ) : (
+                <Tag onClick={showInput} style={{ width: 78 }}>
+                  <PlusOutlined /> New Tag
+                </Tag>
+              )}
+            </EmailInput>
+          </EmailInner>
+          <TextBox variant="body2" fontWeight={'400'} cursor="default">
+            Images
+          </TextBox>
+          <div>
+            <div style={{ width: '50vw' }}>
+              <Upload
+                name="files"
+                listType="picture-card"
+                fileList={formik.values.files}
+                onPreview={handlePreview}
+                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                beforeUpload={() => false}
+                style={{
+                  margin: '0 auto',
+                  display: 'flex',
+                  flexWrap: 'wrap !important',
+                }}
+              >
+                {uploadButton}
+              </Upload>
+              {previewImage && (
+                <Image
+                  wrapperStyle={{ display: 'none' }}
+                  preview={{
+                    visible: previewOpen,
+                    onVisibleChange: (visible) => setPreviewOpen(visible),
+                    afterClose: () => setPreviewImage(''),
+                  }}
+                  src={previewImage}
+                />
+              )}
+            </div>
+          </div>
+          <TextBox variant="body2" fontWeight={'400'} cursor="default">
+            Products
+          </TextBox>
+          <EmailInner>
+            <EmailInput>
+              <div style={{ marginBottom: 16 }}>
+                <TweenOneGroup
+                  name="hashtags"
                   style={{
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -178,7 +339,7 @@ const Post = () => {
           <ButtonContainer>
             <StyledDoneButton
               htmlType="submit"
-              disabled={isDisabled}
+              disabled={!formik.isValid || formik.isSubmitting}
               type="primary"
             >
               <TextBox
@@ -220,7 +381,6 @@ const FormContainer = styled.form`
   align-items: center;
   justify-content: center;
   gap: 24px;
-  width: 390px;
 `;
 
 const ButtonContainer = styled.div`
