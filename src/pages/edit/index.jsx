@@ -8,7 +8,6 @@ import {
   Upload,
   Image,
   message,
-  Select,
   Spin,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -20,9 +19,7 @@ import ValidateSchema from '../../utils/post/validateSchema';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
 import * as yup from 'yup';
-import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
-
+import uuid from 'react-uuid';
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const arr = [
@@ -33,7 +30,9 @@ const arr = [
     likesCount: 123,
     tagList: ['김가을짱'],
     imgList: [
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMRs2OVbsbczIHMpdR0BGeMF8x1_fbHkZR5w&s',
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     ],
     product: {
       productPrice: 1239,
@@ -44,47 +43,6 @@ const arr = [
     },
   },
 ];
-const DebounceSelect = ({ fetchOptions, debounceTimeout = 800, ...props }) => {
-  const [fetching, setFetching] = useState(false);
-  const [options, setOptions] = useState([]);
-  const fetchRef = useRef(0);
-
-  const debounceFetcher = useMemo(() => {
-    const loadOptions = (value) => {
-      fetchRef.current += 1;
-      const fetchId = fetchRef.current;
-      setOptions([]);
-      setFetching(true);
-
-      fetchOptions(value).then((newOptions) => {
-        if (fetchId !== fetchRef.current) {
-          // Ensure the fetch result order
-          return;
-        }
-        setOptions(newOptions);
-        setFetching(false);
-      });
-    };
-
-    return debounce(loadOptions, debounceTimeout);
-  }, [fetchOptions, debounceTimeout]);
-
-  return (
-    <Select
-      labelInValue
-      filterOption={false}
-      onSearch={debounceFetcher}
-      notFoundContent={fetching ? <StyledSpin size="small" /> : null}
-      {...props}
-      options={options}
-    />
-  );
-};
-
-DebounceSelect.propTypes = {
-  fetchOptions: PropTypes.func.isRequired,
-  debounceTimeout: PropTypes.number.isRequired,
-};
 
 const Edit = () => {
   const { handleChangeUrl } = useCustomNavigate();
@@ -104,14 +62,19 @@ const Edit = () => {
       inputRef.current?.focus();
     }
   }, [inputVisible]);
-
   const formik = useFormik({
     initialValues: {
       title: arr[0].title,
       detail: arr[0].body,
       hashtags: arr[0].tagList,
-      files: arr[0].imgList,
-      products: arr[0].product ? arr[0].product.productName : '',
+      files: arr[0].imgList.map((imgUrl, index) => ({
+        uid: `${index}-${Date.now()}`, // Ensure unique uid by combining index with timestamp
+        name: imgUrl.split('/').pop(),
+        status: 'done',
+        url: imgUrl,
+        type: 'image/png',
+        originFileObj: imgUrl,
+      })),
     },
     validationSchema: ValidateSchema,
     onSubmit: (values) => {
@@ -119,9 +82,9 @@ const Edit = () => {
     },
   });
 
-  const handleClose = (removedTag) => {
-    const newTags = formik.values.hashtags.filter((tag) => tag !== removedTag);
-    formik.setFieldValue('hashtags', newTags); // Update Formik state
+  const handleRemove = (file) => {
+    const updatedFiles = formik.values.files.filter((f) => f.uid !== file.uid);
+    formik.setFieldValue('files', updatedFiles);
   };
 
   const showInput = () => {
@@ -139,6 +102,10 @@ const Edit = () => {
     }
     setInputVisible(false);
     setInputValue('');
+  };
+  const handleClose = (removedTag) => {
+    const newTags = formik.values.hashtags.filter((tag) => tag !== removedTag);
+    formik.setFieldValue('hashtags', newTags); // Update Formik state
   };
 
   const forMap = (tag, index) => (
@@ -160,39 +127,27 @@ const Edit = () => {
   };
 
   const handleChange = ({ fileList }) => {
-    const validFiles = [];
-    const filePromises = fileList.map((file) =>
-      yup
-        .object()
-        .shape({
-          originFileObj: yup
-            .mixed()
-            .required('이미지를 업로드해주세요.')
-            .test(
-              'fileType',
-              '지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.',
-              (value) =>
-                value &&
-                ['image/jpeg', 'image/png', 'image/gif'].includes(value.type),
-            ),
-        })
-        .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
-        .then(() => {
-          const blobUrl = URL.createObjectURL(file.originFileObj);
-          validFiles.push({
-            ...file,
-            originFileObj: file.originFileObj,
-            blobUrl,
-          });
-        })
-        .catch((error) => {
-          message.error(error.message);
-        }),
-    );
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-    Promise.all(filePromises).then(() => {
-      formik.setFieldValue('files', validFiles);
-    });
+    if (
+      fileList.length > 0 &&
+      !validTypes.includes(fileList[fileList.length - 1].type)
+    ) {
+      message.error({
+        content: (
+          <TextBox typography="body4" fontWeight={'400'}>
+            지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.
+          </TextBox>
+        ),
+        duration: 2,
+        style: {
+          width: '346px',
+          height: '41px',
+        },
+      });
+    } else {
+      formik.setFieldValue('files', fileList);
+    }
   };
 
   const uploadButton = (
@@ -211,13 +166,12 @@ const Edit = () => {
     });
 
   useEffect(() => {
-    console.log(formik.values.products);
+    console.log(formik.values.files);
     if (
       formik.values.title.length > 0 &&
       formik.values.detail.length > 0 &&
       formik.values.hashtags.length > 0 &&
-      formik.values.files.length > 0 &&
-      formik.values.products.length > 0
+      formik.values.files.length > 0
     ) {
       setIsDisabled(false);
     } else setIsDisabled(true);
@@ -226,22 +180,7 @@ const Edit = () => {
     formik.values.detail,
     formik.values.hashtags,
     formik.values.files,
-    formik.values.products,
   ]);
-
-  // Function to fetch products (similar to fetchUserList)
-  const fetchProducts = async (productName) => {
-    console.log('fetching products', productName);
-
-    return fetch('https://randomuser.me/api/?results=5')
-      .then((response) => response.json())
-      .then((data) =>
-        data.results.map((product) => ({
-          label: `${product.name.first} ${product.name.last}`, // Make sure label is a string
-          value: product.login.username,
-        })),
-      );
-  };
 
   return (
     <StyledLayout>
@@ -360,6 +299,7 @@ const Edit = () => {
                 onPreview={handlePreview}
                 onChange={handleChange}
                 onBlur={formik.handleBlur}
+                onRemove={handleRemove}
                 beforeUpload={() => false}
                 style={{
                   margin: '0 auto',
@@ -382,53 +322,7 @@ const Edit = () => {
               )}
             </div>
           </div>
-          <TextBox variant="body2" fontWeight={'400'} cursor="default">
-            Products
-          </TextBox>
-          <DebounceSelect
-            mode="multiple"
-            placeholder="Select products"
-            fetchOptions={fetchProducts}
-            // onChange={(products) => formik.setFieldValue('products', products)}
-            onChange={(newValue) => {
-              if (newValue.length > 1) {
-                message.error({
-                  content: (
-                    <TextBox typography="body3" fontWeight={'400'}>
-                      하나의 제품만 등록 가능합니다.
-                      <br />
-                      이전에 등록한 제품은 삭제됩니다.
-                    </TextBox>
-                  ),
-                  duration: 2,
-                  style: {
-                    width: '346px',
-                    height: '41px',
-                  },
-                });
 
-                newValue = [newValue[newValue.length - 1]];
-
-                const select = document.querySelector('.ant-select');
-                setTimeout(() => {
-                  if (select) {
-                    const removeButtons = select.querySelectorAll(
-                      '.ant-select-selection-item-remove',
-                    );
-                    removeButtons.forEach((button, index) => {
-                      if (index === 0) {
-                        button.click();
-                      }
-                    });
-                  }
-                }, 1000);
-              }
-              const newProducts = newValue.map((item) => item.label);
-
-              formik.setFieldValue('products', newProducts);
-            }}
-            style={{ width: '100%' }}
-          />
           <ButtonContainer>
             <StyledDoneButton
               htmlType="submit"
@@ -518,12 +412,6 @@ const StyledInput = styled(Input)`
 const StyledTextArea = styled(TextArea)`
   border-radius: 2px;
   border: 1px solid #d9d9d9;
-`;
-
-const StyledSpin = styled(Spin)`
-  .ant-spin-dot i {
-    background-color: ${colors.black900};
-  }
 `;
 
 export default Edit;

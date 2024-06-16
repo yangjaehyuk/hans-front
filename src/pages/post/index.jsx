@@ -153,9 +153,14 @@ const Post = () => {
             .test(
               'fileType',
               '지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.',
-              (value) =>
-                value &&
-                ['image/jpeg', 'image/png', 'image/gif'].includes(value.type),
+              (value) => {
+                if (!value) return false; // Handle empty values
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                return (
+                  validTypes.includes(value.type) ||
+                  value.name.match(/\.(jpg|jpeg|png|gif)$/i)
+                );
+              },
             ),
         })
         .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
