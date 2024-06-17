@@ -96,7 +96,7 @@ const Home = () => {
           </div>
 
           <InnerContainer>
-            {arr.map((item, index) => (
+            {/* {arr.map((item, index) => (
               <HomeCard
                 key={index}
                 thumbnail_img_url={item.thumbnail_img_url}
@@ -104,7 +104,7 @@ const Home = () => {
                 nickname={item.nickname}
                 postId={item.postId}
               />
-            ))}
+            ))} */}
           </InnerContainer>
         </DeepInner>
       </SubContainer>
