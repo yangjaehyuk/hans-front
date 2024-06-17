@@ -18,8 +18,6 @@ import { colors } from '../../constants/colors';
 import ValidateSchema from '../../utils/post/validateSchema';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
-import * as yup from 'yup';
-import uuid from 'react-uuid';
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const arr = [
@@ -103,6 +101,7 @@ const Edit = () => {
     setInputVisible(false);
     setInputValue('');
   };
+
   const handleClose = (removedTag) => {
     const newTags = formik.values.hashtags.filter((tag) => tag !== removedTag);
     formik.setFieldValue('hashtags', newTags); // Update Formik state
