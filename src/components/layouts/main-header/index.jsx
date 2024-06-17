@@ -1,11 +1,10 @@
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   LoginOutlined,
   LogoutOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { SearchContainer } from '../../search';
-import React, { useState } from 'react';
 import { Input, Spin, message } from 'antd';
 import { useCustomNavigate } from '../../../hooks';
 import { TextBox } from '../../../stores/atom/text-box';
@@ -14,6 +13,7 @@ import { ROUTES } from '../../../constants/routes';
 import { useRecoilValue } from 'recoil';
 import { memberState } from '../../../stores/atom/member-atom';
 import MemberAPI from '../../../api/member-api';
+import { SearchContainer } from '../../search';
 const { Search } = Input;
 
 const MainHeader = () => {
@@ -23,8 +23,47 @@ const MainHeader = () => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const showMessage = SignOutContainer();
   const memberData = useRecoilValue(memberState);
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (memberData[0]?.nickname?.length !== 0) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    }, 1000); // 10000 milliseconds = 10 seconds
+
+    return () => clearInterval(interval); // Cleanup function to clear interval
+  }, [memberData]);
+
+  const clearPersistedState = () => {
+    localStorage.removeItem('recoil-persist');
+  };
+
+  const handleLogout = async () => {
+    try {
+      await MemberAPI.signOutAPI();
+      clearPersistedState();
+      handleChangeUrl('/');
+      showMessage();
+    } catch (error) {
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            로그아웃에 실패했습니다.
+          </TextBox>
+        ),
+        duration: 2,
+        style: {
+          width: '346px',
+          height: '41px',
+        },
+      });
+      handleChangeUrl(ROUTES.HOME);
+    }
+  };
+
   const onSearch = (value) => {
-    // test
     if (value.length > 0) {
       setConfirmLoading(true);
       setTimeout(() => {
@@ -63,17 +102,15 @@ const MainHeader = () => {
 
   return (
     <Navbar>
-      <Logo
-        onClick={() => {
-          handleChangeUrl('/');
-        }}
-      >
-        HANS
-      </Logo>
+      <Logo onClick={() => handleChangeUrl('/')}>HANS</Logo>
       <NavLinks>
         <NavLink onClick={() => handleChangeUrl(ROUTES.HOME)}>Home</NavLink>
         <NavLink onClick={() => handleChangeUrl(ROUTES.STYLE)}>Style</NavLink>
-        <NavLink onClick={() => handleChangeUrl(ROUTES.MYPAGE)}>
+        <NavLink
+          onClick={() =>
+            (window.location.href = 'http://localhost:3000/mypage')
+          }
+        >
           My Page
         </NavLink>
       </NavLinks>
@@ -105,48 +142,19 @@ const MainHeader = () => {
           />
         </>
 
-        {memberData[0].nickname === '' && memberData[0].profileImage === '' ? (
+        {isLogin ? (
           <>
+            <StyledLogoutIcon onClick={handleLogout} />
             <ProfileImage>
-              <LoginOutlined
-                style={{ fontSize: '3vh' }}
-                onClick={() => {
-                  handleChangeUrl(ROUTES.HOME);
-                }}
-              />
-            </ProfileImage>
-          </>
-        ) : (
-          <>
-            <StyledLogoutIcon
-              onClick={async () => {
-                try {
-                  await MemberAPI.signOutAPI();
-                  showMessage();
-                } catch (error) {
-                  message.error({
-                    content: (
-                      <TextBox typography="body3" fontWeight={'400'}>
-                        로그아웃에 실패했습니다.
-                      </TextBox>
-                    ),
-                    duration: 2,
-                    style: {
-                      width: '346px',
-                      height: '41px',
-                    },
-                  });
-                  handleChangeUrl(ROUTES.HOME);
-                }
-              }}
-            />
-            <ProfileImage>
-              <span role="img" aria-label="user">
-                {memberData[0].profileImage}{' '}
-              </span>
+              <img src={memberData[0].profileImage} alt="Profile" />
             </ProfileImage>
             <span>{memberData[0].nickname}</span>
           </>
+        ) : (
+          <LoginOutlined
+            style={{ fontSize: '3vh' }}
+            onClick={() => handleChangeUrl(ROUTES.SIGNIN)}
+          />
         )}
       </Profile>
     </Navbar>
@@ -183,7 +191,8 @@ const NavLinks = styled.div`
   gap: 3vw;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.div`
+  cursor: pointer;
   text-decoration: none;
   color: black;
   font-size: 2.2vh;
@@ -228,7 +237,7 @@ const LoadingContainer = styled.div`
 const BlackSpin = styled(Spin)`
   .ant-spin-dot {
     i {
-      background: black; // Change background color to black
+      background: black;
     }
   }
 `;
