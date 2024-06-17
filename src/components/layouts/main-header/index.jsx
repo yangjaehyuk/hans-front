@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  LoginOutlined,
+  LogoutOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import { SearchContainer } from '../../search';
 import React, { useState } from 'react';
 import { Input, Spin, message } from 'antd';
@@ -7,6 +11,9 @@ import { useCustomNavigate } from '../../../hooks';
 import { TextBox } from '../../../stores/atom/text-box';
 import SignOutContainer from '../../sign-out';
 import { ROUTES } from '../../../constants/routes';
+import { useRecoilValue } from 'recoil';
+import { memberState } from '../../../stores/atom/member-atom';
+import MemberAPI from '../../../api/member-api';
 const { Search } = Input;
 
 const MainHeader = () => {
@@ -15,9 +22,8 @@ const MainHeader = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const [inputDisabled, setInputDisabled] = useState(false);
   const showMessage = SignOutContainer();
+  const memberData = useRecoilValue(memberState);
   const onSearch = (value) => {
-    console.log(value);
-
     // test
     if (value.length > 0) {
       setConfirmLoading(true);
@@ -46,9 +52,11 @@ const MainHeader = () => {
       }, 1000);
     }
   };
+
   const showModal = () => {
     setOpen(true);
   };
+
   const handleCancel = () => {
     setOpen(false);
   };
@@ -96,17 +104,50 @@ const MainHeader = () => {
             }
           />
         </>
-        <StyledLogoutIcon
-          onClick={() => {
-            showMessage();
-          }}
-        />
-        <ProfileImage>
-          <span role="img" aria-label="user">
-            👤
-          </span>
-        </ProfileImage>
-        <span>yangjaehyuk_</span>
+
+        {memberData[0].nickname === '' && memberData[0].profileImage === '' ? (
+          <>
+            <ProfileImage>
+              <LoginOutlined
+                style={{ fontSize: '3vh' }}
+                onClick={() => {
+                  handleChangeUrl(ROUTES.HOME);
+                }}
+              />
+            </ProfileImage>
+          </>
+        ) : (
+          <>
+            <StyledLogoutIcon
+              onClick={async () => {
+                try {
+                  await MemberAPI.signOutAPI();
+                  showMessage();
+                } catch (error) {
+                  message.error({
+                    content: (
+                      <TextBox typography="body3" fontWeight={'400'}>
+                        로그아웃에 실패했습니다.
+                      </TextBox>
+                    ),
+                    duration: 2,
+                    style: {
+                      width: '346px',
+                      height: '41px',
+                    },
+                  });
+                  handleChangeUrl(ROUTES.HOME);
+                }
+              }}
+            />
+            <ProfileImage>
+              <span role="img" aria-label="user">
+                {memberData[0].profileImage}{' '}
+              </span>
+            </ProfileImage>
+            <span>{memberData[0].nickname}</span>
+          </>
+        )}
       </Profile>
     </Navbar>
   );
