@@ -7,8 +7,13 @@ const MemberAPI = {
   signInAPI: (signInData) => {
     return instance.post('users/login', signInData);
   },
-
-  userProfileAPI: () => {
+  checkDuplicatedEmailAPI: (checkDuplicatedEmailData) => {
+    return instance.post('users/email', checkDuplicatedEmailData);
+  },
+  checkDuplicatedNicknameAPI: (checkDuplicatedNicknameData) => {
+    return instance.post('users/nickname', checkDuplicatedNicknameData);
+  },
+  memberProfileAPI: () => {
     return instance.get('users/profile');
   },
   signOutAPI: () => {
