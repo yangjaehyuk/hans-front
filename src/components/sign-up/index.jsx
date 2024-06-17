@@ -7,7 +7,8 @@ import { Button, Input, Layout } from 'antd';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import MemberAPI from '../../api/member-api';
+import { ROUTES } from '../../constants/routes';
 const SignUpContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const [emailDisabled, setEmailDisabled] = useState(false);
@@ -32,8 +33,30 @@ const SignUpContainer = () => {
       checkPassword: '',
     },
     validationSchema: ValidateSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // handle form submission
+      try {
+        await MemberAPI.signUpAPI({
+          email: values.email,
+          nickname: values.nickname,
+          password: values.password,
+        });
+        handleChangeUrl(ROUTES.SIGNUP_SUCCESS);
+      } catch (error) {
+        console.error(e);
+        message.error({
+          content: (
+            <TextBox typography="body3" fontWeight={'400'}>
+              회원 가입 형식을 지켜주세요.
+            </TextBox>
+          ),
+          duration: 2,
+          style: {
+            width: '346px',
+            height: '41px',
+          },
+        });
+      }
     },
   });
 
@@ -292,10 +315,10 @@ const SignUpContainer = () => {
                     textAlign="center"
                     color={nicknameDisabled ? 'white' : 'primary'}
                     // test
-                    // onClick={() => {
-                    //   setNicknameDisabled(true);
-                    //   setCheckTwo(true);
-                    // }}
+                    onClick={async () => {
+                      await setNicknameDisabled(true);
+                      setCheckTwo(true);
+                    }}
                   >
                     중복확인
                   </TextBox>
