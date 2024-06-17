@@ -14,8 +14,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'; // Import useSetReco
 import { memberState } from '../../stores/atom/member-atom';
 const SignInContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
-
-  const setMemberState = useSetRecoilState(memberState); // Access to setMemberState
+  const setMemberState = useSetRecoilState(memberState);
   const memberData = useRecoilValue(memberState);
 
   const formik = useFormik({
@@ -30,38 +29,29 @@ const SignInContainer = () => {
           email: values.email,
           password: values.password,
         });
-        setCookie('accessToken', response.data.accessToken);
-
-        const memberData = useRecoilValue(memberState);
-        console.log(memberData);
-
-        if (
-          memberData[0].nickname === '' &&
-          memberData[0].profileImage === ''
-        ) {
-          // New login or first login, set new nickname and profileImage
-          const memberResponse = response.data.memberResponse;
-          const updatedMemberData = {
-            nickname: memberResponse.nickname,
-            profileImage: memberResponse.profileImage,
-          };
-          setMemberState([updatedMemberData]);
+        const accessToken = response.headers.get('Authorization');
+        console.log(accessToken);
+        if (accessToken) {
+          setCookie(accessToken);
         } else {
-          // Clear existing nickname and profileImage
-          setMemberState([{ nickname: '', profileImage: '' }]);
-
-          // Set new nickname and profileImage
-          const memberResponse = response.data.memberResponse;
-          const updatedMemberData = {
-            nickname: memberResponse.nickname,
-            profileImage: memberResponse.profileImage,
-          };
-          setMemberState([updatedMemberData]);
+          console.error('No accessToken in response');
+          return;
         }
 
-        handleChangeUrl(ROUTES.HOME); // Navigate to home page after login
-      } catch (error) {
-        console.error(error);
+        try {
+          const profileResponse = await MemberAPI.memberProfileAPI();
+          const memberResponse = profileResponse.data.data;
+          const updatedMemberData = {
+            nickname: memberResponse.nickname,
+            profileImage: memberResponse.profileImg,
+          };
+          setMemberState([updatedMemberData]);
+          handleChangeUrl(ROUTES.HOME);
+        } catch (profileError) {
+          console.error('Error fetching profile:', profileError);
+        }
+      } catch (signInError) {
+        console.error('Error signing in:', signInError);
         message.error({
           content: (
             <TextBox typography="body3" fontWeight={'400'}>
