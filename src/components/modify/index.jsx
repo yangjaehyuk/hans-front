@@ -8,7 +8,12 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CustomFooter from '../layouts/footer';
+import MemberAPI from '../../api/member-api';
+import { useSetRecoilState } from 'recoil'; // Import useSetRecoilState
+import { memberState } from '../../stores/atom/member-atom'; // Import memberState atom
+
 const ModifyContainer = () => {
+  const setMemberState = useSetRecoilState(memberState); // Access to setMemberState
   const { handleChangeUrl } = useCustomNavigate();
   const [nicknameDisabled, setNicknameDisabled] = useState(false);
   const [checkOne, setCheckOne] = useState(false);
@@ -29,8 +34,47 @@ const ModifyContainer = () => {
       checkPassword: '',
     },
     validationSchema: ValidateSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // handle form submission
+      try {
+        await MemberAPI.editMemberInfoAPI({
+          profileImg: URL.createObjectURL(values.file),
+          nickname: values.nickname,
+          password: values.nickname,
+        });
+        setMemberState((prevMemberState) => {
+          const updatedMemberData = {
+            nickname: values.nickname,
+            profileImage: URL.createObjectURL(values.file),
+          };
+          return [updatedMemberData];
+        });
+        message.success({
+          content: (
+            <TextBox typography="body3" fontWeight={'400'}>
+              성공적으로 수정했습니다.
+            </TextBox>
+          ),
+          duration: 2,
+          style: {
+            width: '346px',
+            height: '41px',
+          },
+        });
+      } catch (error) {
+        message.error({
+          content: (
+            <TextBox typography="body3" fontWeight={'400'}>
+              입력 형식을 확인해주세요.
+            </TextBox>
+          ),
+          duration: 2,
+          style: {
+            width: '346px',
+            height: '41px',
+          },
+        });
+      }
     },
   });
 
