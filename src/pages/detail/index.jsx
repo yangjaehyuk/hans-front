@@ -6,10 +6,14 @@ import {
   SendOutlined,
   CopyOutlined,
   XOutlined,
+  DeleteOutlined,
+  EditOutlined,
 } from '@ant-design/icons';
-import { message, Dropdown, Menu } from 'antd';
+import { message, Dropdown, Menu, Button, Modal } from 'antd';
 import { TextBox } from '../../stores/atom/text-box';
 import { DetailCarousel, DetailCard } from '../../components/detail';
+import { useCustomNavigate } from '../../hooks';
+import { ROUTES } from '../../constants/routes';
 const dummyData = [
   {
     title: '아이브',
@@ -91,7 +95,21 @@ const Detail = () => {
     const twitterIntent = `https://twitter.com/intent/tweet?text=custom%20text&url=${link}`;
     window.open(twitterIntent, '_blank');
   }
+  const { handleChangeUrl } = useCustomNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    handleChangeUrl(ROUTES.HOME);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const handleLike = () => {
     setIsLike(!isLike);
     if (isLike) {
@@ -162,12 +180,51 @@ const Detail = () => {
         </PostImageWrapper>
         <PostContentWrapper>
           <PostHeader>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ProfileImage src={post.profileImg} alt="Profile" />
-              <TextBox typography="body3" fontWeight={'700'}>
-                {post.nickname}
-              </TextBox>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                width: '100%',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <ProfileImage src={post.profileImg} alt="Profile" />
+                <TextBox typography="body3" fontWeight={'700'}>
+                  {post.nickname}
+                </TextBox>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '15px',
+                }}
+              >
+                <EditOutlined
+                  style={{ fontSize: '3vh', cursor: 'pointer' }}
+                  onClick={() => {
+                    handleChangeUrl(ROUTES.EDIT);
+                  }}
+                />
+                <DeleteOutlined
+                  style={{ fontSize: '3vh', cursor: 'pointer' }}
+                  onClick={showModal}
+                />
+              </div>
             </div>
+            <StyledModal
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <p>삭제하시겠습니까?</p>
+            </StyledModal>
           </PostHeader>
           <PostContent>
             <PostDescription>
@@ -237,6 +294,22 @@ const Detail = () => {
   );
 };
 
+const StyledModal = styled(Modal)`
+  .ant-modal-footer {
+    .ant-btn-primary,
+    .ant-btn-primary:hover {
+      background-color: black; /* Ok 버튼의 배경 색상 */
+      border-color: black; /* Ok 버튼의 테두리 색상 */
+    }
+
+    .ant-btn {
+      &:not(.ant-btn-primary) {
+        color: black; /* Cancel 버튼의 텍스트 색상 */
+        border-color: black; /* Cancel 버튼의 테두리 색상 */
+      }
+    }
+  }
+`;
 const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -275,8 +348,10 @@ const PostContentWrapper = styled.div`
 const PostHeader = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 14px;
   border-bottom: 1px solid #dbdbdb;
+  width: 100%;
 `;
 
 const ProfileImage = styled.img`

@@ -185,6 +185,11 @@ const Edit = () => {
   return (
     <StyledLayout>
       <StyledContent>
+        <TextContainer style={{ cursor: 'default' }}>
+          <TextBox typography="h1" fontWeight="700">
+            Edit
+          </TextBox>
+        </TextContainer>
         <FormContainer onSubmit={formik.handleSubmit}>
           <TextBox variant="body2" fontWeight={'400'} cursor="default">
             Title
@@ -348,6 +353,13 @@ const Edit = () => {
 const StyledLayout = styled(Layout)`
   max-width: 100vw;
   background-color: white;
+`;
+
+const TextContainer = styled.div`
+  color: black;
+  font-weight: ${(props) => props.fontWeight};
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
 `;
 
 const StyledContent = styled(Layout.Content)`
