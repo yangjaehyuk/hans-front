@@ -49,7 +49,6 @@ const Edit = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
-        console.log(values.hashtags);
         await PostAPI.modifyPostAPI({
           postId: postId,
           title: values.title,
@@ -71,7 +70,6 @@ const Edit = () => {
       try {
         const response = await PostAPI.viewPostDetailAPI(postId);
         const data = response.data.data;
-        console.log(data);
 
         setDetailArr(data);
         formik.setValues({
@@ -156,7 +154,6 @@ const Edit = () => {
   );
 
   const tagChild = formik.values.hashtags.map(forMap);
-  console.log(tagChild);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -167,29 +164,53 @@ const Edit = () => {
 
   const handleChange = ({ fileList }) => {
     // console.log(fileList[fileList.length - 1].type);
-    if (fileList[fileList.length - 1].type === undefined) {
+    if (fileList.length === 0) {
       formik.setFieldValue('files', fileList);
     } else {
-      const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
-      if (
-        fileList.length > 0 &&
-        !validTypes.includes(fileList[fileList.length - 1].type)
-      ) {
-        message.error({
-          content: (
-            <TextBox typography="body4" fontWeight={'400'}>
-              지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.
-            </TextBox>
-          ),
-          duration: 2,
-          style: {
-            width: '346px',
-            height: '41px',
-          },
-        });
-      } else {
+      if (fileList[fileList.length - 1].type === undefined) {
         formik.setFieldValue('files', fileList);
+      } else {
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+        if (
+          fileList.length > 0 &&
+          !validTypes.includes(fileList[fileList.length - 1].type)
+        ) {
+          message.error({
+            content: (
+              <TextBox typography="body4" fontWeight={'400'}>
+                지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.
+              </TextBox>
+            ),
+            duration: 2,
+            style: {
+              width: '346px',
+              height: '41px',
+            },
+          });
+        } else {
+          // imgId, imgUrl, isThumbnail
+          const imageObjects = [];
+          fileList.forEach((item, index) => {
+            // 이미지 객체인지 판단 (imgId 속성이 있는지 확인)
+            if (item.imgId !== undefined) {
+              // 이미지 객체일 경우 그대로 추가
+              imageObjects.push(item);
+            } else {
+              // 파일 업로드 객체일 경우, 이미지 객체로 변환하여 추가
+              console.log(item);
+              const blobUrl = URL.createObjectURL(item.originFileObj);
+              const imageObj = {
+                imgId: index + 1, // 예시로 순차적으로 부여되는 이미지 ID
+                imgUrl: blobUrl, // uid를 기반으로 imgUrl 생성
+                isThumbnail: index === 0 ? true : false, // 예시로 첫 번째는 썸네일이 아니고, 나머지는 썸네일로 설정
+                uid: `__AUTO__1718729428846_${index}__`, // 예시로 고유한 uid 생성
+              };
+              imageObjects.push(imageObj);
+            }
+            formik.setFieldValue('files', imageObjects);
+          });
+        }
       }
     }
   };
