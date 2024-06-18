@@ -13,6 +13,7 @@ import image5 from '../../assets/image/carousel4.jpg';
 import image6 from '../../assets/image/carousel6.jpg';
 import image7 from '../../assets/image/carousel7.jpg';
 import image8 from '../../assets/image/carousel8.jpg';
+import PostAPI from '../../api/post-api';
 const { Meta } = Card;
 
 const HomeCarousel = () => {
@@ -195,7 +196,7 @@ const HomeCard = ({ thumbnail_img_url, title, nickname, postId }) => {
         hoverable
         style={{ width: 240 }}
         cover={<StyledCardCover alt="example" src={thumbnail_img_url} />}
-        onClick={() => handleChangeUrl(postId)}
+        onClick={() => handleChangeUrl(`/detail/${postId}`)}
       >
         <Meta title={title} description={nickname} />
       </StyledCard>
