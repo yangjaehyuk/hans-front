@@ -25,9 +25,6 @@ const MainHeader = () => {
   const showMessage = SignOutContainer();
   const memberData = useRecoilValue(memberState);
   const accessToken = getCookie('accessToken');
-  console.log(memberData);
-  console.log(memberData.profileImage);
-  console.log(memberData.nickname);
 
   const clearPersistedState = () => {
     localStorage.removeItem('recoil-persist');
