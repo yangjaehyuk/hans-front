@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path={ROUTES.EDIT}
+          path={ROUTES.EDIT.replace(':postId', ':postId')}
           element={
             !accessToken ? (
               <Navigate to="/" />
