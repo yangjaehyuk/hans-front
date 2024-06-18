@@ -1,4 +1,4 @@
-import instance from '..'; // instance는 Axios 인스턴스로 가정합니다.
+import instance from '..';
 
 const MemberAPI = {
   signUpAPI: (signUpData) => {
