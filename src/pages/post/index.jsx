@@ -22,6 +22,7 @@ import { useCustomNavigate } from '../../hooks';
 import * as yup from 'yup';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
+import PostAPI from '../../api/post-api';
 
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -96,8 +97,22 @@ const Post = () => {
       products: '',
     },
     validationSchema: ValidateSchema,
-    onSubmit: (values) => {
-      const blobUrls = values.files.map((file) => file.blobUrl);
+    onSubmit: async (values) => {
+      try {
+        const blobUrls = values.files.map((file) => file.blobUrl);
+
+        const res = await PostAPI.writePostAPI({
+          title: values.title,
+          body: values.detail,
+          tagList: values.hashtags,
+          productName: values.products[0],
+          imgUrl: blobUrls,
+        });
+        console.log(res);
+        window.location.href = 'http://localhost:3000/style';
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
