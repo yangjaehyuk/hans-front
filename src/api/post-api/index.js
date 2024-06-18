@@ -1,22 +1,25 @@
 import instance from '..';
 
 const PostAPI = {
+  viewEmptyAPI: () => {
+    return instance.get('posts?page=0&size=100&sort=created_at&by=desc');
+  },
   viewPostsAPI: (viewPostsData) => {
     return instance.get('posts', {
       params: {
         title: viewPostsData,
         page: 0,
-        size: 8,
-        sort: 'createdAt-desc',
+        size: 100,
+        sort: 'createdAt,desc',
       },
     });
   },
 
   viewPostDetailAPI: (viewPostDetailData) => {
-    return instance.get(`post/${viewPostDetailData}`);
+    return instance.get(`posts/${viewPostDetailData}`);
   },
   viewClothesAPI: (viewClothesData) => {
-    return instance.get(`products?product-name=${viewClothesData}`);
+    return instance.get(`products?product_name=${viewClothesData}`);
   },
   recommendPostAPI: (recommendPostData) => {
     return instance.patch(`posts/${recommendPostData}`);
@@ -28,7 +31,7 @@ const PostAPI = {
     return instance.post('posts', writePostData);
   },
   removePostAPI: (removePostData) => {
-    return instance.delete(`users/posts/${removePostData}`);
+    return instance.delete(`posts/${removePostData}`);
   },
 };
 
