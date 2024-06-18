@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Card, Carousel } from 'antd';
 import { motion } from 'framer-motion';
 import { useCustomNavigate } from '../../hooks';
-
+import { useRecoilValue } from 'recoil';
+import { memberState } from '../../stores/atom/member-atom';
 import image1 from '../../assets/image/carousel0.jpg';
 import image3 from '../../assets/image/carousel2.jpg';
 import image4 from '../../assets/image/carousel3.jpg';
@@ -19,6 +20,8 @@ const HomeCarousel = () => {
   const handleBeforeChange = () => {
     setAnimate(false);
   };
+  const memberData = useRecoilValue(memberState);
+  console.log(memberData.nickname);
 
   const handleAfterChange = () => {
     setAnimate(true);

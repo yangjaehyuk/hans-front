@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import image1 from '../../assets/image/random1.jpg';
 import image2 from '../../assets/image/random2.jpg';
 import image3 from '../../assets/image/random3.jpg';
@@ -13,18 +13,20 @@ import { ROUTES } from '../../constants/routes';
 import { SettingOutlined } from '@ant-design/icons';
 import { useCustomNavigate } from '../../hooks';
 import MemberAPI from '../../api/member-api';
+import { useRecoilValue } from 'recoil';
+import { memberState } from '../../stores/atom/member-atom';
+
 const MyPage = () => {
   const randomArr = [image1, image2, image3, image4, image5, image6, image7];
   const [randomItem, setRandomItem] = useState(null);
   const [memberInfo, setMemberInfo] = useState(null);
   const { handleChangeUrl } = useCustomNavigate();
+  const memberData = useRecoilValue(memberState);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await MemberAPI.viewMemberInfoAPI();
-        console.log(response.data.data.email);
-        console.log(response.data.data.nickname);
         setMemberInfo(response.data.data);
       } catch (error) {
         console.error(error);
@@ -35,13 +37,15 @@ const MyPage = () => {
       const randomIndex = Math.floor(Math.random() * arr.length);
       return arr[randomIndex];
     };
-    fetchData();
 
+    fetchData();
     setRandomItem(getRandomItem(randomArr));
   }, []);
+
   if (!memberInfo) {
     return <div>Loading...</div>;
   }
+
   return (
     <Wrapper>
       <Container>
@@ -83,7 +87,10 @@ const MyPage = () => {
             </StylishContainer>
           </div>
           <div style={{ margin: '0 auto' }}>
-            <ProfileContainer src={memberInfo.profileImg} alt="asd" />
+            <ProfileContainer
+              src={memberData.profileImage}
+              alt="Profile Image"
+            />
           </div>
         </Inner>
       </SubContainer>
@@ -149,22 +156,25 @@ const MyPage = () => {
 const ProfileContainer = styled.img`
   width: 250px;
   height: 300px;
-  outfit: fill;
+  object-fit: cover;
 `;
 
 const StyledSettingOutlined = styled(SettingOutlined)`
   font-size: 3vh;
 `;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 17vh;
 `;
+
 const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
 `;
+
 const TextContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -175,12 +185,14 @@ const TextContainer = styled.div`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
 `;
+
 const ImgContainer = styled.img`
   display: block;
   width: 100%;
   height: 80vh;
   object-fit: fill;
 `;
+
 const SubContainer = styled.div`
   margin: 0 auto;
   width: 80vw;

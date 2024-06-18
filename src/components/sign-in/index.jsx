@@ -45,7 +45,7 @@ const SignInContainer = () => {
             nickname: memberResponse.nickname,
             profileImage: memberResponse.profileImg,
           };
-          setMemberState([updatedMemberData]);
+          setMemberState(updatedMemberData);
           handleChangeUrl(ROUTES.HOME);
         } catch (profileError) {
           console.error('Error fetching profile:', profileError);

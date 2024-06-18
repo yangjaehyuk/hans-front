@@ -15,8 +15,8 @@ import CustomFooter from '../layouts/footer';
 import MemberAPI from '../../api/member-api';
 import { useSetRecoilState } from 'recoil'; // Import useSetRecoilState
 import { memberState } from '../../stores/atom/member-atom'; // Import memberState atom
-import { ROUTES } from '../../constants/routes';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 const ModifyContainer = () => {
   const setMemberState = useSetRecoilState(memberState); // Access to setMemberState
   const { handleChangeUrl } = useCustomNavigate();
@@ -30,9 +30,9 @@ const ModifyContainer = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [nicknameError, setNicknameError] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       files: [],
@@ -67,7 +67,7 @@ const ModifyContainer = () => {
             height: '41px',
           },
         });
-        window.location.href = 'http://localhost:3000/mypage';
+        setIsSubmitted(true);
       } catch (error) {
         console.error(error);
         message.error({
@@ -88,7 +88,11 @@ const ModifyContainer = () => {
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     formik;
-
+  useEffect(() => {
+    if (isSubmitted) {
+      navigate('/mypage');
+    }
+  }, [isSubmitted, navigate]);
   useEffect(() => {
     if (touched.password && errors.password) {
       setCheckThree(false);

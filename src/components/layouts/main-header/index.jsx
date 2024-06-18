@@ -14,6 +14,7 @@ import { useRecoilValue } from 'recoil';
 import { memberState } from '../../../stores/atom/member-atom';
 import MemberAPI from '../../../api/member-api';
 import { SearchContainer } from '../../search';
+import { getCookie } from '../../../utils/cookie';
 const { Search } = Input;
 
 const MainHeader = () => {
@@ -23,18 +24,10 @@ const MainHeader = () => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const showMessage = SignOutContainer();
   const memberData = useRecoilValue(memberState);
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (memberData[0]?.nickname?.length !== 0) {
-        setIsLogin(true);
-      } else {
-        setIsLogin(false);
-      }
-    }, 1000); // 10000 milliseconds = 10 seconds
-
-    return () => clearInterval(interval); // Cleanup function to clear interval
-  }, [memberData]);
+  const accessToken = getCookie('accessToken');
+  console.log(memberData);
+  console.log(memberData.profileImage);
+  console.log(memberData.nickname);
 
   const clearPersistedState = () => {
     localStorage.removeItem('recoil-persist');
@@ -44,7 +37,7 @@ const MainHeader = () => {
     try {
       await MemberAPI.signOutAPI();
       clearPersistedState();
-      handleChangeUrl('/');
+      window.location.href = 'http://localhost:3000/';
       showMessage();
     } catch (error) {
       message.error({
@@ -142,13 +135,22 @@ const MainHeader = () => {
           />
         </>
 
-        {isLogin ? (
+        {accessToken ? (
           <>
             <StyledLogoutIcon onClick={handleLogout} />
             <ProfileImage>
-              <img src={memberData[0].profileImage} alt="Profile" />
+              <img
+                src={memberData.profileImage}
+                alt="Profile"
+                style={{
+                  width: '4vh',
+                  height: '4vh',
+                  objectFit: 'fill',
+                  borderRadius: '50%',
+                }}
+              />
             </ProfileImage>
-            <span>{memberData[0].nickname}</span>
+            <span>{memberData.nickname}</span>
           </>
         ) : (
           <LoginOutlined
