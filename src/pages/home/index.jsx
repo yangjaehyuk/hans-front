@@ -2,6 +2,7 @@ import React from 'react';
 import { HomeCarousel, HomeCard } from '../../components/home';
 import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
+import { Spin } from 'antd';
 const Home = () => {
   const arr = [
     {
@@ -138,6 +139,22 @@ const Home = () => {
     </Container>
   );
 };
+
+const LoadingContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+const BlackSpin = styled(Spin)`
+  .ant-spin-dot {
+    i {
+      background: black;
+    }
+  }
+`;
 
 const Container = styled.div`
   display: flex;

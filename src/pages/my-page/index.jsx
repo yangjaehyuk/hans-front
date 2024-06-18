@@ -15,7 +15,7 @@ import { useCustomNavigate } from '../../hooks';
 import MemberAPI from '../../api/member-api';
 import { useRecoilValue } from 'recoil';
 import { memberState } from '../../stores/atom/member-atom';
-
+import { Spin } from 'antd';
 const MyPage = () => {
   const randomArr = [image1, image2, image3, image4, image5, image6, image7];
   const [randomItem, setRandomItem] = useState(null);
@@ -43,7 +43,11 @@ const MyPage = () => {
   }, []);
 
   if (!memberInfo) {
-    return <div>Loading...</div>;
+    return (
+      <LoadingContainer>
+        <BlackSpin size="large" />
+      </LoadingContainer>
+    );
   }
 
   return (
@@ -152,6 +156,23 @@ const MyPage = () => {
     </Wrapper>
   );
 };
+
+const LoadingContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+
+const BlackSpin = styled(Spin)`
+  .ant-spin-dot {
+    i {
+      background: black;
+    }
+  }
+`;
 
 const ProfileContainer = styled.img`
   width: 250px;
