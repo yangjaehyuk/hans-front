@@ -27,15 +27,14 @@ const Detail = () => {
   const [detailArr, setDetailArr] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Start loading
+      setIsLoading(true);
       try {
         const response = await PostAPI.viewPostDetailAPI(postId);
         setDetailArr(response.data.data);
-        console.log('여기여깅', response);
       } catch (error) {
-        console.error('Error fetching post detail:', error);
+        console.error(error);
       } finally {
-        setIsLoading(false); // Stop loading
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -85,6 +84,7 @@ const Detail = () => {
     }
   };
 
+  console.log('detail', detailArr);
   function handleCopyLink() {
     const link = window.location.href;
     navigator.clipboard
@@ -183,6 +183,7 @@ const Detail = () => {
                       style={{ fontSize: '3vh', cursor: 'pointer' }}
                       onClick={() => {
                         handleChangeUrl(`/edit/${postId}`);
+                        // window.location.href = `http://localhost:3000/edit/${postId}`;
                       }}
                     />
                     <DeleteOutlined

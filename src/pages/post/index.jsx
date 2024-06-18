@@ -108,7 +108,6 @@ const Post = () => {
           productName: values.products[0],
           imgUrl: blobUrls,
         });
-        console.log(res);
         window.location.href = 'http://localhost:3000/style';
       } catch (error) {
         console.error(error);
@@ -233,8 +232,6 @@ const Post = () => {
 
   // Function to fetch products (similar to fetchUserList)
   const fetchProducts = async (productName) => {
-    console.log('fetching products', productName);
-
     return fetch('https://randomuser.me/api/?results=5')
       .then((response) => response.json())
       .then((data) =>
