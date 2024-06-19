@@ -22,11 +22,9 @@ const DetailCarousel = ({ images }) => {
           }),
         );
 
-        // Convert blobs to URLs and store in localStorage
         const blobUrls = fetchedBlobs.map((blob) => URL.createObjectURL(blob));
-        console.log('여기', blobUrls);
-        localStorage.setItem('imageBlobs', JSON.stringify(blobUrls));
         setImageBlobs(blobUrls);
+        console.log('여기', blobUrls);
       } catch (error) {
         console.error('Error fetching or storing blobs:', error);
       }
@@ -95,16 +93,21 @@ const ItemContainer = styled.div`
 
 const DetailCard = ({ productPrice, productImg, productUrl, productName }) => {
   const formattedPrice = `${new Intl.NumberFormat().format(productPrice)} 원`;
+
+  const absoluteProductUrl = /^https?:\/\//i.test(productUrl)
+    ? productUrl
+    : `http://localhost:3000/${productUrl}`;
   return (
     <CardContainer>
-      <StyledCard
-        hoverable
-        style={{ width: 240 }}
-        cover={<StyledCardCover alt="example" src={productImg} />}
-        onClick={() => (window.location.href = productUrl)}
-      >
-        <Meta title={productName} description={formattedPrice} />
-      </StyledCard>
+      <a href={absoluteProductUrl} target="_blank" rel="noopener noreferrer">
+        <StyledCard
+          hoverable
+          style={{ width: 240 }}
+          cover={<StyledCardCover alt="example" src={productImg} />}
+        >
+          <Meta title={productName} description={formattedPrice} />
+        </StyledCard>
+      </a>
     </CardContainer>
   );
 };
