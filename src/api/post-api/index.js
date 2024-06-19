@@ -7,10 +7,11 @@ const PostAPI = {
   viewPostsAPI: (viewPostsData) => {
     return instance.get('posts', {
       params: {
-        title: viewPostsData,
+        tag: viewPostsData,
         page: 0,
         size: 100,
-        sort: 'createdAt,desc',
+        sort: 'created_at',
+        by: 'desc',
       },
     });
   },
