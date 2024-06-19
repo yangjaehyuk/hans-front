@@ -16,6 +16,17 @@ const PostAPI = {
     });
   },
 
+  viewRecentPostsAPI: () => {
+    return instance.get('posts', {
+      params: {
+        page: 0,
+        size: 100,
+        sort: 'created_at',
+        by: 'desc',
+      },
+    });
+  },
+
   viewPostDetailAPI: (viewPostDetailData) => {
     return instance.get(`posts/${viewPostDetailData}`);
   },
