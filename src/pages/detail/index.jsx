@@ -66,14 +66,18 @@ const Detail = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const handleLike = () => {
+  const handleLike = async () => {
     setIsLike(!isLike);
     if (isLike) {
       setDetailArr((prevState) => ({
         ...prevState,
         likesCount: prevState.likesCount - 1,
       }));
-
+      try {
+        await PostAPI.recommendPostAPI(postId);
+      } catch (error) {
+        console.error(error);
+      }
       // 변한 카운트를 api 요청
     } else {
       setDetailArr((prevState) => ({
@@ -81,10 +85,14 @@ const Detail = () => {
         likesCount: prevState.likesCount + 1,
       }));
       // 변한 카운트를 api 요청
+      try {
+        await PostAPI.recommendPostAPI(postId);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
-  console.log('detail', detailArr);
   function handleCopyLink() {
     const link = window.location.href;
     navigator.clipboard
