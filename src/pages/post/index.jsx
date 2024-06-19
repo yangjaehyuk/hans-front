@@ -230,14 +230,21 @@ const Post = () => {
   ]);
 
   const fetchProducts = async (productName) => {
-    return fetch('https://randomuser.me/api/?results=5')
-      .then((response) => response.json())
-      .then((data) =>
-        data.results.map((product) => ({
-          label: `${product.name.first} ${product.name.last}`, // Make sure label is a string
-          value: product.login.username,
-        })),
-      );
+    try {
+      const response = await PostAPI.viewClothesAPI(productName);
+      const data = response.data.data;
+      if (data && Array.isArray(data)) {
+        return data.map((product) => ({
+          label: product.productName,
+          value: product.productId,
+        }));
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   };
 
   return (
