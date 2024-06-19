@@ -100,8 +100,8 @@ const Post = () => {
     onSubmit: async (values) => {
       try {
         const blobUrls = values.files.map((file) => file.blobUrl);
-
-        const res = await PostAPI.writePostAPI({
+        console.log(blobUrls);
+        await PostAPI.writePostAPI({
           title: values.title,
           body: values.detail,
           tagList: values.hashtags,
@@ -178,12 +178,12 @@ const Post = () => {
             ),
         })
         .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
-        .then(() => {
-          const blobUrl = URL.createObjectURL(file.originFileObj);
+        .then(async () => {
+          const url = await getBase64(file.originFileObj);
           validFiles.push({
             ...file,
             originFileObj: file.originFileObj,
-            blobUrl,
+            blobUrl: url,
           });
         })
         .catch((error) => {
@@ -212,7 +212,6 @@ const Post = () => {
     });
 
   useEffect(() => {
-    console.log(formik.values.products + ' ' + formik.values.title);
     if (
       formik.values.title.length > 0 &&
       formik.values.detail.length > 0 &&
@@ -230,7 +229,6 @@ const Post = () => {
     formik.values.products,
   ]);
 
-  // Function to fetch products (similar to fetchUserList)
   const fetchProducts = async (productName) => {
     return fetch('https://randomuser.me/api/?results=5')
       .then((response) => response.json())
