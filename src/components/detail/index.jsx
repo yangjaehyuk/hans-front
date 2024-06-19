@@ -7,7 +7,7 @@ const { Meta } = Card;
 
 const DetailCarousel = ({ images }) => {
   const [imageBlobs, setImageBlobs] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchAndStoreBlobs = async () => {
       try {
@@ -38,9 +38,9 @@ const DetailCarousel = ({ images }) => {
     };
   }, [images]);
 
-  if (imageBlobs.length === 0) {
-    return <div>Loading...</div>;
-  }
+  // if (imageBlobs.length === 0) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <StyledCarousel arrows infinite autoplay>
