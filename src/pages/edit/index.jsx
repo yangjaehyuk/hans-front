@@ -20,6 +20,8 @@ import { TextBox } from '../../stores/atom/text-box';
 import PostAPI from '../../api/post-api';
 import { useParams } from 'react-router-dom';
 import { useCustomNavigate } from '../../hooks';
+import * as yup from 'yup';
+
 const { TextArea } = Input;
 
 const Edit = () => {
@@ -49,15 +51,21 @@ const Edit = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
+        const blobUrls = values.files.map((file) => ({
+          imgUrl: file.blobUrl,
+          isThumbnail: file.isThumbnail,
+        }));
+
+        console.log(values.files);
         await PostAPI.modifyPostAPI({
           postId: postId,
           title: values.title,
           body: values.detail,
           tagList: values.hashtags,
-          imgList: values.files,
+          imgList: blobUrls,
         });
         // window.location.href = `http://localhost:3000/detail/${postId}`;
-        handleChangeUrl('/style');
+        // handleChangeUrl('/style');
       } catch (error) {
         console.error(error);
       }
@@ -71,12 +79,19 @@ const Edit = () => {
         const response = await PostAPI.viewPostDetailAPI(postId);
         const data = response.data.data;
 
-        setDetailArr(data);
+        // Set formik values
         formik.setValues({
           title: data.title,
           detail: data.body,
           hashtags: data.tagList,
-          files: data.imgList,
+          files: data.imgList, // Set formik values to restoredImgList
+        });
+        // Set formik values
+        formik.setValues({
+          title: data.title,
+          detail: data.body,
+          hashtags: data.tagList,
+          files: [], // Set formik values to restoredImgList
         });
       } catch (error) {
         console.error(error);
@@ -96,16 +111,19 @@ const Edit = () => {
 
   useEffect(() => {
     if (
-      detailArr.title.length > 0 &&
-      detailArr.body.length > 0 &&
-      detailArr.tagList.length > 0 &&
-      detailArr.imgList.length > 0
+      formik.values.title.length > 0 &&
+      formik.values.detail.length > 0 &&
+      formik.values.hashtags.length > 0 &&
+      formik.values.files.length > 0
     ) {
       setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [detailArr.title, detailArr.body, detailArr.tagList, detailArr.imgList]);
+    } else setIsDisabled(true);
+  }, [
+    formik.values.title,
+    formik.values.detail,
+    formik.values.hashtags,
+    formik.values.files,
+  ]);
 
   // console.log(detailArr.title);
   // console.log(detailArr.body);
@@ -125,15 +143,10 @@ const Edit = () => {
   };
 
   const handleInputConfirm = () => {
-    if (
-      inputValue &&
-      !formik.values.hashtags.some((tag) => tag.body === inputValue)
-    ) {
-      const newTag = {
-        tagId: formik.values.hashtags.length + 1,
-        body: inputValue,
-      };
-      const newTags = [...formik.values.hashtags, newTag];
+    if (inputValue && !formik.values.hashtags.includes(inputValue)) {
+      const newTags = [...formik.values.hashtags, { body: inputValue }];
+      console.log(newTags);
+
       formik.setFieldValue('hashtags', newTags); // Update Formik state
     }
     setInputVisible(false);
@@ -163,56 +176,49 @@ const Edit = () => {
   };
 
   const handleChange = ({ fileList }) => {
-    // console.log(fileList[fileList.length - 1].type);
-    if (fileList.length === 0) {
-      formik.setFieldValue('files', fileList);
-    } else {
-      if (fileList[fileList.length - 1].type === undefined) {
-        formik.setFieldValue('files', fileList);
-      } else {
-        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
-        if (
-          fileList.length > 0 &&
-          !validTypes.includes(fileList[fileList.length - 1].type)
-        ) {
-          message.error({
-            content: (
-              <TextBox typography="body4" fontWeight={'400'}>
-                지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.
-              </TextBox>
+    const validFiles = [];
+    const filePromises = fileList.map((file) =>
+      yup
+        .object()
+        .shape({
+          originFileObj: yup
+            .mixed()
+            .required('이미지를 업로드해주세요.')
+            .test(
+              'fileType',
+              '지원하는 파일 형식은 JPG, JPEG, GIF, PNG 입니다.',
+              (value) => {
+                if (!value) return false; // Handle empty values
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                return (
+                  validTypes.includes(value.type) ||
+                  value.name.match(/\.(jpg|jpeg|png|gif)$/i)
+                );
+              },
             ),
-            duration: 2,
-            style: {
-              width: '346px',
-              height: '41px',
-            },
+        })
+        .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
+        .then(async () => {
+          const url = await getBase64(file.originFileObj);
+          validFiles.push({
+            ...file,
+            originFileObj: file.originFileObj,
+            blobUrl: url,
+            isThumbnail: false,
           });
-        } else {
-          // imgId, imgUrl, isThumbnail
-          const imageObjects = [];
-          fileList.forEach((item, index) => {
-            // 이미지 객체인지 판단 (imgId 속성이 있는지 확인)
-            if (item.imgId !== undefined) {
-              // 이미지 객체일 경우 그대로 추가
-              imageObjects.push(item);
-            } else {
-              // 파일 업로드 객체일 경우, 이미지 객체로 변환하여 추가
-              console.log(item);
-              const blobUrl = URL.createObjectURL(item.originFileObj);
-              const imageObj = {
-                imgId: index + 1, // 예시로 순차적으로 부여되는 이미지 ID
-                imgUrl: blobUrl, // uid를 기반으로 imgUrl 생성
-                isThumbnail: index === 0 ? true : false, // 예시로 첫 번째는 썸네일이 아니고, 나머지는 썸네일로 설정
-                uid: `__AUTO__1718729428846_${index}__`, // 예시로 고유한 uid 생성
-              };
-              imageObjects.push(imageObj);
-            }
-            formik.setFieldValue('files', imageObjects);
-          });
-        }
+        })
+        .catch((error) => {
+          message.error(error.message);
+        }),
+    );
+
+    Promise.all(filePromises).then(() => {
+      if (validFiles.length > 0) {
+        // Set the isThumbnail property of the last item to true
+        validFiles[validFiles.length - 1].isThumbnail = true;
       }
-    }
+      formik.setFieldValue('files', validFiles);
+    });
   };
 
   const uploadButton = (
@@ -229,7 +235,6 @@ const Edit = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
-
   return (
     <StyledLayout>
       {isLoading ? (
