@@ -56,7 +56,7 @@ const MainHeader = () => {
   const onSearch = (value) => {
     if (value.length > 0) {
       setConfirmLoading(true);
-      setTimeout(() => {
+      setTimeout(async () => {
         setOpen(false);
         setConfirmLoading(false);
         handleChangeUrl(`/search/${value}`);
