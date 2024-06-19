@@ -27,6 +27,7 @@ const MyPage = () => {
     const fetchData = async () => {
       try {
         const response = await MemberAPI.viewMemberInfoAPI();
+        console.log(response);
         setMemberInfo(response.data.data);
       } catch (error) {
         console.error(error);
