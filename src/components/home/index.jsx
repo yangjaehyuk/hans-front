@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Card, Carousel } from 'antd';
@@ -189,13 +189,31 @@ const StyledTextOverlay = styled(motion.div)`
 
 const HomeCard = ({ thumbnail_img_url, title, nickname, postId }) => {
   const { handleChangeUrl } = useCustomNavigate();
+  const [blobUrl, setBlobUrl] = useState('');
 
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await fetch(thumbnail_img_url, { mode: 'cors' });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        setBlobUrl(url);
+      } catch (error) {
+        console.error('Fetch image failed:', error);
+      }
+    };
+
+    fetchImage();
+  }, [thumbnail_img_url]);
   return (
     <CardContainer>
       <StyledCard
         hoverable
         style={{ width: 240 }}
-        cover={<StyledCardCover alt="example" src={thumbnail_img_url} />}
+        cover={<StyledCardCover alt="example" src={blobUrl} />}
         onClick={() => handleChangeUrl(`/detail/${postId}`)}
       >
         <Meta title={title} description={nickname} />
