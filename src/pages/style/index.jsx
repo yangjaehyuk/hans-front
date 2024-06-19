@@ -29,7 +29,7 @@ const Style = () => {
         const res = await PostAPI.viewEmptyAPI();
         setStylishArr(res.data.data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -46,6 +46,7 @@ const Style = () => {
 
     return () => {};
   }, []);
+  console.log('여기스타일리시', stylishArr);
   return (
     <Wrapper>
       {isLoading ? (
@@ -105,6 +106,7 @@ const Style = () => {
                   paddingBottom: '15vh',
                   cursor: 'default',
                   margin: '0 auto',
+                  width: '100%',
                 }}
               >
                 <div
@@ -112,6 +114,7 @@ const Style = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     paddingBottom: '5vh',
+                    width: '100%',
                   }}
                 >
                   <TextBox typography="h1" fontWeight={'700'}>
@@ -125,7 +128,6 @@ const Style = () => {
                   fourth="여름맞이"
                 ></StyleContainer>
               </div>
-              {/* <SearchPagination arr={arr} pageSize={8} /> */}
             </Inner>
           </SubContainer>
 
@@ -136,6 +138,7 @@ const Style = () => {
                   paddingBottom: '15vh',
                   cursor: 'default',
                   margin: '0 auto',
+                  width: '100%',
                 }}
               >
                 <div
@@ -143,6 +146,7 @@ const Style = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     paddingBottom: '5vh',
+                    width: '100%',
                   }}
                 >
                   <TextBox typography="h1" fontWeight={'700'}>
@@ -156,7 +160,6 @@ const Style = () => {
                   fourth="쇼츠"
                 ></StyleContainer>
               </div>
-              {/* <SearchPagination arr={arr} pageSize={8} /> */}
             </Inner>
           </SubContainer>
         </>
