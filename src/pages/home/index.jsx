@@ -4,7 +4,16 @@ import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
 import { Spin } from 'antd';
 import PostAPI from '../../api/post-api';
+import { getCookie } from '../../utils/cookie';
+import { memberState } from '../../stores/atom/member-atom';
+import { useRecoilValue } from 'recoil';
+import { useCustomNavigate } from '../../hooks';
+import { ROUTES } from '../../constants/routes';
 const Home = () => {
+  const accessToken = getCookie('accessToken');
+  const memberData = useRecoilValue(memberState);
+  const { handleChangeUrl } = useCustomNavigate();
+  // console.log(memberData.nickname, memberData.profileImage);
   // heres to you loading
   const [isLoading1, setIsLoading1] = useState(true);
 
@@ -76,18 +85,46 @@ const Home = () => {
               Here&apos;s to you
             </TextBox>
           </div>
-
-          <InnerContainer>
-            {/* {arr.map((item, index) => (
-              <HomeCard
-                key={index}
-                thumbnail_img_url={item.thumbnail_img_url}
-                title={item.title}
-                nickname={item.nickname}
-                postId={item.postId}
-              />
-            ))} */}
-          </InnerContainer>
+          {accessToken &&
+          memberData.nickname !== '' &&
+          memberData.profileImage !== '' ? (
+            <InnerContainer>
+              {arr.map((item, index) => (
+                <HomeCard
+                  key={index}
+                  thumbnail_img_url={item.thumbnail_img_url}
+                  title={item.title}
+                  nickname={item.nickname}
+                  postId={item.postId}
+                />
+              ))}
+            </InnerContainer>
+          ) : (
+            <>
+              <InnerContainer>
+                {arr.map((item, index) => (
+                  <HomeCard
+                    key={index}
+                    thumbnail_img_url={item.thumbnail_img_url}
+                    title={item.title}
+                    nickname={item.nickname}
+                    postId={item.postId}
+                  />
+                ))}
+              </InnerContainer>
+              <InnerText>
+                To view personalized products,{' '}
+                <div
+                  onClick={() => {
+                    handleChangeUrl(ROUTES.SIGNIN);
+                  }}
+                >
+                  sign in
+                </div>{' '}
+                to our website.
+              </InnerText>
+            </>
+          )}
         </DeepInner>
       </SubContainer>
       <SubContainer>
@@ -126,6 +163,20 @@ const Home = () => {
     </Container>
   );
 };
+
+const InnerText = styled.div`
+  margin: 0 auto;
+  font-size: 5vh;
+  cursor: default;
+  padding-top: 5vh;
+  div {
+    display: inline;
+    cursor: pointer;
+  }
+  & div:hover {
+    font-weight: bold;
+  }
+`;
 const LoadingContainer = styled.div`
   display: flex;
   height: 100%;
