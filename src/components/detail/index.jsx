@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Card, Carousel } from 'antd';
@@ -6,26 +6,48 @@ import { Card, Carousel } from 'antd';
 const { Meta } = Card;
 
 const DetailCarousel = ({ images }) => {
-  const [animate, setAnimate] = useState(true);
+  const [imageBlobs, setImageBlobs] = useState([]);
 
-  const handleBeforeChange = () => {
-    setAnimate(false);
-  };
+  useEffect(() => {
+    const fetchAndStoreBlobs = async () => {
+      try {
+        const fetchedBlobs = await Promise.all(
+          images.map(async (element) => {
+            const response = await fetch(element.imgUrl, { mode: 'cors' });
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const blob = await response.blob();
+            return blob;
+          }),
+        );
 
-  const handleAfterChange = () => {
-    setAnimate(true);
-  };
+        // Convert blobs to URLs and store in localStorage
+        const blobUrls = fetchedBlobs.map((blob) => URL.createObjectURL(blob));
+        console.log('여기', blobUrls);
+        localStorage.setItem('imageBlobs', JSON.stringify(blobUrls));
+        setImageBlobs(blobUrls);
+      } catch (error) {
+        console.error('Error fetching or storing blobs:', error);
+      }
+    };
+
+    fetchAndStoreBlobs();
+
+    return () => {
+      // Clean up blob URLs when component unmounts
+      imageBlobs.forEach((blobUrl) => URL.revokeObjectURL(blobUrl));
+    };
+  }, [images]);
+
+  if (imageBlobs.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <StyledCarousel
-      arrows
-      infinite
-      autoplay
-      beforeChange={handleBeforeChange}
-      afterChange={handleAfterChange}
-    >
-      {images.map((element, index) => (
-        <CarouselItem key={index} imgUrl={element.imgUrl} />
+    <StyledCarousel arrows infinite autoplay>
+      {imageBlobs.map((blobUrl, index) => (
+        <CarouselItem key={index} imgUrl={blobUrl} />
       ))}
     </StyledCarousel>
   );
@@ -57,10 +79,11 @@ const StyledCarousel = styled(Carousel)`
   overflow: hidden;
   height: 100%;
 `;
+
 const StyledImage = styled.img`
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 100vh;
+  object-fit: fill;
 `;
 
 const ItemContainer = styled.div`
