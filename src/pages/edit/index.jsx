@@ -51,6 +51,7 @@ const Edit = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
+        setIsDisabled(true);
         const blobUrls = values.files.map((file) => ({
           imgUrl: file.blobUrl,
           isThumbnail: file.isThumbnail,
@@ -64,9 +65,10 @@ const Edit = () => {
           tagList: values.hashtags,
           imgList: blobUrls,
         });
-        // window.location.href = `http://localhost:3000/detail/${postId}`;
+        window.location.href = `http://localhost:3000/detail/${postId}`;
         // handleChangeUrl('/style');
       } catch (error) {
+        setIsDisabled(false);
         console.error(error);
       }
     },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import ValidateSchema from '../../utils/sign-in/validateSchema';
@@ -16,7 +16,7 @@ const SignInContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const setMemberState = useSetRecoilState(memberState);
   const memberData = useRecoilValue(memberState);
-
+  const [isDisabled, setIsDisabled] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,6 +25,7 @@ const SignInContainer = () => {
     validationSchema: ValidateSchema,
     onSubmit: async (values) => {
       try {
+        setIsDisabled(true);
         const response = await MemberAPI.signInAPI({
           email: values.email,
           password: values.password,
@@ -51,6 +52,8 @@ const SignInContainer = () => {
           console.error('Error fetching profile:', profileError);
         }
       } catch (signInError) {
+        setIsDisabled(false);
+
         console.error('Error signing in:', signInError);
         message.error({
           content: (
@@ -135,6 +138,7 @@ const SignInContainer = () => {
                   htmlType="submit"
                   type="primary"
                   onClick={handleOnclick}
+                  disabled={isDisabled}
                 >
                   <TextBox
                     typography="h5"

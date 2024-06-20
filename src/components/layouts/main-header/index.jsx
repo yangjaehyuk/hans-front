@@ -22,6 +22,7 @@ const MainHeader = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { handleChangeUrl } = useCustomNavigate();
   const [inputDisabled, setInputDisabled] = useState(false);
+  const [signoutDisabled, setSignOutDisabled] = useState(false);
   const showMessage = SignOutContainer();
   const memberData = useRecoilValue(memberState);
   const accessToken = getCookie('accessToken');
@@ -32,6 +33,7 @@ const MainHeader = () => {
 
   const handleLogout = async () => {
     try {
+      setSignOutDisabled(true);
       await MemberAPI.signOutAPI();
       clearPersistedState();
       window.location.href = 'http://localhost:3000/';
@@ -134,7 +136,10 @@ const MainHeader = () => {
 
         {accessToken ? (
           <>
-            <StyledLogoutIcon onClick={handleLogout} />
+            <StyledLogoutIcon
+              onClick={handleLogout}
+              disabled={signoutDisabled}
+            />
             <ProfileImage>
               <img
                 src={memberData.profileImage}

@@ -27,12 +27,12 @@ const ModifyContainer = () => {
   const [checkTwo_2, setCheckTwo_2] = useState(false);
   const [checkThree, setCheckThree] = useState(false);
   const [checkFour, setCheckFour] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
   const [nicknameError, setNicknameError] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(false);
   const formik = useFormik({
     initialValues: {
       files: [],
@@ -45,6 +45,7 @@ const ModifyContainer = () => {
       // handle form submission
       console.log(values.files[0].blobUrl);
       try {
+        setIsDisabled(true);
         await MemberAPI.editMemberInfoAPI({
           profileImg: values.files[0].blobUrl,
           nickname: values.nickname,
@@ -69,6 +70,7 @@ const ModifyContainer = () => {
         });
         setIsSubmitted(true);
       } catch (error) {
+        setIsDisabled(false);
         console.error(error);
         message.error({
           content: (
@@ -146,13 +148,13 @@ const ModifyContainer = () => {
   const handleNicknameCheck = async () => {
     if (values.nickname.length > 0 && (!touched.nickname || !errors.nickname)) {
       try {
-        await MemberAPI.checkDuplicatedNicknameAPI({
-          nickname: formik.values.nickname,
-        });
         setNicknameDisabled(true);
         setCheckTwo(true);
 
         setCheckTwo_2(false);
+        await MemberAPI.checkDuplicatedNicknameAPI({
+          nickname: formik.values.nickname,
+        });
       } catch (error) {
         console.error(error);
         setCheckTwo_2(true);
@@ -245,12 +247,12 @@ const ModifyContainer = () => {
             ),
         })
         .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
-        .then(() => {
-          const blobUrl = URL.createObjectURL(file.originFileObj);
+        .then(async () => {
+          const url = await getBase64(file.originFileObj);
           validFiles.push({
             ...file,
             originFileObj: file.originFileObj,
-            blobUrl,
+            blobUrl: url,
           });
         })
         .catch((error) => {

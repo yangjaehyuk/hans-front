@@ -18,7 +18,6 @@ import styled from 'styled-components';
 import { colors } from '../../constants/colors';
 import ValidateSchema from '../../utils/post/validateSchema';
 import { TextBox } from '../../stores/atom/text-box';
-import { useCustomNavigate } from '../../hooks';
 import * as yup from 'yup';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
@@ -70,7 +69,6 @@ DebounceSelect.propTypes = {
 };
 
 const Post = () => {
-  const { handleChangeUrl } = useCustomNavigate();
   const { token } = theme.useToken();
 
   const [inputVisible, setInputVisible] = useState(false);
@@ -101,6 +99,7 @@ const Post = () => {
       try {
         const blobUrls = values.files.map((file) => file.blobUrl);
         console.log(blobUrls);
+        setIsDisabled(true);
         await PostAPI.writePostAPI({
           title: values.title,
           body: values.detail,
@@ -110,6 +109,7 @@ const Post = () => {
         });
         window.location.href = 'http://localhost:3000/style';
       } catch (error) {
+        setIsDisabled(false);
         console.error(error);
       }
     },

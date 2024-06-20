@@ -24,7 +24,6 @@ const SignUpContainer = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
-
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const formik = useFormik({
@@ -38,6 +37,7 @@ const SignUpContainer = () => {
     onSubmit: async (values) => {
       // handle form submission
       try {
+        setIsDisabled(true);
         await MemberAPI.signUpAPI({
           email: values.email,
           nickname: values.nickname,
@@ -118,12 +118,12 @@ const SignUpContainer = () => {
   const handleEmailCheck = async () => {
     if (values.email.length > 0 && (!touched.email || !errors.email)) {
       try {
-        await MemberAPI.checkDuplicatedEmailAPI({
-          email: formik.values.email,
-        });
         setEmailDisabled(true);
         setCheckOne(true);
         setCheckOne_3(false);
+        await MemberAPI.checkDuplicatedEmailAPI({
+          email: formik.values.email,
+        });
       } catch (error) {
         setCheckOne_3(true);
         console.error(error);
@@ -147,13 +147,12 @@ const SignUpContainer = () => {
   const handleNicknameCheck = async () => {
     if (values.nickname.length > 0 && (!touched.nickname || !errors.nickname)) {
       try {
+        setNicknameDisabled(true);
+        setCheckTwo(true);
+        setCheckTwo_2(false);
         await MemberAPI.checkDuplicatedNicknameAPI({
           nickname: formik.values.nickname,
         });
-        setNicknameDisabled(true);
-        setCheckTwo(true);
-
-        setCheckTwo_2(false);
       } catch (error) {
         console.error(error);
         setCheckTwo_2(true);
