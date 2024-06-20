@@ -10,14 +10,12 @@ import image5 from '../../assets/image/random5.png';
 import image6 from '../../assets/image/random6.jpg';
 import image7 from '../../assets/image/random7.jpg';
 import { PlusOutlined } from '@ant-design/icons';
-import { useCustomNavigate } from '../../hooks';
 import StyleContainer from '../../components/style';
 import PostAPI from '../../api/post-api';
 import { getCookie } from '../../utils/cookie';
 import { Spin } from 'antd';
 const Style = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { handleChangeUrl } = useCustomNavigate();
   const randomArr = [image1, image2, image3, image4, image5, image6, image7];
   const [randomItem, setRandomItem] = useState(null);
   const accessToken = getCookie('accessToken');
@@ -46,7 +44,6 @@ const Style = () => {
 
     return () => {};
   }, []);
-  console.log('여기스타일리시', stylishArr);
   return (
     <Wrapper>
       {isLoading ? (
