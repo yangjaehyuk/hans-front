@@ -188,7 +188,7 @@ const Detail = () => {
                   }}
                 >
                   <ProfileImage src={detailArr.profileImg} alt="Profile" />
-                  <TextBox typography="body3" fontWeight={'700'}>
+                  <TextBox typography="body2" fontWeight={'700'}>
                     {detailArr.nickname}
                   </TextBox>
                 </div>
@@ -236,23 +236,29 @@ const Detail = () => {
                   >
                     <ProfileImage src={detailArr.profileImg} alt="Profile" />
                   </div>
-                  <TextBox typography="body3" fontWeight={'700'}>
+                  <TextBox typography="body2" fontWeight={'700'}>
                     {detailArr.nickname}
                   </TextBox>
                   <div style={{ marginLeft: '10px' }}>
-                    <TextBox typography="body3" fontWeight={'700'}>
+                    <TextBox typography="body2" fontWeight={'700'}>
                       {detailArr.title}
                     </TextBox>
                   </div>
                 </div>
                 <div style={{ marginLeft: '46px' }}>
-                  <TextBox typography="body2" fontWeight={'500'}>
+                  <TextBox typography="body1" fontWeight={'500'}>
                     {detailArr.body}
                   </TextBox>
                   <TagListContainer>
-                    {detailArr.tagList.map((tag) => (
-                      <Hashtags key={tag.tagId}>#{tag.body}</Hashtags>
-                    ))}
+                    <TextBox
+                      typography="body2"
+                      fontWeight={'500'}
+                      style={{ display: 'flex' }}
+                    >
+                      {detailArr.tagList.map((tag) => (
+                        <Hashtags key={tag.tagId}>#{tag.body} </Hashtags>
+                      ))}
+                    </TextBox>
                   </TagListContainer>
                 </div>
               </PostDescription>
@@ -271,11 +277,13 @@ const Detail = () => {
                     <SendIcon onClick={(e) => e.preventDefault()} />
                   </Dropdown>
                 </div>
-                <LikeCount>좋아요 {detailArr.likesCount}개</LikeCount>
+                <TextBox typography="body2" fontWeight={'700'}>
+                  <LikeCount>좋아요 {detailArr.likesCount}개</LikeCount>
+                </TextBox>
               </LikeSection>
               <LikeSectionDivider /> {/* 줄 추가 */}
               <AdditionalImagesContainer>
-                <TextBox typography="body2" fontWeight={'700'}>
+                <TextBox typography="body1" fontWeight={'700'}>
                   Related Products
                 </TextBox>
                 <DetailCard
@@ -301,6 +309,7 @@ const LoadingContainer = styled.div`
   align-items: center;
   margin: 0 auto;
 `;
+
 const BlackSpin = styled(Spin)`
   .ant-spin-dot {
     i {
@@ -338,7 +347,7 @@ const DetailContainer = styled.div`
 const PostWrapper = styled.div`
   border: 2px solid #dbdbdb; /* 외부 테두리 */
   border-radius: 10px; /* 둥근 테두리 적용 */
-  width: 1000px; /* 너비를 1000px로 증가 */
+  width: 900px;
   margin-bottom: 20px;
   background-color: white;
   display: flex; /* 가로로 나열하기 위해 flex 속성 추가 */
@@ -370,8 +379,8 @@ const PostHeader = styled.div`
 `;
 
 const ProfileImage = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-right: 14px;
 `;
