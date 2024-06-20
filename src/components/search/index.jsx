@@ -29,11 +29,10 @@ const SearchPagination = ({ arr = [], pageSize = 8 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const dataArray = Array.isArray(arr) ? arr : [];
   const totalPages = Math.ceil(dataArray.length / pageSize);
-  console.log(totalPages);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, arr.length);
   const displayItems = dataArray.slice(startIndex, endIndex);
-  console.log(displayItems);
+  console.log('여기', displayItems);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
