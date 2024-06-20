@@ -16,6 +16,19 @@ const PostAPI = {
     });
   },
 
+  // 추천
+  viewRecommendPostsAPI: () => {
+    return instance.get('posts', {
+      params: {
+        page: 0,
+        size: 100,
+        sort: 'post_likes',
+        by: 'desc',
+      },
+    });
+  },
+
+  // 최신
   viewRecentPostsAPI: () => {
     return instance.get('posts', {
       params: {
