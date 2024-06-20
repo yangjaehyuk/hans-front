@@ -67,29 +67,44 @@ const Detail = () => {
     setIsModalOpen(false);
   };
   const handleLike = async () => {
-    setIsLike(!isLike);
-    if (isLike) {
-      setDetailArr((prevState) => ({
-        ...prevState,
-        likesCount: prevState.likesCount - 1,
-      }));
-      try {
-        await PostAPI.recommendPostAPI(postId);
-      } catch (error) {
-        console.error(error);
+    if (accessToken) {
+      setIsLike(!isLike);
+      if (isLike) {
+        setDetailArr((prevState) => ({
+          ...prevState,
+          likesCount: prevState.likesCount - 1,
+        }));
+        try {
+          await PostAPI.recommendPostAPI(postId);
+        } catch (error) {
+          console.error(error);
+        }
+        // 변한 카운트를 api 요청
+      } else {
+        setDetailArr((prevState) => ({
+          ...prevState,
+          likesCount: prevState.likesCount + 1,
+        }));
+        // 변한 카운트를 api 요청
+        try {
+          await PostAPI.recommendPostAPI(postId);
+        } catch (error) {
+          console.error(error);
+        }
       }
-      // 변한 카운트를 api 요청
     } else {
-      setDetailArr((prevState) => ({
-        ...prevState,
-        likesCount: prevState.likesCount + 1,
-      }));
-      // 변한 카운트를 api 요청
-      try {
-        await PostAPI.recommendPostAPI(postId);
-      } catch (error) {
-        console.error(error);
-      }
+      message.error({
+        content: (
+          <TextBox typography="body3" fontWeight={'400'}>
+            로그인이 필요한 서비스 입니다.
+          </TextBox>
+        ),
+        duration: 2,
+        style: {
+          width: '346px',
+          height: '41px',
+        },
+      });
     }
   };
 
@@ -378,16 +393,12 @@ const LikeSection = styled.div`
   margin-top: 20px;
 `;
 
-const LikeIcon = styled(HeartOutlined).attrs((props) => ({
-  style: {
-    color: props.islike ? '#ff6f61' : 'black',
-    fill: props.islike ? '#ff6f61' : 'transparent',
-  },
-}))`
+const LikeIcon = styled(HeartOutlined)`
   font-size: 24px;
   cursor: pointer;
   border-radius: 50%;
   padding: 5px;
+  color: ${(props) => (props.islike ? '#ff6f61' : 'black')};
 
   &:hover {
     color: #ff6f61;
