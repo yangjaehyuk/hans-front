@@ -73,17 +73,17 @@ const Home = () => {
     <Container>
       <HomeCarousel />
       <SubContainer>
-        <DeepInner>
+        <Inner>
           <div
             style={{
+              borderTop: '1px solid black',
               paddingBottom: '7vh',
               cursor: 'default',
               margin: '0 auto',
+              paddingTop: '3.5vh',
             }}
           >
-            <TextBox typography="h1" fontWeight={'700'}>
-              Here&apos;s to you
-            </TextBox>
+            <CustomTextBox>Here&apos;s to you</CustomTextBox>
           </div>
           {accessToken &&
           memberData.nickname !== '' &&
@@ -125,15 +125,17 @@ const Home = () => {
               </InnerText>
             </>
           )}
-        </DeepInner>
+        </Inner>
       </SubContainer>
       <SubContainer>
         <Inner>
           <div
             style={{
+              borderTop: '1px solid black',
               paddingBottom: '7vh',
               cursor: 'default',
               margin: '0 auto',
+              paddingTop: '3.5vh',
             }}
           >
             <TextBox typography="h3" fontWeight={'700'}>
@@ -164,6 +166,12 @@ const Home = () => {
   );
 };
 
+const CustomTextBox = styled(TextBox)`
+  font-size: 4rem;
+  font-weight: 700;
+  padding-top: 3vh;
+`;
+
 const InnerText = styled.div`
   margin: 0 auto;
   font-size: 5vh;
@@ -172,6 +180,7 @@ const InnerText = styled.div`
   div {
     display: inline;
     cursor: pointer;
+    font-weight: bold;
   }
   & div:hover {
     font-weight: bold;
@@ -215,9 +224,6 @@ const Inner = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10vh 1vw 10vh 1vw;
-`;
-const DeepInner = styled(Inner)`
-  border: 1px solid black;
 `;
 
 export default Home;

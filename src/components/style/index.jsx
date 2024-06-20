@@ -63,7 +63,7 @@ const StyleContainer = ({ first, second, third, fourth }) => {
             <Radio.Button value="c">{third}</Radio.Button>
             <Radio.Button value="d">{fourth}</Radio.Button>
           </StyledRadioGroup>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', paddingTop: '10vh' }}>
             <SearchPagination arr={arr} pageSize={8} />
           </div>
         </>

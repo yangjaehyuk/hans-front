@@ -105,7 +105,7 @@ const DetailCard = ({ productPrice, productImg, productUrl, productName }) => {
           style={{ width: 240 }}
           cover={<StyledCardCover alt="example" src={productImg} />}
         >
-          <Meta title={productName} description={formattedPrice} />
+          <StyledMeta title={productName} description={formattedPrice} />
         </StyledCard>
       </a>
     </CardContainer>
@@ -127,11 +127,25 @@ const CardContainer = styled.div`
 
 const StyledCard = styled(Card)`
   width: 240px;
+  border: 1px solid black;
 `;
 
 const StyledCardCover = styled.img`
   height: 300px;
   object-fit: fill;
+  border: 1px solid black;
+`;
+
+const StyledMeta = styled(Meta)`
+  .ant-card-meta-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .ant-card-meta-description {
+    font-size: 15px;
+    color: gray;
+  }
 `;
 
 export { DetailCarousel, DetailCard };

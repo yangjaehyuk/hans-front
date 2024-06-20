@@ -75,12 +75,16 @@ const Style = () => {
                 }}
               >
                 <StylishContainer>
-                  <div style={{ margin: '0 auto' }}>
-                    <TextBox
-                      typography="h1"
-                      fontWeight={'700'}
-                      style={{ textAlign: 'center' }}
-                    >
+                  <div
+                    style={{
+                      borderTop: '1px solid black',
+                      paddingBottom: '7vh',
+                      cursor: 'default',
+                      margin: '0 auto',
+                      paddingTop: '3.5vh',
+                    }}
+                  >
+                    <TextBox typography="h1" fontWeight={'700'}>
                       Most Stylish
                     </TextBox>
                   </div>
@@ -117,9 +121,19 @@ const Style = () => {
                     width: '100%',
                   }}
                 >
-                  <TextBox typography="h1" fontWeight={'700'}>
-                    In Fashion
-                  </TextBox>
+                  <div
+                    style={{
+                      borderTop: '1px solid black',
+                      paddingBottom: '7vh',
+                      cursor: 'default',
+                      margin: '0 auto',
+                      paddingTop: '3.5vh',
+                    }}
+                  >
+                    <TextBox typography="h1" fontWeight={'700'}>
+                      In Fashion
+                    </TextBox>
+                  </div>
                 </div>
                 <StyleContainer
                   first="ootd"
@@ -149,9 +163,19 @@ const Style = () => {
                     width: '100%',
                   }}
                 >
-                  <TextBox typography="h1" fontWeight={'700'}>
-                    Categories
-                  </TextBox>
+                  <div
+                    style={{
+                      borderTop: '1px solid black',
+                      paddingBottom: '7vh',
+                      cursor: 'default',
+                      margin: '0 auto',
+                      paddingTop: '3.5vh',
+                    }}
+                  >
+                    <TextBox typography="h1" fontWeight={'700'}>
+                      Categories
+                    </TextBox>
+                  </div>
                 </div>
                 <StyleContainer
                   first="원피스"

@@ -72,7 +72,15 @@ const MyPage = () => {
             }}
           >
             <StylishContainer>
-              <div style={{ margin: '0 auto' }}>
+              <div
+                style={{
+                  borderTop: '1px solid black',
+                  paddingBottom: '7vh',
+                  cursor: 'default',
+                  margin: '0 auto',
+                  paddingTop: '3.5vh',
+                }}
+              >
                 <TextBox
                   typography="h1"
                   fontWeight={'700'}
@@ -101,7 +109,15 @@ const MyPage = () => {
       </SubContainer>
       <SubContainer>
         <Inner>
-          <div style={{ margin: '0 auto', cursor: 'default' }}>
+          <div
+            style={{
+              borderTop: '1px solid black',
+              paddingBottom: '7vh',
+              cursor: 'default',
+              margin: '0 auto',
+              paddingTop: '3.5vh',
+            }}
+          >
             <TextBox
               typography="h1"
               fontWeight={'700'}
@@ -142,13 +158,23 @@ const MyPage = () => {
                 justifyContent: 'center',
               }}
             >
-              <TextBox
-                typography="h1"
-                fontWeight={'700'}
-                style={{ textAlign: 'center' }}
+              <div
+                style={{
+                  borderTop: '1px solid black',
+                  paddingBottom: '7vh',
+                  cursor: 'default',
+                  margin: '0 auto',
+                  paddingTop: '3.5vh',
+                }}
               >
-                Recent Posts
-              </TextBox>
+                <TextBox
+                  typography="h1"
+                  fontWeight={'700'}
+                  style={{ textAlign: 'center' }}
+                >
+                  Recent Posts
+                </TextBox>
+              </div>
             </div>
           </div>
           <SearchPagination arr={memberInfo.postList} pageSize={4} />
