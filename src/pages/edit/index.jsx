@@ -65,6 +65,7 @@ const Edit = () => {
           tagList: values.hashtags,
           imgList: blobUrls,
         });
+        // console.log(values.hashtags);
         window.location.href = `http://localhost:3000/detail/${postId}`;
         // handleChangeUrl('/style');
       } catch (error) {
@@ -80,20 +81,12 @@ const Edit = () => {
       try {
         const response = await PostAPI.viewPostDetailAPI(postId);
         const data = response.data.data;
-
-        // Set formik values
+        setDetailArr(data);
         formik.setValues({
           title: data.title,
           detail: data.body,
           hashtags: data.tagList,
-          files: data.imgList, // Set formik values to restoredImgList
-        });
-        // Set formik values
-        formik.setValues({
-          title: data.title,
-          detail: data.body,
-          hashtags: data.tagList,
-          files: [], // Set formik values to restoredImgList
+          files: [],
         });
       } catch (error) {
         console.error(error);
@@ -156,13 +149,15 @@ const Edit = () => {
   };
 
   const handleClose = (removedTag) => {
-    const newTags = formik.values.hashtags.filter((tag) => tag !== removedTag);
+    const newTags = formik.values.hashtags.filter(
+      (tag) => tag.body !== removedTag,
+    );
     formik.setFieldValue('hashtags', newTags); // Update Formik state
   };
 
   const forMap = (tagObject, index) => (
-    <span key={`${tagObject.tagId}-${index}`}>
-      <Tag closable onClose={() => handleClose(tagObject.tagId)}>
+    <span key={`${tagObject.body}-${index}`}>
+      <Tag closable onClose={() => handleClose(tagObject.body)}>
         {tagObject.body}
       </Tag>
     </span>
@@ -318,7 +313,7 @@ const Edit = () => {
                       maxWidth: '100%',
                     }}
                     key={formik.values.hashtags
-                      .map((tag) => tag.tagId)
+                      .map((tag) => tag.body)
                       .join(',')}
                     enter={{
                       scale: 0.8,
