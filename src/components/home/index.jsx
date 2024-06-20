@@ -185,6 +185,8 @@ const StyledTextOverlay = styled(motion.div)`
   line-height: ${(props) => props.lineHeight};
   opacity: 1;
   color: white;
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const HomeCard = ({ thumbnail_img_url, title, nickname, postId }) => {
@@ -216,7 +218,7 @@ const HomeCard = ({ thumbnail_img_url, title, nickname, postId }) => {
         cover={<StyledCardCover alt="example" src={blobUrl} />}
         onClick={() => handleChangeUrl(`/detail/${postId}`)}
       >
-        <Meta title={title} description={nickname} />
+        <StyledMeta title={title} description={nickname} />
       </StyledCard>
     </CardContainer>
   );
@@ -237,11 +239,25 @@ const CardContainer = styled.div`
 
 const StyledCard = styled(Card)`
   width: 240px;
+  border: 1px solid gray;
 `;
 
 const StyledCardCover = styled.img`
   height: 300px;
   object-fit: fill;
+  border: 1px solid gray;
+`;
+
+const StyledMeta = styled(Meta)`
+  .ant-card-meta-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .ant-card-meta-description {
+    font-size: 15px;
+    color: gray;
+  }
 `;
 
 export { HomeCarousel, HomeCard };
