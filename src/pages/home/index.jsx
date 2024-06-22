@@ -9,7 +9,8 @@ import { useCustomNavigate } from '../../hooks';
 import { ROUTES } from '../../constants/routes';
 const Home = () => {
   const { handleChangeUrl } = useCustomNavigate();
-  const [timeArr, setTimeArr] = useState([]);
+  const [timeArr, setTimeArr] = useState(Array.from({ length: 8 }));
+
   // console.log(memberData.nickname, memberData.profileImage);
   // heres to you loading
   const [isCheck, setIsCheck] = useState(false);
@@ -18,7 +19,7 @@ const Home = () => {
   // new arrivals loading
   const [isLoading2, setIsLoading2] = useState(true);
 
-  const [arr, setArr] = useState([]);
+  const [arr, setArr] = useState(new Array(4).fill({}));
   useEffect(() => {
     //heres to you
     setIsLoading1(true);
@@ -82,7 +83,7 @@ const Home = () => {
             </LoadingContainer>
           ) : isCheck ? (
             <InnerContainer>
-              {arr.map((item, index) => (
+              {arr.slice(arr.length - 4, arr.length).map((item, index) => (
                 <HomeCard
                   key={index}
                   thumbnail_img_url={item.thumbNailImgUrl}
@@ -95,7 +96,7 @@ const Home = () => {
           ) : (
             <>
               <InnerContainer>
-                {arr.map((item, index) => (
+                {arr.slice(0, 4).map((item, index) => (
                   <HomeCard
                     key={index}
                     thumbnail_img_url={item.thumbNailImgUrl}
@@ -142,13 +143,13 @@ const Home = () => {
             </LoadingContainer>
           ) : (
             <InnerContainer>
-              {timeArr.map((item, index) => (
+              {timeArr.slice(0, 8).map((item, index) => (
                 <HomeCard
                   key={index}
-                  thumbnail_img_url={item.thumbNailImgUrl}
-                  title={item.title}
-                  nickname={item.nickname}
-                  postId={item.postId}
+                  thumbnail_img_url={item?.thumbNailImgUrl} // Using optional chaining here
+                  title={item?.title} // Using optional chaining here
+                  nickname={item?.nickname} // Using optional chaining here
+                  postId={item?.postId} // Using optional chaining here
                 />
               ))}
             </InnerContainer>
