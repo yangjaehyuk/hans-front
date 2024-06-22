@@ -175,10 +175,10 @@ const Style = () => {
                   </div>
                 </div>
                 <StyleContainer
-                  first="원피스"
-                  second="셔츠"
-                  third="슬리브"
-                  fourth="쇼츠"
+                  first="재킷"
+                  second="드레스"
+                  third="스커트"
+                  fourth="가디건"
                 ></StyleContainer>
               </div>
             </Inner>
