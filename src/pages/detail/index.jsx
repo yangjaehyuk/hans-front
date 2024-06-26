@@ -9,21 +9,21 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { message, Dropdown, Menu, Button, Modal, Spin } from 'antd';
+import { message, Dropdown, Menu, Modal, Spin } from 'antd';
 import { TextBox } from '../../stores/atom/text-box';
 import { DetailCarousel, DetailCard } from '../../components/detail';
 import { useCustomNavigate } from '../../hooks';
-import { ROUTES } from '../../constants/routes';
 import PostAPI from '../../api/post-api';
 import { useRecoilValue } from 'recoil';
 import { memberState } from '../../stores/atom/member-atom';
 import { getCookie } from '../../utils/cookie';
+
+/** This is a post detail page. */
 const Detail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const memberData = useRecoilValue(memberState);
   const accessToken = getCookie('accessToken');
   const { postId } = useParams();
-  console.log(postId);
   const [detailArr, setDetailArr] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +41,7 @@ const Detail = () => {
   }, [postId]);
 
   const [isLike, setIsLike] = useState(false);
+  /** Links to the post upload URL of x */
   function onClickShareTwitter() {
     const link = window.location.href;
     const twitterIntent = `https://twitter.com/intent/tweet?text=custom%20text&url=${link}`;
@@ -79,13 +80,11 @@ const Detail = () => {
         } catch (error) {
           console.error(error);
         }
-        // 변한 카운트를 api 요청
       } else {
         setDetailArr((prevState) => ({
           ...prevState,
           likesCount: prevState.likesCount + 1,
         }));
-        // 변한 카운트를 api 요청
         try {
           await PostAPI.recommendPostAPI(postId);
         } catch (error) {
@@ -110,6 +109,7 @@ const Detail = () => {
 
   function handleCopyLink() {
     const link = window.location.href;
+    // Copy the current url.
     navigator.clipboard
       .writeText(link)
       .then(() => {
@@ -169,7 +169,6 @@ const Detail = () => {
         <PostWrapper>
           <PostImageWrapper>
             <DetailCarousel images={detailArr.imgList}></DetailCarousel>
-            {/* 캐러셀 */}
           </PostImageWrapper>
           <PostContentWrapper>
             <PostHeader>

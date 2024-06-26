@@ -24,6 +24,7 @@ import * as yup from 'yup';
 
 const { TextArea } = Input;
 
+/** This is editing a post page. */
 const Edit = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const { postId } = useParams();
@@ -82,6 +83,7 @@ const Edit = () => {
         const response = await PostAPI.viewPostDetailAPI(postId);
         const data = response.data.data;
         setDetailArr(data);
+        // set the existing title, detail, hashtags for the initial value.
         formik.setValues({
           title: data.title,
           detail: data.body,
