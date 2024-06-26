@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { typographyMap } from './type';
 import { colors } from '../../../constants/colors';
 
+/** Set the textbox style. */
 export const TextBox = styled.span(
   ({ color = colors.black900, textAlign, fontWeight, bold, cursor }) => ({
     color: colors[color],

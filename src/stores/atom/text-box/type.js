@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 
+/** Size for text */
 export const typographyMap = {
   h1: css`
     font-size: 40px;

@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
-const Footer = () => {
+const CustomFooter = () => {
   return (
     <StyledLayout>
       <Container>
@@ -62,13 +62,12 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default CustomFooter;
 
 const StyledLayout = styled(Layout)`
-  position: absolute;
   bottom: 0;
-  width: 100%;
   background-color: ${colors.midGray};
+  width: 100% !important;
 `;
 
 const Container = styled.div`
