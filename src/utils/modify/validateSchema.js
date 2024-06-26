@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+/** When we edit our information, we use this validation schema. */
+/** This schema used with formik library */
 const ValidateSchema = () => {
   return yup.object().shape({
     nickname: yup

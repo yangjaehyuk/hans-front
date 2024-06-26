@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MemberAPI from '../../api/member-api';
 import { ROUTES } from '../../constants/routes';
+/** This is a sign up component. */
 const SignUpContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const [emailDisabled, setEmailDisabled] = useState(false);
@@ -24,7 +25,6 @@ const SignUpContainer = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [nicknameError, setNicknameError] = useState(false);
-
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
   const formik = useFormik({

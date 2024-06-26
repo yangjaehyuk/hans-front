@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-
+/** When we sign up to our web site, we use this validation schema */
+/** This schema used with formik library. */
 const ValidateSchema = () => {
   return yup.object({
     email: yup

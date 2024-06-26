@@ -15,11 +15,12 @@ import Post from './pages/post';
 import MyPage from './pages/my-page';
 import Modify from './pages/modify';
 import Edit from './pages/edit';
-import Error404 from './pages/errors/error404';
+import Error404 from './pages/error/error404';
 import { getCookie } from './utils/cookie';
 function App() {
   const accessToken = getCookie('accessToken');
   return (
+    /** According to access token, conditional orders */
     <BrowserRouter>
       <Routes>
         <Route

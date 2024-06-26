@@ -6,6 +6,7 @@ import SubHeader from './components/layouts/sub-header';
 import PropTypes from 'prop-types';
 
 const AuthLayout = ({ title, children }) => {
+  /** layout for sign up, sign in, sign up success, sign up agreement pages */
   return (
     <StyledLayout>
       <SubHeader title={title} />

@@ -2,8 +2,10 @@ import React from 'react';
 import { message } from 'antd';
 import { TextBox } from '../../stores/atom/text-box';
 import { deleteAllCookies } from '../../utils/cookie';
+/** This is a sign out component. */
 const SignOutContainer = () => {
   const showMessage = () => {
+    // delete all cookie values.
     deleteAllCookies();
     message.error({
       content: (

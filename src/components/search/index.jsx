@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { HomeCard } from '../home';
 import styled from 'styled-components';
+/** This is a search component. */
 const SearchContainer = ({ open, onCancel, confirmLoading, modalText }) => {
   return (
     <Modal
@@ -27,12 +28,11 @@ SearchContainer.propTypes = {
 
 const SearchPagination = ({ arr = [], pageSize = 8 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const dataArray = Array.isArray(arr) ? arr : [];
+  const dataArray = Array.isArray(arr) ? arr : []; // Check the type whether array or not.
   const totalPages = Math.ceil(dataArray.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, arr.length);
   const displayItems = dataArray.slice(startIndex, endIndex);
-  console.log('여기', displayItems);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };

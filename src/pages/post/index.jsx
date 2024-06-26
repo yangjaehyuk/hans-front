@@ -40,7 +40,6 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 800, ...props }) => {
 
       fetchOptions(value).then((newOptions) => {
         if (fetchId !== fetchRef.current) {
-          // Ensure the fetch result order
           return;
         }
         setOptions(newOptions);

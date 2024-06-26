@@ -244,9 +244,12 @@ const ModifyContainer = () => {
               },
             ),
         })
+        // Validate the files
         .validate({ originFileObj: file.originFileObj }, { abortEarly: false })
         .then(async () => {
+          // If validation is successful, convert the file to a base64-encoded string
           const blobUrl = await getBase64(file.originFileObj);
+          // Add the valid file along with its base64 string to the validFiles array
           validFiles.push({
             ...file,
             originFileObj: file.originFileObj,
@@ -254,11 +257,14 @@ const ModifyContainer = () => {
           });
         })
         .catch((error) => {
+          // If validation fails, show an error message
           message.error(error.message);
         }),
     );
 
+    // Once all file validation and conversions are done
     Promise.all(filePromises).then(() => {
+      // Set the field value 'files' in Formik with the array of valid files
       formik.setFieldValue('files', validFiles);
     });
   };
@@ -273,13 +279,13 @@ const ModifyContainer = () => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   );
-
+  // Function to convert a file (blob) to a base64-encoded string
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+      const reader = new FileReader(); // Create a new FileReader instance
+      reader.readAsDataURL(file); // Start reading the file as a data URL
+      reader.onload = () => resolve(reader.result); // Resolve the promise with the result when reading is complete
+      reader.onerror = (error) => reject(error); // Reject the promise if an error occurs during reading
     });
 
   return (

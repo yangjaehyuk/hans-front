@@ -13,7 +13,6 @@ import image5 from '../../assets/image/carousel4.jpg';
 import image6 from '../../assets/image/carousel6.jpg';
 import image7 from '../../assets/image/carousel7.jpg';
 import image8 from '../../assets/image/carousel8.jpg';
-import PostAPI from '../../api/post-api';
 const { Meta } = Card;
 
 const HomeCarousel = () => {
@@ -21,6 +20,7 @@ const HomeCarousel = () => {
   const handleBeforeChange = () => {
     setAnimate(false);
   };
+  // Get a persist recoil value that key is named memberState.
   const memberData = useRecoilValue(memberState);
   console.log(memberData.nickname);
 

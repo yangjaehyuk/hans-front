@@ -7,22 +7,25 @@ const { Meta } = Card;
 
 const DetailCarousel = ({ images }) => {
   const [imageBlobs, setImageBlobs] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchAndStoreBlobs = async () => {
       try {
+        // Fetching all blobs
         const fetchedBlobs = await Promise.all(
           images.map(async (element) => {
+            // Fetch image with CORS
             const response = await fetch(element.imgUrl, { mode: 'cors' });
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            // Convert response to blob
             const blob = await response.blob();
             return blob;
           }),
         );
-
+        // Create object URLs from blobs
         const blobUrls = fetchedBlobs.map((blob) => URL.createObjectURL(blob));
+        // Store the blob URLs
         setImageBlobs(blobUrls);
         console.log('여기', blobUrls);
       } catch (error) {
@@ -37,10 +40,6 @@ const DetailCarousel = ({ images }) => {
       imageBlobs.forEach((blobUrl) => URL.revokeObjectURL(blobUrl));
     };
   }, [images]);
-
-  // if (imageBlobs.length === 0) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <StyledCarousel arrows infinite autoplay>

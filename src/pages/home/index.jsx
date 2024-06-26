@@ -7,35 +7,31 @@ import PostAPI from '../../api/post-api';
 import HistoryAPI from '../../api/history-api';
 import { useCustomNavigate } from '../../hooks';
 import { ROUTES } from '../../constants/routes';
+/** This is the home page. */
 const Home = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const [timeArr, setTimeArr] = useState(Array.from({ length: 8 }));
 
-  // console.log(memberData.nickname, memberData.profileImage);
-  // heres to you loading
+  // banner loading state
   const [isCheck, setIsCheck] = useState(false);
   const [isLoading1, setIsLoading1] = useState(true);
 
-  // new arrivals loading
+  // new arrivals loading state
   const [isLoading2, setIsLoading2] = useState(true);
 
   const [arr, setArr] = useState(new Array(4).fill({}));
   useEffect(() => {
-    //heres to you
     setIsLoading1(true);
     const fetchData1 = async () => {
       try {
         const res1 = await HistoryAPI.bannerAPI();
-        console.log('banner', res1);
         setArr(res1.data.data);
         setIsCheck(true);
       } catch (error) {
-        console.log('여기 에러야');
         setIsLoading1(true);
         setIsCheck(false);
         try {
           const res2 = await PostAPI.viewRecommendPostsAPI();
-          console.log('추천순', res2);
           setArr(res2.data.data);
         } catch (error) {
           console.error(error);

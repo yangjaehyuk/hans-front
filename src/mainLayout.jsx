@@ -8,6 +8,7 @@ import CustomFooter from './components/layouts/footer';
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = ({ children }) => {
+  /** layout for home, my page, style, post, edit, post detail pages */
   return (
     <StyledLayout>
       <StyledHeader>

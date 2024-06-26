@@ -16,9 +16,11 @@ import MemberAPI from '../../../api/member-api';
 import { SearchContainer } from '../../search';
 import { getCookie } from '../../../utils/cookie';
 const { Search } = Input;
-
+/** This is the header for main layout. */
+/** It is included in main layout. */
 const MainHeader = () => {
   const [open, setOpen] = useState(false);
+
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { handleChangeUrl } = useCustomNavigate();
   const [inputDisabled, setInputDisabled] = useState(false);
@@ -27,6 +29,7 @@ const MainHeader = () => {
   const memberData = useRecoilValue(memberState);
   const accessToken = getCookie('accessToken');
 
+  // Delete a persist-recoil value.
   const clearPersistedState = () => {
     localStorage.removeItem('recoil-persist');
   };
@@ -133,7 +136,6 @@ const MainHeader = () => {
             }
           />
         </>
-
         {accessToken ? (
           <>
             <StyledLogoutIcon

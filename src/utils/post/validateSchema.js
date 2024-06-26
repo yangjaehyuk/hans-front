@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+/** When we write a post, we use this validation schema  */
+/** This schema used with formik library. */
 const ValidateSchema = yup.object().shape({
   title: yup
     .string()

@@ -2,8 +2,9 @@ import { useCustomNavigate } from '../../hooks';
 import { Layout, Button } from 'antd';
 import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
-
 import { colors } from '../../constants/colors';
+
+/** This is a sign up sucess component. */
 const SignUpSuccessContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   return (

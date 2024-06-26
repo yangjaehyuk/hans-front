@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TextBox } from '../../stores/atom/text-box';
 import { useCustomNavigate } from '../../hooks';
 import { colors } from '../../constants/colors';
+/** This is a sign up agreement component. */
 const SignUpAgreementContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const [allChecked, setAllChecked] = useState(false);

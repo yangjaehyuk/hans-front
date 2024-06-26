@@ -14,14 +14,17 @@ import StyleContainer from '../../components/style';
 import PostAPI from '../../api/post-api';
 import { getCookie } from '../../utils/cookie';
 import { Spin } from 'antd';
+/** This is the style page.*/
+/** Style page contains lots of posts.*/
 const Style = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const randomArr = [image1, image2, image3, image4, image5, image6, image7];
-  const [randomItem, setRandomItem] = useState(null);
-  const accessToken = getCookie('accessToken');
-  const [stylishArr, setStylishArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Set a status whether loading or not.
+  const randomArr = [image1, image2, image3, image4, image5, image6, image7]; // This is array for a banner which changed pictures randomly.
+  const [randomItem, setRandomItem] = useState(null); // Set a null value to get a random image value.
+  const accessToken = getCookie('accessToken'); // Get an access token from cookie.
+  const [stylishArr, setStylishArr] = useState([]); // Set an empty array to insert values from server.
   useEffect(() => {
     const fetchData = async () => {
+      // Loading status.
       setIsLoading(true);
       try {
         const res = await PostAPI.viewEmptyAPI();
@@ -29,6 +32,7 @@ const Style = () => {
       } catch (error) {
         console.error(error);
       } finally {
+        // Unlock loading status.
         setIsLoading(false);
       }
     };
@@ -45,6 +49,7 @@ const Style = () => {
     return () => {};
   }, []);
   return (
+    // Conditional rendering whether loading or not.
     <Wrapper>
       {isLoading ? (
         <LoadingContainer>

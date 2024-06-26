@@ -12,6 +12,8 @@ import { setCookie } from '../../utils/cookie';
 import { ROUTES } from '../../constants/routes';
 import { useRecoilValue, useSetRecoilState } from 'recoil'; // Import useSetRecoilState
 import { memberState } from '../../stores/atom/member-atom';
+
+/** This is a sign in component. */
 const SignInContainer = () => {
   const { handleChangeUrl } = useCustomNavigate();
   const setMemberState = useSetRecoilState(memberState);

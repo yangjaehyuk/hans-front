@@ -16,7 +16,7 @@ const PostAPI = {
     });
   },
 
-  // 추천
+  // Recommended
   viewRecommendPostsAPI: () => {
     return instance.get('posts', {
       params: {
@@ -28,7 +28,7 @@ const PostAPI = {
     });
   },
 
-  // 최신
+  // Newest
   viewRecentPostsAPI: () => {
     return instance.get('posts', {
       params: {

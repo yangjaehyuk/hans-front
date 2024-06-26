@@ -16,6 +16,7 @@ import MemberAPI from '../../api/member-api';
 import { useRecoilValue } from 'recoil';
 import { memberState } from '../../stores/atom/member-atom';
 import { Spin } from 'antd';
+/** This is the my page. */
 const MyPage = () => {
   const randomArr = [image1, image2, image3, image4, image5, image6, image7];
   const [randomItem, setRandomItem] = useState(null);
@@ -27,7 +28,6 @@ const MyPage = () => {
     const fetchData = async () => {
       try {
         const response = await MemberAPI.viewMemberInfoAPI();
-        console.log(response);
         setMemberInfo(response.data.data);
       } catch (error) {
         console.error(error);

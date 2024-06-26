@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { TextBox } from '../../../stores/atom/text-box';
-
+/** This is a header for auth layout. */
+/** It is included in auth layout. */
 const SubHeader = ({ title }) => {
   return (
     <HeaderContainer>

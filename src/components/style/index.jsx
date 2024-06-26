@@ -4,6 +4,7 @@ import { Radio, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { SearchPagination } from '../search';
 import PostAPI from '../../api/post-api';
+/** THis is the style component. */
 const StyleContainer = ({ first, second, third, fourth }) => {
   const [selectedValue, setSelectedValue] = useState('a');
   const [selectedText, setSelectedText] = useState(first);
@@ -46,6 +47,7 @@ const StyleContainer = ({ first, second, third, fourth }) => {
   }, [selectedText]);
 
   return (
+    // Conditional rendering whether loading or not.
     <>
       {isLoading ? (
         <LoadingContainer>
