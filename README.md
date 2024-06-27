@@ -1,70 +1,147 @@
-# Getting Started with Create React App
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="https://github.com/yangjaehyuk/Algorithm/assets/37584686/c9307797-0e4c-48c1-92fc-e6dd0fa79cc9" alt="HANS"/>
 
-## Available Scripts
 
-In the project directory, you can run:
+### 한섬 상품 구매 유도 SNS, HANS
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+안녕하세요😃 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 입니다 
 
-### `npm run build`
+백엔드는 [이곳](https://github.com/hyundai-hans/hans-back)을 클릭해 주세요  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎯 팀 소개
+<table align="center">
+    <tr>
+        <td align="center"><img alt="avatar" src="https://avatars.githubusercontent.com/u/60885635?v=4" width="100"></td>
+        <td align="center"><img alt="avatar" src="https://github.com/yangjaehyuk.png" width="100"></td>
+    </tr>
+    <tr>
+        <td align="center"><a href="https://github.com/JIUNG GU">구지웅</a></td>
+        <td align="center"><a href="https://github.com/yangjaehyuk">양재혁</a></td>
+    </tr>
+ </table>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/>
 
-### `npm run eject`
+## 🔨 기술 스택
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Language
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<p align="left">
+ <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
+  
+</p>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Development
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<p align="left">
+  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/recoil-007AF4?style=for-the-badge&logo=recoil&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Ant%20Design-0170fe?style=for-the-badge&logo=Ant%20Design&logoColor=white">
+  <img src="https://img.shields.io/badge/styled%20components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+  
+  
+</p>
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🎨 화면 구성
+<div style="text-align: center">
+  
+  <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a8b0a5b0-7786-4fd8-b0e5-0d3bbb197a6a" alt="메인 페이지">
 
-### Code Splitting
+  <h4>쿠폰 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
+  
+  <h4>쿠폰 만들기 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
+  
+  <h4>포인트 내역 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/4630f880-e1ed-4303-96d5-ea15a7ffc7e4" alt="숙박 상세 페이지">
+  
+  <h4>객실 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/490e2d41-ba1d-4ad5-8775-f4513f9a2054" alt="장바구니 페이지">
+  
+  <h4>이용 가이드 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/f523634b-f881-4bf8-8c28-b1e04d923e08">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+</div>
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📚 주요 기능
+<div align="center">
+  <table>
+    <tr align="center">
+      <th>회원 가입</th>
+      <th>숙소 등록</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/aa2853b5-6118-41e3-9c2f-31f3a8a9601c" alt="회원가입 유효성 검사"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/04e5cfd5-1acb-4442-aa2b-7d86c259b059"alt="무한스크롤 시연"></td>
+    </tr>
+    <tr align="center">
+      <th>포인트 충전</th>
+      <th>쿠폰 구매</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/cdcc409b-f099-45dc-9072-b3b02d8f9df3" alt="날짜에 따라 가격 및 품절 변경"></td>
+      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/d31c2634-0c10-4693-8751-95080b235d93" alt="결제페이지 필수 동의 여부"></td>
+    </tr>
+  </table>
+</div>
 
-### Advanced Configuration
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## ✏️ 컴포넌트 다이어그램
+![image](https://github.com/yangjaehyuk/hans-front/assets/37584686/dfed8f27-6e2c-409c-aed6-ae5966022cf5)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📂 폴더 구조
 
-### `npm run build` fails to minify
+```
+📂 src
+┣ 📂 api
+┣ 📂 assets                   
+┣ 📂 components
+┃  ┣ 📂 layouts
+┃  ┃  ┣ 📂 footer
+┃  ┃  ┣ 📂 main-header
+┃  ┃  ┣ ...
+┃  ┣ 📂 search
+┃  ┣ 📂 home
+┃  ┣ ...           
+┣ 📂 constants
+┃  ┣ 📂 routes
+┃  ┣ 📂 colors
+┃  ┣ ...
+┣ 📂 hooks                    
+┣ 📂 pages
+┃  ┣ 📂 detail
+┃  ┣ 📂 style
+┃  ┣ 📂 edit
+┃  ┣ 📂 my-page
+┃  ┣ ...                  
+┣ 📂 stores               
+┃  ┣ ...                   
+┣ 📂 utils
+┃  ┣ 📂 sign-in
+┃  ┣ 📂 sign-up
+┃  ┣ ...
+┣ App.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
+
+## 📆 기간
+```2024.06.14 ~ 2024.06.21```
+<br>
+
+
