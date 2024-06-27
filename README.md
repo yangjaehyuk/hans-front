@@ -65,24 +65,42 @@ HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 �
 <br/>
 
 ## 📚 주요 기능
-<div style="text-align: center; width: '100%'">
-  <h4>회원 가입</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/413bb2ad-a17f-47be-be15-2a6808982cc6" alt="회원 가입">
+<div align="center">
+<table>
+    <tr align="center">
+      <th>회원 가입</th>
+      <th>마이 페이지</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/413bb2ad-a17f-47be-be15-2a6808982cc6" alt="회원가입 유효성 검사"></td>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3e4ec387-8442-4fa9-89c0-8ba2f31df4f6"alt="무한스크롤 시연"></td>
+    </tr>
+    <tr align="center">
+      <th>회원 프로필 수정</th>
+      <th>배너</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4d4c8ff7-cb39-42a9-bb50-d75a879ca614" alt="날짜에 따라 가격 및 품절 변경"></td>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/afbf78ca-b7f0-443c-90b7-a1afd798233a" alt="결제페이지 필수 동의 여부"></td>
+    </tr>
+    <tr align="center">
+      <th>태그 별 검색th>
+      <th>옷 자랑 글 등록</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/d6a96c37-dde4-425e-9e1e-23f0f1c1c3dc" alt="날짜에 따라 가격 및 품절 변경"></td>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/10a4c6b9-ce35-470b-b31a-8326e9c10681" alt="결제페이지 필수 동의 여부"></td>
+    </tr>
+    <tr align="center">
+      <th>한섬 쇼핑몰 구매 유도</th>
+      <th>옷 자랑 글 수정</th>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4e9624a4-415f-412e-9e3f-cfce5aa8f38c" alt="날짜에 따라 가격 및 품절 변경"></td>
+      <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3943e088-bfd4-48a9-b26b-7dd525e6eebf" alt="결제페이지 필수 동의 여부"></td>
+    </tr>
+</table>
 
-  <h4>마이 페이지</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3e4ec387-8442-4fa9-89c0-8ba2f31df4f6" alt="마이 페이지">
-
-  <h4>회원 프로필 수정</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4d4c8ff7-cb39-42a9-bb50-d75a879ca614" alt="회원 프로필 수정">
-
-  <h4>배너</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/afbf78ca-b7f0-443c-90b7-a1afd798233a" alt="배너">
-  
-  <h4>태그별 검색</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/d6a96c37-dde4-425e-9e1e-23f0f1c1c3dc" alt="태그별 검색">
-  
-  <h4>옷 자랑 글 등록</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/10a4c6b9-ce35-470b-b31a-8326e9c10681" alt="옷 자랑 글 등록">
-
-  <h4>한섬 쇼핑몰 구매 유도</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4e9624a4-415f-412e-9e3f-cfce5aa8f38c" alt="한섬 쇼핑몰 구매 유도">
-  
-  <h4>옷 자랑 글 수정</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3943e088-bfd4-48a9-b26b-7dd525e6eebf" alt="옷 자랑 글 수정">
-  
-  <h4>옷 자랑 글 삭제</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/e4df7393-784d-4244-9e8b-c8f167bbe28e" alt="옷 자랑 글 삭제>
 </div>
 
 
