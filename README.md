@@ -55,16 +55,22 @@ HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 �
 
 <br/>
 
+
+## ✏️ 컴포넌트 다이어그램
+![image](https://github.com/yangjaehyuk/hans-front/assets/37584686/dfed8f27-6e2c-409c-aed6-ae5966022cf5)
+
+<br/>
+
 ## 🎨 화면 구성
 <div style="text-align: center">
   
   <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a8b0a5b0-7786-4fd8-b0e5-0d3bbb197a6a" alt="메인 페이지">
 
-  <h4>쿠폰 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
+  <h4>스타일 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
   
-  <h4>쿠폰 만들기 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
+  <h4>마이 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
   
-  <h4>포인트 내역 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/4630f880-e1ed-4303-96d5-ea15a7ffc7e4" alt="숙박 상세 페이지">
+  <h4>옷 자랑 글 상세 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/4630f880-e1ed-4303-96d5-ea15a7ffc7e4" alt="숙박 상세 페이지">
   
   <h4>객실 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/490e2d41-ba1d-4ad5-8775-f4513f9a2054" alt="장바구니 페이지">
   
@@ -99,9 +105,6 @@ HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 �
 </div>
 
 <br>
-
-## ✏️ 컴포넌트 다이어그램
-![image](https://github.com/yangjaehyuk/hans-front/assets/37584686/dfed8f27-6e2c-409c-aed6-ae5966022cf5)
 
 
 ## 📂 폴더 구조
