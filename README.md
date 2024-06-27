@@ -57,57 +57,41 @@ HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 �
 
 
 ## ✏️ 컴포넌트 다이어그램
-![image](https://github.com/yangjaehyuk/hans-front/assets/37584686/dfed8f27-6e2c-409c-aed6-ae5966022cf5)
+<div align="center">
+    <img src="https://github.com/yangjaehyuk/hans-front/assets/37584686/dfed8f27-6e2c-409c-aed6-ae5966022cf5" alt="컴포넌트다이어그램"/>
+    
+</div>
 
 <br/>
 
-## 🎨 화면 구성
-<div style="text-align: center">
-  
-  <h4>메인 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a8b0a5b0-7786-4fd8-b0e5-0d3bbb197a6a" alt="메인 페이지">
-
-  <h4>스타일 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/ca107a8e-c20a-41f8-b985-273ee923742b" alt="메인 페이지">
-  
-  <h4>마이 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/a9b27167-d28b-4713-868f-92918f9f0344" alt="카테고리별 페이지">
-  
-  <h4>옷 자랑 글 상세 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/4630f880-e1ed-4303-96d5-ea15a7ffc7e4" alt="숙박 상세 페이지">
-  
-  <h4>객실 관리 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/490e2d41-ba1d-4ad5-8775-f4513f9a2054" alt="장바구니 페이지">
-  
-  <h4>이용 가이드 페이지</h4> <img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/f523634b-f881-4bf8-8c28-b1e04d923e08">
-
-</div>
-
-
-
-<br>
-
 ## 📚 주요 기능
-<div align="center">
-  <table>
-    <tr align="center">
-      <th>회원 가입</th>
-      <th>숙소 등록</th>
-    </tr>
-    <tr>
-      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/aa2853b5-6118-41e3-9c2f-31f3a8a9601c" alt="회원가입 유효성 검사"></td>
-      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/04e5cfd5-1acb-4442-aa2b-7d86c259b059"alt="무한스크롤 시연"></td>
-    </tr>
-    <tr align="center">
-      <th>포인트 충전</th>
-      <th>쿠폰 구매</th>
-    </tr>
-    <tr>
-      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/cdcc409b-f099-45dc-9072-b3b02d8f9df3" alt="날짜에 따라 가격 및 품절 변경"></td>
-      <td><img src="https://github.com/Upjuyanolja/Upjuyanolja_FE/assets/37584686/d31c2634-0c10-4693-8751-95080b235d93" alt="결제페이지 필수 동의 여부"></td>
-    </tr>
-  </table>
+<div style="text-align: center; width: '100%'">
+  <h4>회원 가입</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/413bb2ad-a17f-47be-be15-2a6808982cc6" alt="회원 가입">
+
+  <h4>마이 페이지</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3e4ec387-8442-4fa9-89c0-8ba2f31df4f6" alt="마이 페이지">
+
+  <h4>회원 프로필 수정</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4d4c8ff7-cb39-42a9-bb50-d75a879ca614" alt="회원 프로필 수정">
+
+  <h4>배너</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/afbf78ca-b7f0-443c-90b7-a1afd798233a" alt="배너">
+  
+  <h4>태그별 검색</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/d6a96c37-dde4-425e-9e1e-23f0f1c1c3dc" alt="태그별 검색">
+  
+  <h4>옷 자랑 글 등록</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/10a4c6b9-ce35-470b-b31a-8326e9c10681" alt="옷 자랑 글 등록">
+
+  <h4>한섬 쇼핑몰 구매 유도</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/4e9624a4-415f-412e-9e3f-cfce5aa8f38c" alt="한섬 쇼핑몰 구매 유도">
+  
+  <h4>옷 자랑 글 수정</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/3943e088-bfd4-48a9-b26b-7dd525e6eebf" alt="옷 자랑 글 수정">
+  
+  <h4>옷 자랑 글 삭제</h4> <img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/e4df7393-784d-4244-9e8b-c8f167bbe28e" alt="옷 자랑 글 삭제>
 </div>
 
-<br>
+
+
+<br/>
 
 
 ## 📂 폴더 구조
+
 
 ```
 📂 src
