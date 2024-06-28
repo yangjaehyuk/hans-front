@@ -10,11 +10,11 @@
 <br/>
 
 
-안녕하세요😃 
+Hello😃 
 
-HANS의 한섬 상품 구매 유도 SNS 프로젝트 :computer: 웹 페이지 입니다 
+This is the promotes the sales of hansome-shopping-mall SNS project :computer: Web page.
 
-백엔드는 [이곳](https://github.com/hyundai-hans/hans-back)을 클릭해 주세요  
+For more details of Back-end, visit [hans-back](https://github.com/hyundai-hans/hans-back).
 
 ---
 
@@ -28,7 +28,7 @@ Otherwise anyone can see the posts above all There are the banner posts which us
 
 <br/>
 
-## 🔨 Stack
+## 🔨 Tech
 
 ### Language
 
@@ -87,7 +87,7 @@ Otherwise anyone can see the posts above all There are the banner posts which us
       <td><img src="https://github.com/yangjaehyuk/LeetCode/assets/37584686/10a4c6b9-ce35-470b-b31a-8326e9c10681" alt="결제페이지 필수 동의 여부"></td>
     </tr>
     <tr align="center">
-      <th>Inducing purchases handsome-shopping-mall products</th>
+      <th>Promotes the sales of hansome-shopping-mall</th>
       <th>Edit posts</th>
     </tr>
     <tr>
